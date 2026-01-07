@@ -1,4 +1,4 @@
-/*using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     [Header("Sub-Managers")]
     [field: SerializeField] public AudioManager audioManager { get; private set; }
     [field: SerializeField] public UIManager uiManager { get; private set; }
-    [field: SerializeField] public BattleManager battleManager { get; private set; }
-
 
     //[Header ("Ads")]
     //[field: SerializeField] public AdmobInit admobInit { get; private set; }
@@ -20,9 +18,7 @@ public class GameManager : MonoBehaviour
     public SceneLoader SceneLoader { get; private set; }
 
     [Header("Game Enumerators")]
-    public Language language;
     public GameState gameState;
-    public GameMode gameMode;
 
     [Header("Game Settings")]
     public bool isBgmOn = true;
@@ -34,12 +30,9 @@ public class GameManager : MonoBehaviour
     public bool isFirstTimeShop;
 
     [Header("Resource")]
-    public List<SlimeData> Slime;
-    public List<StageData> StageData;
+    
 
     [HideInInspector] public bool isAnimating;
-    [HideInInspector] public GameState nextUiState = GameState.MainMenu;
-    private List<SlimeData> unlockedSlime;
     private int sceneCount = 0;
 
     private void Awake()
@@ -57,11 +50,11 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        *//*if (admobInit != null && admobInit.isAdActive)
+        /*if (admobInit != null && admobInit.isAdActive)
         {
             admobInit.Init();
             admobInit.RequestBanner();
-        }*//*
+        }*/
 
         SceneLoader = GetComponent<SceneLoader>();
         saveManager = GetComponent<SaveManager>();
@@ -77,8 +70,6 @@ public class GameManager : MonoBehaviour
         uiManager?.HideAllPopups();
 
         ApplyAudioSettings();
-
-        unlockedSlime = saveManager.GetUnlockedSlimes();
     }
 
     public void ApplyAudioSettings()
@@ -100,20 +91,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    *//*public void PauseGame() => SetGameState(GameState.Pause);*//*
+    //*public void PauseGame() => SetGameState(GameState.Pause);*//*
 
     public void SetGameState(GameState newGameState) => gameState = newGameState;
-
-    public void SetGameMode(GameMode newGameMode) => gameMode = newGameMode;
-
-    public void SetLanguage(Language newLanguage) => language = newLanguage;
 
     public void ResetSceneCount() => sceneCount = 0;
 
     private void LoadResource()
     {
-        Slime = ResourceLoader.LoadAllSlime();
-        StageData = ResourceLoader.LoadAllStageData();
+        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -152,4 +138,4 @@ public class GameManager : MonoBehaviour
         }
 #endif
     }
-}*/
+}

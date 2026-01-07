@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class FPSCounter : MonoBehaviour
 {
     [Header("UI")]
-    public Text fpsText; // Assign Text (Legacy UI)
+    public Text fpsText; 
 
     [Header("Settings")]
     [Range(0.1f, 1f)]

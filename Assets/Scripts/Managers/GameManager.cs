@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviour
     public bool isFirstTimeShop;
 
     [Header("Resource")]
+    public AnimalData selectedAnimalData;
+    public LevelData selectedLevelData;
+    public List<AnimalData> allAnimalData;
+    public List<LevelData> allLevelData;
     
 
     [HideInInspector] public bool isAnimating;
@@ -99,7 +103,8 @@ public class GameManager : MonoBehaviour
 
     private void LoadResource()
     {
-        
+        allAnimalData = ResourcesLoader.LoadAllAnimalData();
+        allLevelData = ResourcesLoader.LoadAllLevelData();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

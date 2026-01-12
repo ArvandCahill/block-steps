@@ -4,32 +4,30 @@ using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
-    private Vector2 _delta;
-
+    [Header("References")]
     [SerializeField] private Camera _cam;
 
-    private bool _isMoving;
-    private bool _isRotating;
-    private bool _isZooming;
-
-    [SerializeField] private float _movementSpeed;
+    [Header("Rotation")]
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _zoomSpeed;
+
+    [Header("Zoom")]
     [SerializeField] private float _zoomSpeedMouse;
     [SerializeField] private float _zoomSpeedMobile;
-
-    private Vector2 _moveInput;
-    private Vector2 _lookInput;
-
     private float _minZoom = 4f;
     private float _maxZoom = 20f;
 
-    private float _lockedXrotation;
+    private Vector2 _delta;
+    private Vector2 _lookInput;
 
     private Vector2 _touch0;
     private Vector2 _touch1;
 
-    private float _prevDistance;
+    private bool _isRotating;
+    private bool _isPinchZoom;
+
+    private float _lockedXrotation;
+    private float _zoomDelta;
+    private float _previousPinchDistance;
 
     private void Awake()
     {
@@ -44,12 +42,6 @@ public class CameraManager : MonoBehaviour
         _lookInput = context.ReadValue<Vector2>();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        _moveInput = context.ReadValue<Vector2>();
-        _isMoving = context.started || context.performed;
-    }
-
     public void OnRotate(InputAction.CallbackContext context)
     {
         _isRotating = context.started || context.performed;
@@ -57,11 +49,8 @@ public class CameraManager : MonoBehaviour
 
     public void OnZoom(InputAction.CallbackContext context)
     {
-        if (context.control.device is Mouse)
-        {
-            float scroll = context.ReadValue<float>();
-            ApplyZoom(scroll * _zoomSpeedMouse);
-        }
+        Vector2 scroll = context.ReadValue<Vector2>();
+        _zoomDelta += scroll.y * _zoomSpeedMouse;
     }
 
     public void OnTouch0(InputAction.CallbackContext context)
@@ -76,48 +65,12 @@ public class CameraManager : MonoBehaviour
         TryPinchZoom();
     }
 
-    private void TryPinchZoom()
-    {
-        if (_touch0 == Vector2.zero || _touch1 == Vector2.zero)
-        {
-            _prevDistance = 0f;
-            _isZooming = false;
-            return;
-        }
-
-        float _currentDistance = Vector2.Distance(_touch0, _touch1);
-
-        if (!_isZooming)
-        {
-            _prevDistance = _currentDistance;
-            _isZooming = true;
-            return;
-        }
-
-        float delta = _currentDistance - _prevDistance;
-        _prevDistance = _currentDistance;
-
-        ApplyZoom(delta * _zoomSpeedMobile);
-    }
-
     #endregion
 
     private void LateUpdate()
     {
-        HandleMovement();
         HandleRotation();
-    }
-
-    private void HandleMovement()
-    {
-        if (!_isMoving)
-            return;
-
-        Vector3 right = transform.right * _moveInput.x;
-        Vector3 up = transform.up * _moveInput.y;
-
-        Vector3 movement = (right + up) * _movementSpeed * Time.deltaTime;
-        transform.position += movement;
+        HandleZoom();
     }
 
     private void HandleRotation()
@@ -131,12 +84,38 @@ public class CameraManager : MonoBehaviour
         transform.rotation = Quaternion.Euler(_lockedXrotation, newY, 0f);
     }
 
-    private void ApplyZoom(float delta)
+    private void TryPinchZoom()
     {
-        if (Mathf.Approximately(delta, 0f))
+        if (_touch0 == Vector2.zero || _touch1 == Vector2.zero)
+        {
+            _previousPinchDistance = 0f;
+            _isPinchZoom = false;
+            return;
+        }
+
+        float currentDistance = Vector2.Distance(_touch0, _touch1);
+
+        if (!_isPinchZoom)
+        {
+            _previousPinchDistance = currentDistance;
+            _isPinchZoom = true;
+            return;
+        }
+
+        float delta = currentDistance - _previousPinchDistance;
+        _previousPinchDistance = currentDistance;
+
+        _zoomDelta += delta * _zoomSpeedMobile;
+    }
+
+    private void HandleZoom()
+    {
+        if (Mathf.Approximately(_zoomDelta, 0f))
             return;
 
-        _cam.orthographicSize -= delta;
+        _cam.orthographicSize -= _zoomDelta * Time.deltaTime;
         _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
+
+        _zoomDelta = 0f;
     }
 }

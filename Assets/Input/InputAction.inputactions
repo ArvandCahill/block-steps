@@ -3,17 +3,17 @@
     "name": "InputAction",
     "maps": [
         {
-            "name": "Gameplay",
+            "name": "Camera",
             "id": "a995c36f-fa9b-47cd-ba03-2545962bac73",
             "actions": [
                 {
                     "name": "Look",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "f5309a31-88ef-40c0-9b84-6095eac922b3",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Move",
@@ -57,6 +57,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7fb4f289-4d21-4e2b-81d5-7d6aaf789455",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2a73d5f6-85b3-4b61-b3e0-e56d6c0a5bc7",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -70,6 +81,17 @@
                     "name": "",
                     "id": "9caae7bb-77d7-4d66-8510-4997cf3b0398",
                     "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac98af50-68b3-4b08-8fc7-cae3c32c5eab",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

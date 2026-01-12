@@ -1,3 +1,4 @@
+using System.IO.MemoryMappedFiles;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,24 +14,36 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _zoomSpeed;
-    private float _xRotation;
-    private float _zoomDelta;
+
+    private Vector2 _moveInput;
+    private Vector2 _lookInput;
+
     private float _minZoom = 4f;
     private float _maxZoom = 20f;
 
+    private float _lockedXrotation;
+
+    private Vector2 _touch0;
+    private Vector2 _touch1;
+
+    private float _prevDistance;
+
     private void Awake()
     {
-        _xRotation = transform.rotation.eulerAngles.x;
+        _lockedXrotation = transform.rotation.eulerAngles.x;
         _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
     }
 
+    #region Input Callback
+
     public void OnLook(InputAction.CallbackContext context)
     {
-        _delta = context.ReadValue<Vector2>();
+        _lookInput = context.ReadValue<Vector2>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        _moveInput = context.ReadValue<Vector2>();
         _isMoving = context.started || context.performed;
     }
 
@@ -41,31 +54,47 @@ public class CameraManager : MonoBehaviour
 
     public void OnZoom(InputAction.CallbackContext context)
     {
-        _zoomDelta = context.ReadValue<float>();
+        float zoomDelta = context.ReadValue <float>();
+        ApplyZoom(zoomDelta);
     }
+
+    #endregion
 
     private void LateUpdate()
     {
-        if (_isMoving)
-        {   
-            var pos = transform.right * (_delta.x * -_movementSpeed);
-            pos += transform.up * (_delta.y * -_movementSpeed);
+        HandleMovement();
+        HandleRotation();
+    }
 
-            transform.position += Time.deltaTime * pos;
-        }
+    private void HandleMovement()
+    {
+        if (!_isMoving)
+            return;
 
-        if (_isRotating)
-        {
-            transform.Rotate(new Vector3(_xRotation, _delta.x * _rotationSpeed, 0.0f));
-            transform.rotation = Quaternion.Euler(_xRotation, transform.rotation.eulerAngles.y, 0.0f);
-        }
+        Vector3 right = transform.right * _moveInput.x;
+        Vector3 up = transform.up * _moveInput.y;
 
-        if (_zoomDelta != 0)
-        {
-            _cam.orthographicSize -= _zoomDelta * _zoomSpeed * Time.deltaTime;
-            _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
+        Vector3 movement = (right + up) * _movementSpeed * Time.deltaTime;
+        transform.position += movement;
+    }
 
-            _zoomDelta = 0f;
-        }
+    private void HandleRotation()
+    {
+        if (!_isRotating)
+            return;
+
+        float yawDelta = _lookInput.x * _rotationSpeed * Time.deltaTime;
+        float newY = transform.eulerAngles.y + yawDelta;
+
+        transform.rotation = Quaternion.Euler(_lockedXrotation, newY, 0f);
+    }
+
+    private void ApplyZoom(float _zoomDelta)
+    {
+        if (Mathf.Approximately(_zoomDelta, 0f))
+            return;
+
+        _cam.orthographicSize -= _zoomDelta * _zoomSpeed * Time.deltaTime;
+        _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
     }
 }

@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay::SolidBlock
   position: {x: 0, y: 0, z: 0}
-  type: 1
+  type: 2
   isSolid: 0
   isWalkable: 1
 --- !u!65 &1819429226989132534

@@ -2,17 +2,26 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
 public class PlayerController : MonoBehaviour
 {
-    PlayerUnit playerUnit;
-    Coroutine moveRoutine;
-    public float rotateSpeed = 45f;
+    private Camera mainCamera;
+    private AnimalUnit unit;
+    private Coroutine moveRoutine;
+    private PathFinding pathFinding;
+    public Iinteractable currentInteractable;   
+    public IDraggable currentDraggable;
+
+    private Vector2 inputPos;
+    [SerializeField] private InputState inputState = InputState.idle;
+    [SerializeField] private float dragThreshold = 10f;
 
     void Start()
     {
-        playerUnit = GetComponent<PlayerUnit>();
+        unit = GetComponent<AnimalUnit>();
+        moveRoutine = unit.moveRoutine;
+        pathFinding = PathFinding.instance;
+        mainCamera = Camera.main;
     }
 
     void Update()
@@ -20,90 +29,87 @@ public class PlayerController : MonoBehaviour
         if (Pointer.current == null)
             return;
 
-        if (!Pointer.current.press.wasPressedThisFrame)
-            return;
-
-        Vector2 screenPos = Pointer.current.position.ReadValue();
-        HandleInput(screenPos);
-    }
-
-    void HandleInput(Vector2 screenPos)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(screenPos);
-
-        if (!Physics.Raycast(ray, out RaycastHit hit))
-            return;
-
-        Vector3Int targetPos = Vector3Int.RoundToInt(hit.transform.position);
-
-        List<Vector3Int> path = PathFinding.instance.FindPath(GetPlayerPosition(), targetPos);
-
-        if (path == null || path.Count == 0)
+        switch (inputState)
         {
-            Debug.Log("Path not found");
-            return;
+            case InputState.idle:
+                HandleIdle();
+                break;
+            case InputState.dragging:
+                Handleragging();
+                break;
+            case InputState.pressed:
+                HandlePressed();
+                break;
         }
-
-        if (moveRoutine != null)
-            StopCoroutine(moveRoutine);
-
-        moveRoutine = StartCoroutine(MoveToPoint(path));
     }
 
-    IEnumerator MoveToPoint(List<Vector3Int> path)
+    void HandleIdle()
     {
-        playerUnit.animator.SetBool("isMoving", true);
-        foreach (var p in path)
+        if (Pointer.current.press.wasPressedThisFrame)
         {
-            Vector3 target = new Vector3(p.x, 1, p.z);
-            Vector3Int dir = p - GetPlayerPosition();
-            Quaternion lookRot = GetRotationFromDirection(dir);
+            inputPos = Pointer.current.position.ReadValue();
+            inputState = InputState.pressed;
+            StartRaycast(inputPos);
+        }
+    }
 
-            while (Vector3.Distance(transform.position, target) > 0.05f)
+    void Handleragging()
+    {
+        Vector2 currentPos = Pointer.current.position.ReadValue();
+        Drag(currentPos);
+
+        if (Pointer.current.press.wasReleasedThisFrame)
+        {
+            inputState = InputState.idle;
+            currentInteractable = null;
+        }
+    }
+
+    void HandlePressed()
+    {
+        Vector2 currentPos = Pointer.current.position.ReadValue();
+
+        if (Pointer.current.press.isPressed)
+        {
+            if (Vector2.Distance(currentPos, inputPos) > dragThreshold)
             {
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    target,
-                    5f * Time.deltaTime
-                );
-
-                playerUnit.visualRoot.transform.rotation = Quaternion.Slerp(
-                    playerUnit.visualRoot.transform.rotation,
-                    lookRot,
-                    rotateSpeed * Time.deltaTime
-                );
-                yield return null;
+                inputState = InputState.dragging;
+                return;
             }
-
         }
-        playerUnit.animator.SetBool("isMoving", false);
+
+        if (Pointer.current.press.wasReleasedThisFrame && inputState != InputState.dragging)
+        {
+            inputState = InputState.idle;
+            Click(currentPos);
+        }
+
     }
 
-    Vector3Int GetPlayerPosition()
+    void StartRaycast(Vector2 screenPos)
     {
-        Vector3 pos = transform.position;
-        return new Vector3Int(
-            Mathf.RoundToInt(pos.x),
-            0,
-            Mathf.RoundToInt(pos.z)
-        );
+        currentInteractable = null;
+        currentDraggable = null;
+
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 1f);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+
+        hit.transform.TryGetComponent(out currentInteractable);
+        hit.transform.TryGetComponent(out currentDraggable);
     }
 
-    Quaternion GetRotationFromDirection(Vector3Int dir)
+    void Click(Vector2 screenPos)
     {
-        if (dir == Vector3Int.forward)
-            return Quaternion.Euler(0, 0, 0);
-
-        if (dir == Vector3Int.back)    
-            return Quaternion.Euler(0, 180, 0);
-
-        if (dir == Vector3Int.right)     
-            return Quaternion.Euler(0, 90, 0);
-
-        if (dir == Vector3Int.left)       
-            return Quaternion.Euler(0, -90, 0);
-
-        return playerUnit.visualRoot.transform.rotation;
+        if (currentInteractable == null) return;
+        currentInteractable.Interact(currentInteractable.GetPosition());
+        PathFinding.instance.Move(unit, currentInteractable.GetPosition());
     }
 
+    void Drag(Vector2 screenPos)
+    {
+        if(currentDraggable != null) currentDraggable.OnDrag(screenPos);
+        else Debug.Log("Camera Movement");
+    }
 }

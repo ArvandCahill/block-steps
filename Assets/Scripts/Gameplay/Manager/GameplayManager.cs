@@ -12,7 +12,7 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Core")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private PlayerUnit playerUnit;
+    [SerializeField] private AnimalUnit playerUnit;
     [SerializeField] private PlayerController playerController;
 
     [Header("Environment")]
@@ -39,7 +39,7 @@ public class GameplayManager : MonoBehaviour
 
     private void SpawnEnvironment()
     {
-        playerUnit = Instantiate(playerPrefab, startPoint + Vector3.up, Quaternion.identity, environmentParent).GetComponent<PlayerUnit>();
+        playerUnit = Instantiate(playerPrefab, startPoint + Vector3.up, Quaternion.identity, environmentParent).GetComponent<AnimalUnit>();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -64,5 +64,4 @@ public class GameplayManager : MonoBehaviour
     {
         return null;
     }
-
 }

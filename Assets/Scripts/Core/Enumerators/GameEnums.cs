@@ -7,6 +7,13 @@ public enum GameState
     Victory
 }
 
+public enum InputState
+{
+    idle,
+    pressed,
+    dragging
+}
+
 public enum BlockType
 {
     Start,

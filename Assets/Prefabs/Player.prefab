@@ -315,7 +315,6 @@ GameObject:
   - component: {fileID: 5775180834672754157}
   - component: {fileID: 423805040189534179}
   - component: {fileID: 6869573666408017978}
-  - component: {fileID: 3024050780957909900}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -352,9 +351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5614f7e3c4c92df4db0c77f0edaed86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay::PlayerUnit
-  animalData: {fileID: 0}
+  animalData: {fileID: 11400000, guid: 1dfe0c90a60d72d4aa7fa7c50ca5c72e, type: 2}
   PlayerController: {fileID: 6869573666408017978}
-  Mesh: {fileID: 2802236303234768782}
+  Mesh: {fileID: 8107195317931161087}
   visualRoot: {fileID: 1812767504423157632}
   animator: {fileID: 2061864422954218763}
   Health: 0
@@ -372,21 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b5fb6fbc6625c44975273aef38b80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay::PlayerController
-  rotateSpeed: 10
---- !u!114 &3024050780957909900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588274714876077911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef9fc9ff5cfcf8a44b48823094e36f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::PathFinding
-  blocks:
-    _serializedList: []
+  inputState: 0
+  dragThreshold: 10
 --- !u!1 &6710887288051385066
 GameObject:
   m_ObjectHideFlags: 0

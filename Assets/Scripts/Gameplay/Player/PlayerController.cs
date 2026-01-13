@@ -9,34 +9,12 @@ public class PlayerController : MonoBehaviour
     private AnimalUnit unit;
     private Coroutine moveRoutine;
     private PathFinding pathFinding;
-
     public Iinteractable currentInteractable;   
     public IDraggable currentDraggable;
 
-    private Vector2 startPos;
-    private Vector2 currentPos;
-
+    private Vector2 inputPos;
     [SerializeField] private InputState inputState = InputState.idle;
     [SerializeField] private float dragThreshold = 10f;
-
-    private InputManager inputManager;
-
-    private void OnEnable()
-    {
-        inputManager = InputManager.instance;
-
-        inputManager.inputAction.Player.Enable();
-        inputManager.inputAction.Player.Press.started += OnPressStarted;
-        inputManager.inputAction.Player.Point.performed += OnPoint;
-        inputManager.inputAction.Player.Press.canceled += OnPressReleased;
-    }
-
-    private void OnDisable()
-    {
-        inputManager.inputAction.Player.Press.started -= OnPressStarted;
-        inputManager.inputAction.Player.Point.performed -= OnPoint;
-        inputManager.inputAction.Player.Press.canceled -= OnPressReleased;
-    }
 
     void Start()
     {
@@ -46,57 +24,73 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-
-    void OnPressStarted(InputAction.CallbackContext context)
+    void Update()
     {
-        currentInteractable = null;
-        currentDraggable = null;
-        startPos = inputManager.inputAction.Player.Point.ReadValue<Vector2>();
-        StartRaycast(startPos);
+        if (Pointer.current == null)
+            return;
 
-        if (currentDraggable != null)
+        switch (inputState)
         {
-            inputManager.inputAction.Camera.Disable();
-            Debug.Log("Camera Disabled");
+            case InputState.idle:
+                HandleIdle();
+                break;
+            case InputState.dragging:
+                Handleragging();
+                break;
+            case InputState.pressed:
+                HandlePressed();
+                break;
         }
-        else inputManager.inputAction.Camera.Enable();
-
-        inputState = InputState.pressed;
     }
 
-    void OnPoint(InputAction.CallbackContext context)
+    void HandleIdle()
     {
-        currentPos = context.ReadValue<Vector2>();
-
-        if (inputState == InputState.pressed && Vector2.Distance(currentPos, startPos) > dragThreshold)
+        if (Pointer.current.press.wasPressedThisFrame)
         {
-            inputState = InputState.dragging;
+            inputPos = Pointer.current.position.ReadValue();
+            inputState = InputState.pressed;
+            StartRaycast(inputPos);
         }
-
-        if(inputState == InputState.dragging) Drag(currentPos);
     }
 
-    void OnPressReleased(InputAction.CallbackContext context)
+    void Handleragging()
+    {
+        Vector2 currentPos = Pointer.current.position.ReadValue();
+        Drag(currentPos);
+
+        if (Pointer.current.press.wasReleasedThisFrame)
+        {
+            inputState = InputState.idle;
+            currentInteractable = null;
+        }
+    }
+
+    void HandlePressed()
     {
         Vector2 currentPos = Pointer.current.position.ReadValue();
 
-        if(inputState == InputState.dragging)
+        if (Pointer.current.press.isPressed)
         {
-            inputState = InputState.idle;
-            inputManager.inputAction.Camera.Enable();
-            return;
+            if (Vector2.Distance(currentPos, inputPos) > dragThreshold)
+            {
+                inputState = InputState.dragging;
+                return;
+            }
         }
 
-        if (currentInteractable != null)
+        if (Pointer.current.press.wasReleasedThisFrame && inputState != InputState.dragging)
         {
+            inputState = InputState.idle;
             Click(currentPos);
         }
 
-        inputState = InputState.idle;
     }
 
     void StartRaycast(Vector2 screenPos)
     {
+        currentInteractable = null;
+        currentDraggable = null;
+
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 1f);
 
@@ -116,5 +110,6 @@ public class PlayerController : MonoBehaviour
     void Drag(Vector2 screenPos)
     {
         if(currentDraggable != null) currentDraggable.OnDrag(screenPos);
+        else Debug.Log("Camera Movement");
     }
 }

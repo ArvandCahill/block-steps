@@ -23,6 +23,11 @@ public class AnimalUnit : MonoBehaviour
         Init();
     }
 
+    void Update()
+    {
+        
+    }
+
     void Init()
     {
         Mesh.mesh = animalData.animalMesh;

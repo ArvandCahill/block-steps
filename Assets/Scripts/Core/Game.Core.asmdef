@@ -2,6 +2,7 @@
     "name": "Game.Core",
     "rootNamespace": "",
     "references": [
+        "",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],

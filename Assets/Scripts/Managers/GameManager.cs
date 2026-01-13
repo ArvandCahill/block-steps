@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
 
         SceneLoader = GetComponent<SceneLoader>();
         saveManager = GetComponent<SaveManager>();
+
         LoadResource();
     }
 
@@ -70,7 +71,6 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         audioManager?.Initialize();
-
         uiManager?.HideAllPopups();
 
         ApplyAudioSettings();

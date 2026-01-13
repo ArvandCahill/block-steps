@@ -16,6 +16,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "5411ecd6-2a92-435b-988a-07eb217b758c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Rotate",
                     "type": "Button",
                     "id": "2c18d36a-967a-4caf-9278-fe16816ab252",
@@ -26,30 +35,12 @@
                 },
                 {
                     "name": "Zoom",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "0ef0b5b0-3256-42f7-aad2-5151b0dac475",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Touch0",
-                    "type": "PassThrough",
-                    "id": "04171a85-0fe3-4d10-bff4-d11ab8b9bbab",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Touch1",
-                    "type": "PassThrough",
-                    "id": "58edecd4-b754-45f1-86f9-b69025ea8957",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -72,6 +63,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a73d5f6-85b3-4b61-b3e0-e56d6c0a5bc7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -100,55 +102,59 @@
                 {
                     "name": "",
                     "id": "ccae98cc-14ee-4cee-9e7d-dc8ec6ad89af",
-                    "path": "<Mouse>/scroll",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "id": "e1e700dd-ca74-4f06-b713-05c7a0f4680f",
+            "actions": [
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "b7d52ed8-c990-4094-bc14-a4a64a62c925",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "95f9fa99-34de-4b24-80d0-5e9e598315c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "576589cb-e325-41a5-a7fd-b6052f4a3f5c",
-                    "path": "<Touchscreen>/touch0/position",
+                    "id": "ea5f1aec-b4be-452f-a57f-8dfc3cb00bad",
+                    "path": "<Pointer>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Zoom",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "379c7311-e71d-4ac3-9ad9-bf5805577dfc",
-                    "path": "<Touchscreen>/touch1/position",
+                    "id": "2e57f413-8f4f-46af-9358-9d1cbeb6c07f",
+                    "path": "<Pointer>/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "52a6c848-f5db-4b0c-b7f8-e21ea9cd8fd7",
-                    "path": "<Touchscreen>/touch0/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Touch0",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c136b7e1-d980-43fc-b0b4-311f504c76c9",
-                    "path": "<Touchscreen>/touch1/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Touch1",
+                    "action": "Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

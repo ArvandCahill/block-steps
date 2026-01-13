@@ -14,8 +14,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _zoomSpeedMouse = 1f;
     [SerializeField] private float _zoomSpeedMobile = 0.01f;
 
-    private float _minZoom = 4f;
-    private float _maxZoom = 20f;
+    private float _minZoom = 30f;
+    private float _maxZoom = 75f;
 
     private PlayerInputAction inputAction;
 
@@ -34,7 +34,7 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         _lockedXrotation = transform.rotation.eulerAngles.x;
-        _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
+        _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, _minZoom, _maxZoom);
 
         inputAction = InputManager.instance.inputAction;
     }
@@ -69,6 +69,7 @@ public class CameraManager : MonoBehaviour
     {
         HandleRotation();
         HandleZoom();
+        HandlePinchZoom();
     }
 
     private void OnLook(InputAction.CallbackContext context)
@@ -101,13 +102,52 @@ public class CameraManager : MonoBehaviour
         _cameraRig.rotation = Quaternion.Euler(0f, newY, 0f);
     }
 
+    private void HandlePinchZoom()
+    {
+        if (Touchscreen.current == null)
+            return;
+
+        if (Touchscreen.current.touches.Count < 2)
+        {
+            _isPinchZoom = false;
+            return;
+        }
+
+        var touch0 = Touchscreen.current.touches[0];
+        var touch1 = Touchscreen.current.touches[1];
+
+        if (!touch0.isInProgress || !touch1.isInProgress)
+        {
+            _isPinchZoom = false;
+            return;
+        }
+
+        Vector2 pos0 = touch0.position.ReadValue();
+        Vector2 pos1 = touch1.position.ReadValue();
+
+        float currentDistance = Vector2.Distance(pos0, pos1);
+
+        if (!_isPinchZoom)
+        {
+            _previousPinchDistance = currentDistance;
+            _isPinchZoom = true;
+            return;
+        }
+
+        float delta = currentDistance - _previousPinchDistance;
+        _previousPinchDistance = currentDistance;
+
+        _zoomDelta += delta * _zoomSpeedMobile * Time.deltaTime;
+    }
+
+
     private void HandleZoom()
     {
         if (Mathf.Approximately(_zoomDelta, 0f))
             return;
 
-        _cam.orthographicSize -= _zoomDelta;
-        _cam.orthographicSize = Mathf.Clamp(_cam.orthographicSize, _minZoom, _maxZoom);
+        _cam.fieldOfView -= _zoomDelta;
+        _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, _minZoom, _maxZoom);
 
         _zoomDelta = 0f;
     }

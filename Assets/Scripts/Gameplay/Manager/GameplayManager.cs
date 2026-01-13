@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
-using UnityEngine.InputSystem;
-using System.Collections;
 using System.Linq;
 
 public class GameplayManager : MonoBehaviour

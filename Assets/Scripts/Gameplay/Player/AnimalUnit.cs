@@ -9,6 +9,7 @@ public class AnimalUnit : MonoBehaviour
     public Transform visualRoot;
     public Animator animator;
     public Coroutine moveRoutine;
+    public bool isPlayer = false;
 
     [Header("Stats")]   
     public int Health;

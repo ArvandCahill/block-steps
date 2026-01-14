@@ -10,8 +10,9 @@ public class PathFinding : MonoBehaviour
     [SerializedDictionary("Position", "Game Object")]
     public SerializedDictionary<Vector3Int, Block> blocks = new SerializedDictionary<Vector3Int, Block>();
 
-    [SerializeField] public float rotateSpeed = 10f;
-    [SerializeField] public AnimationClip moveAnim;
+    [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private AnimationClip moveAnim;
+    [SerializeField] private Transform marker;
 
     static readonly Vector3Int[] directions = new Vector3Int[]
     {
@@ -133,6 +134,7 @@ public class PathFinding : MonoBehaviour
             if (unit.stopMovement) break;
         }
 
+        EnableMarker(unit, Vector3.zero, false);
         unit.moveRoutine = null;
     }
 
@@ -146,6 +148,7 @@ public class PathFinding : MonoBehaviour
         if (unit.isMoving)
         {
             StopMove(unit);
+            EnableMarker(unit, targetPos, false);
             return;
         }
 
@@ -158,11 +161,19 @@ public class PathFinding : MonoBehaviour
         }
 
         unit.stopMovement = false;
+        EnableMarker(unit, targetPos, true);
         unit.moveRoutine = StartMoveRoutine(unit, path);
     }
 
     void StopMove(AnimalUnit unit)
     {
         unit.stopMovement = true;
+    }
+
+    public void EnableMarker(AnimalUnit unit, Vector3 position, bool enable)
+    {
+        if (!unit.isPlayer) return;
+        marker.gameObject.SetActive(enable);
+        marker.position = position + Vector3.up;
     }
 }

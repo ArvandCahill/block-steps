@@ -140,7 +140,6 @@ public class CameraManager : MonoBehaviour
         _zoomDelta += delta * _zoomSpeedMobile * Time.deltaTime;
     }
 
-
     private void HandleZoom()
     {
         if (Mathf.Approximately(_zoomDelta, 0f))

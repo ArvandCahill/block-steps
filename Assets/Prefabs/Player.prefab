@@ -375,6 +375,7 @@ MonoBehaviour:
   Mesh: {fileID: 8107195317931161087}
   visualRoot: {fileID: 1812767504423157632}
   animator: {fileID: 2061864422954218763}
+  isPlayer: 1
   Health: 0
   movementSpeed: 0
   stopMovement: 0

@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
         inputManager.inputAction.Player.Press.started -= OnPressStarted;
         inputManager.inputAction.Player.Point.performed -= OnPoint;
         inputManager.inputAction.Player.Press.canceled -= OnPressReleased;
+
+        inputManager.inputAction.Player.Disable();
     }
 
     void Start()
@@ -110,7 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentInteractable == null) return;
         currentInteractable.Interact(currentInteractable.GetPosition());
-        PathFinding.instance.Move(unit, currentInteractable.GetPosition());
+        pathFinding.Move(unit, currentInteractable.GetPosition());
     }
 
     void Drag(Vector2 screenPos)

@@ -2,7 +2,9 @@
     "name": "Game.Core",
     "rootNamespace": "",
     "references": [
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "AYellowpaper.SerializedCollections",
+        "Unity.Behavior"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

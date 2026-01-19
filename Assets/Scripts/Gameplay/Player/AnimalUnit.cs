@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class AnimalUnit : MonoBehaviour
 {
+    public static AnimalUnit player;
+
     [Header("Core")]
     [SerializeField] private AnimalData animalData;
     public PlayerController PlayerController;
@@ -18,6 +20,11 @@ public class AnimalUnit : MonoBehaviour
     public bool stopMovement = false;
 
     public bool isMoving => moveRoutine != null;
+
+    private void Awake()
+    {
+        if (isPlayer) player = this;
+    }
 
     void Start()
     {

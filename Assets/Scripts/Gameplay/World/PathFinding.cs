@@ -16,10 +16,12 @@ public class PathFinding : MonoBehaviour
 
     static readonly Vector3Int[] directions = new Vector3Int[]
     {
-            Vector3Int.left,
-            Vector3Int.right,
-            Vector3Int.forward,
-            Vector3Int.back
+        Vector3Int.left,
+        Vector3Int.right,
+        Vector3Int.forward,
+        Vector3Int.back,
+        Vector3Int.up,
+        Vector3Int.down
     };
 
     void Awake()
@@ -34,6 +36,8 @@ public class PathFinding : MonoBehaviour
 
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)
     {
+        if (start == target)
+            return new List<Vector3Int> { start };
         Queue<Vector3Int> queue = new Queue<Vector3Int>();
         Dictionary<Vector3Int, Vector3Int> cameFrom = new Dictionary<Vector3Int, Vector3Int>();
 
@@ -78,16 +82,32 @@ public class PathFinding : MonoBehaviour
     {
         List<Vector3Int> neighbors = new();
 
-        foreach (Vector3Int dir in directions)
+        foreach (var dir in directions)
         {
-            Vector3Int neighborPos = position + dir;
+            Vector3Int sameLevel = position + dir;
+            if (IsPositionWalkable(sameLevel))
+            {
+                neighbors.Add(sameLevel);
+                continue;
+            }
 
-            if (IsPositionWalkable(neighborPos))
-                neighbors.Add(neighborPos);
+            Vector3Int upStep = position + dir + Vector3Int.up;
+            if (IsPositionWalkable(upStep))
+            {
+                neighbors.Add(upStep);
+                continue;
+            }
+
+            Vector3Int downStep = position + dir + Vector3Int.down;
+            if (IsPositionWalkable(downStep))
+            {
+                neighbors.Add(downStep);
+            }
         }
 
         return neighbors;
     }
+
 
     bool IsPositionWalkable(Vector3Int position)
     {
@@ -107,9 +127,9 @@ public class PathFinding : MonoBehaviour
         {
             unit.animator.SetBool("isMoving", true);
             Vector3 start = unit.transform.position;
-            Vector3 target = new Vector3(path[i].x, 1, path[i].z);
+            Vector3 target = new Vector3(path[i].x, path[i].y + 1, path[i].z);
             Vector3Int dir = path[i] - path[i - 1];
-            Quaternion lookRot = unit.GetRotationFromDirection(dir);
+            Quaternion lookRot = unit.GetRotationFromDirection(new Vector3Int(dir.x, 0, dir.z));
 
             float t = 0f;
 
@@ -145,6 +165,8 @@ public class PathFinding : MonoBehaviour
 
     public void Move(AnimalUnit unit, Vector3Int targetPos)
     {
+        if (unit.gameObject.transform.position == new Vector3(targetPos.x, targetPos.y + 1, targetPos.z)) return;
+
         if (unit.isMoving)
         {
             StopMove(unit);

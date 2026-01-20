@@ -16,7 +16,7 @@ public class GameplayManager : MonoBehaviour
     [Header("Environment")]
     public Transform environmentParent;
     public GameObject levelPrefab;
-    public Vector3 startPoint;
+    public Transform startPoint;
     public Vector3 finishPoint;
 
     [Header("References")]
@@ -37,7 +37,7 @@ public class GameplayManager : MonoBehaviour
 
     private void SpawnEnvironment()
     {
-        playerUnit = Instantiate(playerPrefab, startPoint + Vector3.up, Quaternion.identity, environmentParent).GetComponent<AnimalUnit>();
+        playerUnit = Instantiate(playerPrefab, startPoint.position, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 

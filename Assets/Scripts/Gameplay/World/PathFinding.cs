@@ -198,7 +198,7 @@ public class PathFinding : MonoBehaviour
     {
         return new Vector3Int(
             Mathf.RoundToInt(pos.x),
-            Mathf.RoundToInt(pos.y),
+            Mathf.RoundToInt(0),
             Mathf.RoundToInt(pos.z)
         );
     }

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class AnimalUnit : MonoBehaviour
 {
-    public static AnimalUnit player;
-
     [Header("Core")]
     [SerializeField] private AnimalData animalData;
     public PlayerController PlayerController;
@@ -21,11 +19,6 @@ public class AnimalUnit : MonoBehaviour
 
     public bool isMoving => moveRoutine != null;
 
-    private void Awake()
-    {
-        if (isPlayer) player = this;
-    }
-
     void Start()
     {
         Init();
@@ -37,16 +30,6 @@ public class AnimalUnit : MonoBehaviour
         Health = animalData.health;
         movementSpeed = animalData.GetSpeed();
         animator.SetFloat("speed", movementSpeed);
-    }
-
-    public Vector3Int GetPlayerPosition()
-    {
-        Vector3 pos = transform.position;
-        return new Vector3Int(
-            Mathf.RoundToInt(pos.x),
-            0,
-            Mathf.RoundToInt(pos.z)
-        );
     }
 
     public Quaternion GetRotationFromDirection(Vector3Int dir)

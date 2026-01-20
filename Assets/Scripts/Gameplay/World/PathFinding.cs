@@ -20,8 +20,6 @@ public class PathFinding : MonoBehaviour
         Vector3Int.right,
         Vector3Int.forward,
         Vector3Int.back,
-        Vector3Int.up,
-        Vector3Int.down
     };
 
     void Awake()
@@ -36,8 +34,6 @@ public class PathFinding : MonoBehaviour
 
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)
     {
-        if (start == target)
-            return new List<Vector3Int> { start };
         Queue<Vector3Int> queue = new Queue<Vector3Int>();
         Dictionary<Vector3Int, Vector3Int> cameFrom = new Dictionary<Vector3Int, Vector3Int>();
 
@@ -108,7 +104,6 @@ public class PathFinding : MonoBehaviour
         return neighbors;
     }
 
-
     bool IsPositionWalkable(Vector3Int position)
     {
         if (blocks.ContainsKey(position))
@@ -174,7 +169,7 @@ public class PathFinding : MonoBehaviour
             return;
         }
 
-        List<Vector3Int> path = FindPath(unit.GetPlayerPosition(), targetPos);
+        List<Vector3Int> path = FindPath(GetPlayerPosition(unit.transform.position), targetPos);
 
         if (path == null || path.Count == 0)
         {
@@ -197,5 +192,14 @@ public class PathFinding : MonoBehaviour
         if (!unit.isPlayer) return;
         marker.gameObject.SetActive(enable);
         marker.position = position + Vector3.up;
+    }
+
+    public Vector3Int GetPlayerPosition(Vector3 pos)
+    {
+        return new Vector3Int(
+            Mathf.RoundToInt(pos.x),
+            Mathf.RoundToInt(pos.y),
+            Mathf.RoundToInt(pos.z)
+        );
     }
 }

@@ -10,7 +10,7 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Core")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private AnimalUnit playerUnit;
+    [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private PlayerController playerController;
 
     [Header("Environment")]

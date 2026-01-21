@@ -155,6 +155,11 @@ public class PathFinding : MonoBehaviour
 
     public Coroutine StartMoveRoutine(AnimalUnit unit, List<Vector3Int> path)
     {
+        if (!unit.isPlayer)
+        {
+            blocks[Vector3Int.FloorToInt(unit.transform.position) + Vector3Int.down].isWalkable = true;
+            blocks[path[^1]].isWalkable = false;
+        }
         return StartCoroutine(MoveToPoint(unit, path));
     }
 

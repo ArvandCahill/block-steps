@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "AIIdle", story: "[Agent] Idle and Pick a [Coordinates] From [BlockList]", category: "Action", id: "9ddfa0cb191bf66753304cf2a0bbda58")]
+[NodeDescription(name: "AIIdle", story: "[Agent] Idle and Pick a [Coordinates] From [BlockList]", category: "Action/Game", id: "9ddfa0cb191bf66753304cf2a0bbda58")]
 public partial class AiIdleAction : Action
 {
     [SerializeReference] public BlackboardVariable<Transform> Agent;
@@ -32,6 +32,12 @@ public partial class AiIdleAction : Action
         int index = UnityEngine.Random.Range(0, BlockList.Value.Count);
         Vector3Int target = BlockList.Value[index];
 
+        if (pathFinding.blocks[target].isWalkable == false)
+        {
+            Debug.LogError($"AIIdle: Target Block {target} is not walkable");
+            return Status.Failure;
+        }
+
         var path = pathFinding.FindPath(
             pathFinding.GetPlayerPosition(Agent.Value.position),
             target
@@ -44,7 +50,6 @@ public partial class AiIdleAction : Action
 
         Coordinates.Value = target;
 
-        Debug.Log($"AIIdle: Selected {target}");
         return Status.Success;
     }
 }

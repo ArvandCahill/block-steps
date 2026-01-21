@@ -6,7 +6,7 @@ public class Button : MonoBehaviour
 
     private bool isPopupActive = false;
 
-    void OnClick(string name)
+    public void OnClick(string name)
     {
         switch (buttonType)
         {
@@ -19,7 +19,7 @@ public class Button : MonoBehaviour
         }
     }
 
-    void ShowPopup(string name)
+    public void ShowPopup(string name)
     {
         if (!isPopupActive)
         {

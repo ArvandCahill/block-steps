@@ -12,12 +12,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private LevelData levelData;
 
     [Header("Environment")]
     public Transform environmentParent;
     public GameObject levelPrefab;
     public Transform startPoint;
-    public Vector3 finishPoint;
 
     [Header("References")]
     private GameManager gameManager;
@@ -31,7 +31,6 @@ public class GameplayManager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.instance;
-
         SpawnEnvironment();
     }
 

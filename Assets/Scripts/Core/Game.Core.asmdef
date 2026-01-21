@@ -4,7 +4,8 @@
     "references": [
         "Unity.InputSystem",
         "AYellowpaper.SerializedCollections",
-        "Unity.Behavior"
+        "Unity.Behavior",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3547207777714325158}
   - component: {fileID: 7270091950328440371}
   - component: {fileID: 6798078659359771757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4858535529147209678}
   - component: {fileID: 2061864422954218763}
   - component: {fileID: 5662473232856167872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6437455556055127309}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 423805040189534179}
   - component: {fileID: 6869573666408017978}
   - component: {fileID: 5454413380884703787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ Transform:
   m_GameObject: {fileID: 6588274714876077911}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -460,7 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1812767504423157632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

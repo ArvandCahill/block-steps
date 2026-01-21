@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Linq;
+using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -18,9 +19,14 @@ public class GameplayManager : MonoBehaviour
     public Transform environmentParent;
     public GameObject levelPrefab;
     public Transform startPoint;
+    [SerializeField] public GameObject finishPoint;
 
     [Header("References")]
     private GameManager gameManager;
+
+    [Header("UI")]
+    [SerializeField] private Image[] collectiblesIcon;
+    private int currentIndex = 0;
     #endregion
 
     void Awake()
@@ -30,7 +36,15 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        levelData.ResetLevel();
+        finishPoint.SetActive(false);
         gameManager = GameManager.instance;
+
+        foreach (Image icon in collectiblesIcon)
+        {
+            SetAlpha(icon, 0.5f);
+        }
+
         SpawnEnvironment();
     }
 
@@ -57,8 +71,32 @@ public class GameplayManager : MonoBehaviour
         return blocks;
     }
 
+    public void OnCollectiblesPicked()
+    {
+        levelData.CollectiblesCollected();
+
+        if (currentIndex < collectiblesIcon.Length)
+        {
+            SetAlpha(collectiblesIcon[currentIndex], 1.0f);
+            currentIndex++;
+        }
+
+        if (levelData.IsFinish())
+        {
+            finishPoint.SetActive(true);
+            Debug.Log("Finish Point Activated");
+        }
+    }
+
     public List<Vector3Int> GetAllBlockPos()
     {
         return null;
+    }
+
+    private void SetAlpha(Image img, float alpha)
+    {
+        Color c = img.color;
+        c.a = alpha;
+        img.color = c;
     }
 }

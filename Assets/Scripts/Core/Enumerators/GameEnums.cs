@@ -22,10 +22,12 @@ public enum BlockType
     Start,
     Finish,
     Walkable,
+    Decoration
 }
 
 public enum MovementSpeed
 {
+    Slow,
     Normal,
     Fast
 }

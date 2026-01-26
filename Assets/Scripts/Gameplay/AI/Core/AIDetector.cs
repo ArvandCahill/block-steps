@@ -18,9 +18,13 @@ public class AIDetector : MonoBehaviour
         return null;
     }
 
-    private void OnDrawGizmos()
+    private void OnCollisionEnter(Collision collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        AnimalUnit player = collision.collider.GetComponentInParent<AnimalUnit>();
+
+        if (player != null)
+        {
+            player.Die();
+        }
     }
 }

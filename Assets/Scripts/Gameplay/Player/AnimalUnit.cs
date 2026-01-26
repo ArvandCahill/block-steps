@@ -49,4 +49,12 @@ public class AnimalUnit : MonoBehaviour
 
         return visualRoot.transform.rotation;
     }
+
+    public void Die()
+    {
+        animator.SetTrigger("die");
+        enabled = false;
+        GameEvents.TriggerPlayerFinished(false, GameplayManager.instance.collectiblesCollected);
+        Debug.Log("die");
+    }
 }

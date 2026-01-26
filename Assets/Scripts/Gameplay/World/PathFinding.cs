@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Collections;
-using Codice.CM.SEIDInfo;
 
 public class PathFinding : MonoBehaviour
 {

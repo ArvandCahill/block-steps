@@ -6,10 +6,12 @@ public abstract class Block : Interactable
     public BlockType type;
     public bool isWalkable;
 
-    protected void OnValidate()
+    protected void OnEnable()
     {
         position = Vector3Int.RoundToInt(transform.position);
         isWalkable = !IsBlockedAbove();
+
+/*        if (!isWalkable || type == BlockType.Decoration) GetComponent<BoxCollider>().enabled = false;*/
     }
 
     public override void Interact(Vector3 position)

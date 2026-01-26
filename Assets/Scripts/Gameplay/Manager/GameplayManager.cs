@@ -26,7 +26,7 @@ public class GameplayManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private Image[] collectiblesIcon;
-    private int currentIndex = 0;
+    public int collectiblesCollected = 0;
     #endregion
 
     void Awake()
@@ -74,10 +74,10 @@ public class GameplayManager : MonoBehaviour
     {
         levelData.CollectiblesCollected();
 
-        if (currentIndex < collectiblesIcon.Length)
+        if (collectiblesCollected < collectiblesIcon.Length)
         {
-            SetAlpha(collectiblesIcon[currentIndex], 1.0f);
-            currentIndex++;
+            SetAlpha(collectiblesIcon[collectiblesCollected], 1.0f);
+            collectiblesCollected++;
         }
 
         if (levelData.IsFinish())

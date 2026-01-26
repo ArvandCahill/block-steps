@@ -4,6 +4,7 @@ public class AnimalUnit : MonoBehaviour
 {
     [Header("Core")]
     [SerializeField] private AnimalData animalData;
+    public Rigidbody rb;
     public PlayerController PlayerController;
     public MeshFilter Mesh;
     public Transform visualRoot;

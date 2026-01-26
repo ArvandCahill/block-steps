@@ -10,8 +10,10 @@ public class InputManager : MonoBehaviour
     private InputActionMap playerMap;
     private InputActionMap cameraMap;
 
-    private void Awake()
+    private void OnEnable()
     {
+        inputAction = new PlayerInputAction();
+
         if (instance == null)
         {
             instance = this;
@@ -23,10 +25,12 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        inputAction = new PlayerInputAction();
         playerMap = inputAction.Player;
         cameraMap = inputAction.Camera;
+    }
 
-        Debug.Log(inputAction.ToString());
+    private void Awake()
+    {
+       
     }
 }

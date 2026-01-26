@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera _cam;
+    [SerializeField] private CinemachineCamera _virtualCam;
     [SerializeField] private Transform _cameraRig;
 
     [Header("Rotation")]
@@ -39,27 +41,20 @@ public class CameraManager : MonoBehaviour
         inputAction = InputManager.instance.inputAction;
     }
 
+    private void Start()
+    {
+        _virtualCam.Follow = GameplayManager.instance.playerUnit.transform;
+    }
+
     private void OnEnable()
     {
         inputAction.Camera.Enable();
-
-        inputAction.Camera.Look.performed += OnLook;
-        inputAction.Camera.Look.canceled += OnLook;
-
-        inputAction.Camera.Rotate.started += OnRotate;
-        inputAction.Camera.Rotate.canceled += OnRotate;
 
         inputAction.Camera.Zoom.performed += OnZoom;
     }
 
     private void OnDisable()
     {
-        inputAction.Camera.Look.performed -= OnLook;
-        inputAction.Camera.Look.canceled -= OnLook;
-
-        inputAction.Camera.Rotate.started -= OnRotate;
-        inputAction.Camera.Rotate.canceled -= OnRotate;
-
         inputAction.Camera.Zoom.performed -= OnZoom;
 
         inputAction.Camera.Disable();
@@ -67,7 +62,6 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        HandleRotation();
         HandleZoom();
         HandlePinchZoom();
     }

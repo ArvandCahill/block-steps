@@ -32,6 +32,7 @@ public class GameplayManager : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
+        SpawnEnvironment();
     }
 
     void Start()
@@ -44,8 +45,6 @@ public class GameplayManager : MonoBehaviour
         {
             SetAlpha(icon, 0.5f);
         }
-
-        SpawnEnvironment();
     }
 
     private void SpawnEnvironment()

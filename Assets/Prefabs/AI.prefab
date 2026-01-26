@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1363855635127552457, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2802236303234768782, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
       propertyPath: m_Layer
       value: 0

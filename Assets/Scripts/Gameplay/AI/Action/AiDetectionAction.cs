@@ -14,6 +14,8 @@ public partial class AiDetectionAction : Action
 
     protected override Status OnStart()
     {
+        if (Detector.Value == null) return Status.Failure;
+
         Player.Value = Detector.Value.UpdateRangeDetector();
         if(Player.Value != null) Agent.Value.stopMovement = true;
         return Status.Success;

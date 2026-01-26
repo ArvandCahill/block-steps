@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private CinemachineCamera _virtualCam;
     [SerializeField] private Transform _cameraRig;
+    private Interactable _currentInteractable;
 
     [Header("Rotation")]
     [SerializeField] private float _rotationSpeed = 120f;
@@ -62,18 +63,33 @@ public class CameraManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        StartRaycast();
         HandleZoom();
         HandlePinchZoom();
     }
 
-    private void OnLook(InputAction.CallbackContext context)
+    private void StartRaycast()
     {
-        _lookInput = context.ReadValue<Vector2>();
-    }
+        Ray ray = new Ray(transform.position, transform.forward);
 
-    private void OnRotate(InputAction.CallbackContext context)
-    {
-        _isRotating = context.started;
+        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+        {
+            if (hit.collider.TryGetComponent(out Interactable interactable))
+            {
+                if (_currentInteractable != interactable)
+                {
+                    _currentInteractable = interactable;
+                    _currentInteractable.FadeOut();
+                }
+                return;
+            }
+        }
+
+        if (_currentInteractable != null)
+        {
+            _currentInteractable.FadeIn();
+            _currentInteractable = null;
+        }
     }
 
     private void OnZoom(InputAction.CallbackContext context)
@@ -83,17 +99,6 @@ public class CameraManager : MonoBehaviour
             float scroll = context.ReadValue<float>();
             _zoomDelta += scroll * _zoomSpeedMouse;
         }
-    }
-
-    private void HandleRotation()
-    {
-        if (!_isRotating)
-            return;
-
-        float yawDelta = _lookInput.x * _rotationSpeed * Time.deltaTime;    
-        float newY = _cameraRig.eulerAngles.y + yawDelta;
-
-        _cameraRig.rotation = Quaternion.Euler(0f, newY, 0f);
     }
 
     private void HandlePinchZoom()

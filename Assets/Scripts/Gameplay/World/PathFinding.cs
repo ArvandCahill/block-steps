@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Collections;
+using Codice.CM.SEIDInfo;
 
 public class PathFinding : MonoBehaviour
 {
@@ -120,6 +121,13 @@ public class PathFinding : MonoBehaviour
 
         for (int i = 1; i < path.Count; i++)
         {
+            if (!unit.isPlayer)
+            {
+                blocks[Vector3Int.RoundToInt(unit.transform.position) + Vector3Int.down].isWalkable = true;
+
+                if (path[i] == path[^1]) blocks[path[i]].isWalkable = false;
+            }
+
             unit.animator.SetBool("isMoving", true);
             Vector3 start = unit.transform.position;
             Vector3 target = new Vector3(path[i].x, path[i].y + 1, path[i].z);
@@ -132,7 +140,7 @@ public class PathFinding : MonoBehaviour
             {
                 t += Time.deltaTime / stepDuration;
 
-                unit.transform.position = Vector3.Lerp(start, target, t);
+                unit.rb.MovePosition(Vector3.Lerp(start, target, t));
 
                 unit.visualRoot.rotation = Quaternion.Slerp(
                     unit.visualRoot.rotation,
@@ -155,11 +163,6 @@ public class PathFinding : MonoBehaviour
 
     public Coroutine StartMoveRoutine(AnimalUnit unit, List<Vector3Int> path)
     {
-        if (!unit.isPlayer)
-        {
-            blocks[Vector3Int.FloorToInt(unit.transform.position) + Vector3Int.down].isWalkable = true;
-            blocks[path[^1]].isWalkable = false;
-        }
         return StartCoroutine(MoveToPoint(unit, path));
     }
 

@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay::SolidBlock
+  duration: 0.2
   position: {x: 0, y: 0, z: 0}
   type: 2
-  isSolid: 0
   isWalkable: 1
 --- !u!65 &8489396242236565291
 BoxCollider:
@@ -137,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: d8b2c3dbc2fe3fe4fbe112451cc019c8, type: 3}
+  - {fileID: 2100000, guid: bca8030e83fd236419a49725c24fbf1a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -30,6 +30,7 @@ public class PathFinding : MonoBehaviour
     void Start()
     {
         blocks = GameplayManager.instance.RegisterBlock();
+        blocks.Remove(GameplayManager.instance.finishPoint.GetPosition());
     }
 
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d766e7fa4807e41a1b42e9d164446d, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: Game.Core::LevelData
-  levelPrefab: {fileID: 0}
+  levelPrefab: {fileID: 7476027685774720237, guid: f270f469c66d7d24a907696c0dc0ecc3, type: 3}
   levelNumber: 0
   collectiblesCollected: 0
   maxCollectibles: 3

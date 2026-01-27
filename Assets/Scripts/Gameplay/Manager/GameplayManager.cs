@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Linq;
 using UnityEngine.UI;
+using Unity.Behavior;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -13,15 +14,15 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private AIController aiController;
     [SerializeField] private LevelData levelData;
 
     [Header("Environment")]
     public Transform environmentParent;
     public GameObject levelPrefab;
     public Transform startPoint;
-    [SerializeField] public GameObject finishPoint;
+    public Block finishPoint;
 
-    [Header("References")]
     private GameManager gameManager;
 
     [Header("UI")]
@@ -32,14 +33,19 @@ public class GameplayManager : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
-        SpawnEnvironment();
     }
 
     void Start()
     {
-        levelData.ResetLevel();
-        finishPoint.SetActive(false);
         gameManager = GameManager.instance;
+        levelData = gameManager.selectedLevelData;
+        levelPrefab = levelData.levelPrefab;
+        levelData.ResetLevel();
+
+        SpawnEnvironment();
+
+        finishPoint.gameObject.SetActive(false);
+
 
         foreach (Image icon in collectiblesIcon)
         {
@@ -49,7 +55,8 @@ public class GameplayManager : MonoBehaviour
 
     private void SpawnEnvironment()
     {
-        playerUnit = Instantiate(playerPrefab, startPoint.position, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
+        Instantiate(levelPrefab, environmentParent);
+        playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -82,8 +89,16 @@ public class GameplayManager : MonoBehaviour
 
         if (levelData.IsFinish())
         {
-            finishPoint.SetActive(true);
+            finishPoint.gameObject.SetActive(true);
             Debug.Log("Finish Point Activated");
+        }
+    }
+
+    public void DisableAI()
+    {
+        foreach (BehaviorGraphAgent agent in aiController.agents)
+        {
+            agent.enabled = false;
         }
     }
 

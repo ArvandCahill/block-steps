@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AIController : MonoBehaviour
 {
-    [SerializeField] private List<BehaviorGraphAgent> agents;
+    public List<BehaviorGraphAgent> agents;
 
     IEnumerator Start()
     {

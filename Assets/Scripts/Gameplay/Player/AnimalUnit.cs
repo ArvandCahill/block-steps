@@ -53,8 +53,8 @@ public class AnimalUnit : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger("die");
-        enabled = false;
+        GameplayManager.instance.DisableAI();
         GameEvents.TriggerPlayerFinished(false, GameplayManager.instance.collectiblesCollected);
-        Debug.Log("die");
+        enabled = false;
     }
 }

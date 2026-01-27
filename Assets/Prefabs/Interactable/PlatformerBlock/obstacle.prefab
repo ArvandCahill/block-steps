@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3233353292564157643}
-  - component: {fileID: 3165318094391029864}
   - component: {fileID: 7769167084893070570}
   m_Layer: 0
   m_Name: obstacle
@@ -34,22 +33,6 @@ Transform:
   - {fileID: 2643359556489274771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3165318094391029864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2852182764458872433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
-  duration: 0.2
-  position: {x: 0, y: 0, z: 0}
-  type: 2
-  isWalkable: 1
 --- !u!65 &7769167084893070570
 BoxCollider:
   m_ObjectHideFlags: 0

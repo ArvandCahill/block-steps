@@ -99,7 +99,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4997001711730303828}
-  - component: {fileID: 4785847757994674167}
   - component: {fileID: 168435739470664565}
   m_Layer: 0
   m_Name: pinkluckyblock
@@ -124,22 +123,6 @@ Transform:
   - {fileID: 5559938545998172684}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4785847757994674167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5625904373772351982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
-  duration: 0.2
-  position: {x: 0, y: 0, z: 0}
-  type: 2
-  isWalkable: 1
 --- !u!65 &168435739470664565
 BoxCollider:
   m_ObjectHideFlags: 0

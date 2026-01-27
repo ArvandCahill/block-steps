@@ -98,4 +98,6 @@ public class GameplayManager : MonoBehaviour
         c.a = alpha;
         img.color = c;
     }
+
+
 }

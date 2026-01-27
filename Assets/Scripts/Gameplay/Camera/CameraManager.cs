@@ -42,11 +42,6 @@ public class CameraManager : MonoBehaviour
         inputAction = InputManager.instance.inputAction;
     }
 
-    private void Start()
-    {
-        _virtualCam.Follow = GameplayManager.instance.playerUnit.transform;
-    }
-
     private void OnEnable()
     {
         inputAction.Camera.Enable();
@@ -67,6 +62,7 @@ public class CameraManager : MonoBehaviour
         HandleZoom();
         HandlePinchZoom();
     }
+
 
     private void StartRaycast()
     {
@@ -148,5 +144,10 @@ public class CameraManager : MonoBehaviour
         _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, _minZoom, _maxZoom);
 
         _zoomDelta = 0f;
+    }
+
+    public void SetCameraTarget(Transform target)
+    {
+        _virtualCam.Follow = target;
     }
 }

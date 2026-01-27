@@ -15,11 +15,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private AIController aiController;
+    [SerializeField] private CameraManager cameraManager;   
     [SerializeField] private LevelData levelData;
 
     [Header("Environment")]
-    public Transform environmentParent;
-    public GameObject levelPrefab;
+    [SerializeField] private Transform environmentParent;
+    [SerializeField] private GameObject levelPrefab;
     public Transform startPoint;
     public Block finishPoint;
 
@@ -33,20 +34,19 @@ public class GameplayManager : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
+
+        gameManager = GameManager.instance;
+        levelData = gameManager.selectedLevelData;
+        levelPrefab = levelData?.levelPrefab;
+        levelData?.ResetLevel();
+
+        finishPoint.gameObject.SetActive(false);
     }
 
     void Start()
     {
-        gameManager = GameManager.instance;
-        levelData = gameManager.selectedLevelData;
-        levelPrefab = levelData.levelPrefab;
-        levelData.ResetLevel();
-
         SpawnEnvironment();
-
-        finishPoint.gameObject.SetActive(false);
-
-
+        cameraManager.SetCameraTarget(playerUnit.transform);
         foreach (Image icon in collectiblesIcon)
         {
             SetAlpha(icon, 0.5f);
@@ -55,7 +55,7 @@ public class GameplayManager : MonoBehaviour
 
     private void SpawnEnvironment()
     {
-        Instantiate(levelPrefab, environmentParent);
+        if (levelData != null) Instantiate(levelPrefab, environmentParent);
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }

@@ -16,7 +16,7 @@ MonoBehaviour:
   animalName: Fox
   animalMesh: {fileID: -2432090755550338912, guid: fec2eb8c1a2a8d547b16823abe1b04b1, type: 3}
   health: 3
-  movementSpeed: 0
+  movementSpeed: 1
   price: 0
   isUnlockedAtStart: 1
   isUnlocked: 0

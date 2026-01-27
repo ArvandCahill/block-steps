@@ -117,7 +117,7 @@
             "id": "e1e700dd-ca74-4f06-b713-05c7a0f4680f",
             "actions": [
                 {
-                    "name": "Point",
+                    "name": "Drag",
                     "type": "Value",
                     "id": "b7d52ed8-c990-4094-bc14-a4a64a62c925",
                     "expectedControlType": "Vector2",
@@ -143,7 +143,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Point",
+                    "action": "Drag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

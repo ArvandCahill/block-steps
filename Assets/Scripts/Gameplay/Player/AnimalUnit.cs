@@ -4,6 +4,7 @@ public class AnimalUnit : MonoBehaviour
 {
     [Header("Core")]
     [SerializeField] private AnimalData animalData;
+    public Rigidbody rb;
     public PlayerController PlayerController;
     public MeshFilter Mesh;
     public Transform visualRoot;
@@ -47,5 +48,13 @@ public class AnimalUnit : MonoBehaviour
             return Quaternion.Euler(0, -90, 0);
 
         return visualRoot.transform.rotation;
+    }
+
+    public void Die()
+    {
+        animator.SetTrigger("die");
+        GameplayManager.instance.DisableAI();
+        GameEvents.TriggerPlayerFinished(false, GameplayManager.instance.collectiblesCollected);
+        enabled = false;
     }
 }

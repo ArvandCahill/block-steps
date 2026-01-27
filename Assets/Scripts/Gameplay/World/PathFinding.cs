@@ -30,6 +30,7 @@ public class PathFinding : MonoBehaviour
     void Start()
     {
         blocks = GameplayManager.instance.RegisterBlock();
+        blocks.Remove(GameplayManager.instance.finishPoint.GetPosition());
     }
 
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)
@@ -120,6 +121,13 @@ public class PathFinding : MonoBehaviour
 
         for (int i = 1; i < path.Count; i++)
         {
+            if (!unit.isPlayer)
+            {
+                blocks[Vector3Int.RoundToInt(unit.transform.position) + Vector3Int.down].isWalkable = true;
+
+                if (path[i] == path[^1]) blocks[path[i]].isWalkable = false;
+            }
+
             unit.animator.SetBool("isMoving", true);
             Vector3 start = unit.transform.position;
             Vector3 target = new Vector3(path[i].x, path[i].y + 1, path[i].z);
@@ -132,7 +140,7 @@ public class PathFinding : MonoBehaviour
             {
                 t += Time.deltaTime / stepDuration;
 
-                unit.transform.position = Vector3.Lerp(start, target, t);
+                unit.rb.MovePosition(Vector3.Lerp(start, target, t));
 
                 unit.visualRoot.rotation = Quaternion.Slerp(
                     unit.visualRoot.rotation,

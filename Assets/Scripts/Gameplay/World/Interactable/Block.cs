@@ -6,10 +6,13 @@ public abstract class Block : Interactable
     public BlockType type;
     public bool isWalkable;
 
-    protected void OnValidate()
+    protected void Start()
     {
         position = Vector3Int.RoundToInt(transform.position);
         isWalkable = !IsBlockedAbove();
+
+        if (type == BlockType.Start) GameplayManager.instance.startPoint = transform;
+        if (type == BlockType.Finish) GameplayManager.instance.finishPoint = this;
     }
 
     public override void Interact(Vector3 position)

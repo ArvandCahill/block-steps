@@ -27,14 +27,14 @@ public class PlayerController : MonoBehaviour
 
         inputManager.inputAction.Player.Enable();
         inputManager.inputAction.Player.Press.started += OnPressStarted;
-        inputManager.inputAction.Player.Point.performed += OnPoint;
+        inputManager.inputAction.Player.Drag.performed += OnDrag;
         inputManager.inputAction.Player.Press.canceled += OnPressReleased;
     }
 
     private void OnDisable()
     {
         inputManager.inputAction.Player.Press.started -= OnPressStarted;
-        inputManager.inputAction.Player.Point.performed -= OnPoint;
+        inputManager.inputAction.Player.Drag.performed -= OnDrag;
         inputManager.inputAction.Player.Press.canceled -= OnPressReleased;
 
         inputManager.inputAction.Player.Disable();
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         currentInteractable = null;
         currentDraggable = null;
-        startPos = inputManager.inputAction.Player.Point.ReadValue<Vector2>();
+        startPos = inputManager.inputAction.Player.Drag.ReadValue<Vector2>();
         StartRaycast(startPos);
 
         if (currentDraggable != null)
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         inputState = InputState.pressed;
     }
 
-    void OnPoint(InputAction.CallbackContext context)
+    void OnDrag(InputAction.CallbackContext context)
     {
         currentPos = context.ReadValue<Vector2>();
 

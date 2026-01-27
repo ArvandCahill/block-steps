@@ -22,10 +22,12 @@ public enum BlockType
     Start,
     Finish,
     Walkable,
+    Decoration
 }
 
 public enum MovementSpeed
 {
+    Slow,
     Normal,
     Fast
 }
@@ -36,8 +38,7 @@ public enum AIState
     Idle,
     Patrol,
     Chase,
-    Attack,
-    Flee
+    Attack
 }
 
 public enum ButtonType

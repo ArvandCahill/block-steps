@@ -25,7 +25,7 @@ public class GameplayManager : MonoBehaviour
     public Block finishPoint;
 
     private GameManager gameManager;
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     [Header("UI")]
     [SerializeField] private Image[] collectiblesIcon;
@@ -40,12 +40,12 @@ public class GameplayManager : MonoBehaviour
         levelData = gameManager.selectedLevelData;
         levelPrefab = levelData?.levelPrefab;
         levelData?.ResetLevel();
-
     }
 
     void Start()
     {
         SpawnEnvironment();
+        cameraManager.SetCameraTarget(playerUnit.transform);
         foreach (Image icon in collectiblesIcon)
         {
             SetAlpha(icon, 0.5f);
@@ -57,7 +57,6 @@ public class GameplayManager : MonoBehaviour
     {
         if (levelData != null) Instantiate(levelPrefab, environmentParent);
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
-        cameraManager.SetCameraTarget(playerUnit.transform);
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -119,12 +118,14 @@ public class GameplayManager : MonoBehaviour
     {
         if (isPaused)
         {
+            InputManager.instance.playerMap.Enable();
             Time.timeScale = 1.0f;
             isPaused = false;
         }
 
         else
         {
+            InputManager.instance.playerMap.Disable();
             Time.timeScale = 0f;
             isPaused = true;
         }

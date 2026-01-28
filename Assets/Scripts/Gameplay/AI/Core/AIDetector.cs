@@ -22,7 +22,7 @@ public class AIDetector : MonoBehaviour
     {
         AnimalUnit player = collision.collider.GetComponentInParent<AnimalUnit>();
 
-        if (player != null)
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) < 1f)
         {
             player.Die();
         }

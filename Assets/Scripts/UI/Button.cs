@@ -16,6 +16,9 @@ public class Button : MonoBehaviour
             case ButtonType.UIAction:
                 ShowPopup(name);
                 break;
+            case ButtonType.Restart:
+                GameManager.instance.SceneLoader.RestartScene();
+                break;
         }
     }
 

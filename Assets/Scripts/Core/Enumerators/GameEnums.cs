@@ -44,5 +44,6 @@ public enum AIState
 public enum ButtonType
 {
     LoadScene,
-    UIAction
+    UIAction,
+    Restart
 }

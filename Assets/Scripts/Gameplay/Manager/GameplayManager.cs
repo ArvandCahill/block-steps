@@ -25,6 +25,7 @@ public class GameplayManager : MonoBehaviour
     public Block finishPoint;
 
     private GameManager gameManager;
+    private bool isPaused = false;
 
     [Header("UI")]
     [SerializeField] private Image[] collectiblesIcon;
@@ -40,23 +41,23 @@ public class GameplayManager : MonoBehaviour
         levelPrefab = levelData?.levelPrefab;
         levelData?.ResetLevel();
 
-        finishPoint.gameObject.SetActive(false);
     }
 
     void Start()
     {
         SpawnEnvironment();
-        cameraManager.SetCameraTarget(playerUnit.transform);
         foreach (Image icon in collectiblesIcon)
         {
             SetAlpha(icon, 0.5f);
         }
+        finishPoint.gameObject.SetActive(false);
     }
 
     private void SpawnEnvironment()
     {
         if (levelData != null) Instantiate(levelPrefab, environmentParent);
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
+        cameraManager.SetCameraTarget(playerUnit.transform);
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -112,5 +113,20 @@ public class GameplayManager : MonoBehaviour
         Color c = img.color;
         c.a = alpha;
         img.color = c;
+    }
+
+    public void Pause()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 1.0f;
+            isPaused = false;
+        }
+
+        else
+        {
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
     }
 }

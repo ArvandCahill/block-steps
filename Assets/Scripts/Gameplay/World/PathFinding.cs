@@ -27,8 +27,9 @@ public class PathFinding : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitUntil(() => GameplayManager.instance != null);
         blocks = GameplayManager.instance.RegisterBlock();
         blocks.Remove(GameplayManager.instance.finishPoint.GetPosition());
     }

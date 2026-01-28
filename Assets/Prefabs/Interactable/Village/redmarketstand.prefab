@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Gameplay::SolidBlock
   duration: 0.2
   position: {x: 0, y: 0, z: 0}
-  type: 2
+  type: 3
   isWalkable: 1
 --- !u!65 &875394835233565664
 BoxCollider:

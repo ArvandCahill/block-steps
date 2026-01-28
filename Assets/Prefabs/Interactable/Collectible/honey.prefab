@@ -122,8 +122,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6700483394604464550}
-  - component: {fileID: 6615422387450420485}
   - component: {fileID: 2013790562298644871}
+  - component: {fileID: -3638811215010458818}
   m_Layer: 0
   m_Name: honey
   m_TagString: Untagged
@@ -147,22 +147,6 @@ Transform:
   - {fileID: 6092475393095256318}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6615422387450420485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6320580564419945244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
-  duration: 0.2
-  position: {x: 0, y: 0, z: 0}
-  type: 2
-  isWalkable: 1
 --- !u!65 &2013790562298644871
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,3 +168,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5497038, y: 1.9662247, z: 0.9149303}
   m_Center: {x: 0.003767144, y: 1.2080665, z: -0.00000001862645}
+--- !u!114 &-3638811215010458818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320580564419945244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadce9034a573e7448ad7d72f2308408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Gameplay::Collectibles

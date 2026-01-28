@@ -99,8 +99,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8339137926117315109}
-  - component: {fileID: 8397177541397231238}
   - component: {fileID: 3797691445240979972}
+  - component: {fileID: -7265150064166089720}
   m_Layer: 0
   m_Name: cheese
   m_TagString: Untagged
@@ -124,22 +124,6 @@ Transform:
   - {fileID: 8920124464012256125}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8397177541397231238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8714818695740098719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
-  duration: 0.2
-  position: {x: 0, y: 0, z: 0}
-  type: 2
-  isWalkable: 1
 --- !u!65 &3797691445240979972
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -161,3 +145,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7265150064166089720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8714818695740098719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadce9034a573e7448ad7d72f2308408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Gameplay::Collectibles

@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7857399856753943240}
   - component: {fileID: 3027996161896289001}
+  - component: {fileID: 6934096916295004759}
   m_Layer: 0
   m_Name: smallrock
   m_TagString: Untagged
@@ -142,5 +143,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1525577, y: 0.6101131, z: 1.1359975}
-  m_Center: {x: -0.025382835, y: 0.24026105, z: -0.004810194}
+  m_Size: {x: 1.0592208, y: 0.16813342, z: 1.056386}
+  m_Center: {x: -0.00616618, y: 0.060449403, z: -0.00618275}
+--- !u!65 &6934096916295004759
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368107958593812594}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6541031, y: 0.1380024, z: 0.6568482}
+  m_Center: {x: 0.00000017881393, y: 0.45296067, z: 0.0013725758}

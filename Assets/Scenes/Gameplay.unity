@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: selectedLevelData
       value: 
       objectReference: {fileID: 11400000, guid: b59c6a084acc6994b82b15809507f00d, type: 2}
+    - target: {fileID: 6573215634301694122, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: selectedAnimalData
+      value: 
+      objectReference: {fileID: 11400000, guid: 1dfe0c90a60d72d4aa7fa7c50ca5c72e, type: 2}
     - target: {fileID: 6657447867837631393, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -779,17 +783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f9182696e41a346bbc6ae6014e4fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.UI::AnimationManager
-  useEvents: 1
-  animationGroups:
-    _serializedList:
-    - Key: 
-      Value:
-        useSequence: 0
-        animatedObjects: []
-        groupSettings:
-          playInSequence: 0
-          groupDelay: 0
-          autoReverse: 0
 --- !u!1 &654944598
 GameObject:
   m_ObjectHideFlags: 0

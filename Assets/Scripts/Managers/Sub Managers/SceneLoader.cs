@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -26,10 +27,16 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
 
+        /*gameManager.gameState = Enum.TryParse()*/
+
         Debug.Log("Scene " + sceneName + " has been loaded!");
     }
 
-    public void LoadScene(string sceneName) => StartCoroutine(LoadSceneAsync(sceneName));
+    public void LoadScene(string sceneName)
+    {
+        Enum.TryParse(sceneName, true, out gameManager.gameState);
+        SceneManager.LoadScene(sceneName);
+    }
 
     public void LoadMainMenu()
     {
@@ -41,5 +48,6 @@ public class SceneLoader : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         LoadScene(currentSceneName);
+        Time.timeScale = 1f;
     }
 }

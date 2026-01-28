@@ -7,8 +7,8 @@ public class InputManager : MonoBehaviour
     public static InputManager instance { get; private set; }
 
     public PlayerInputAction inputAction;
-    private InputActionMap playerMap;
-    private InputActionMap cameraMap;
+    public InputActionMap playerMap;
+    public InputActionMap cameraMap;
 
     private void OnEnable()
     {

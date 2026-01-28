@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -48,19 +47,15 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-
     void OnPressStarted(InputAction.CallbackContext context)
     {
         currentInteractable = null;
         currentDraggable = null;
+
         startPos = inputManager.inputAction.Player.Drag.ReadValue<Vector2>();
         StartRaycast(startPos);
 
-        if (currentDraggable != null)
-        {
-            inputManager.inputAction.Camera.Disable();
-            Debug.Log("Camera Disabled");
-        }
+        if (currentDraggable != null) inputManager.inputAction.Camera.Disable();
         else inputManager.inputAction.Camera.Enable();
 
         inputState = InputState.pressed;
@@ -80,9 +75,9 @@ public class PlayerController : MonoBehaviour
 
     void OnPressReleased(InputAction.CallbackContext context)
     {
-        Vector2 currentPos = Pointer.current.position.ReadValue();
+        currentPos = context.ReadValue<Vector2>();
 
-        if(inputState == InputState.dragging)
+        if (inputState == InputState.dragging)
         {
             inputState = InputState.idle;
             inputManager.inputAction.Camera.Enable();
@@ -100,7 +95,7 @@ public class PlayerController : MonoBehaviour
     void StartRaycast(Vector2 screenPos)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 1f);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
 
         if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
@@ -117,6 +112,6 @@ public class PlayerController : MonoBehaviour
 
     void Drag(Vector2 screenPos)
     {
-        if(currentDraggable != null) currentDraggable.OnDrag(screenPos);
+        currentDraggable?.OnDrag(screenPos);
     }
 }

@@ -6,7 +6,7 @@ public abstract class Block : Interactable
     public BlockType type;
     public bool isWalkable;
 
-    protected void Start()
+    protected void OnEnable()
     {
         position = Vector3Int.RoundToInt(transform.position);
         isWalkable = !IsBlockedAbove();

@@ -6,6 +6,7 @@ public static class GameEvents
     public static event Action OnGamePaused;
     public static event Action<Vector3> OnPlayerMoving;
     public static event Action<Vector3> OnPlayerStopped;
+    public static event Action OnCollectiblePicked;
     public static event Action<bool,int> OnPlayerFinished;
 
     public static void TriggerGamePaused()
@@ -21,6 +22,11 @@ public static class GameEvents
     public static void TriggerPlayerStopped(Vector3 stopPos)
     {
         OnPlayerStopped?.Invoke(stopPos);
+    }
+
+    public static void TriggerCollectiblePicked()
+    {
+        OnCollectiblePicked?.Invoke();
     }
 
     public static void TriggerPlayerFinished(bool isWinning, int collectibles)

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public SceneLoader SceneLoader { get; private set; }
 
     [Header("Game Enumerators")]
-    public GameState gameState;
+    [SerializeField] private GameState gameState;
 
     [Header("Game Settings")]
     public bool isBgmOn = true;
@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     public bool isFirstTimeShop;
 
     [Header("Resource")]
-    public AnimalData selectedAnimalData;
-    public LevelData selectedLevelData;
+    [SerializeField] private AnimalData selectedAnimalData;
+    [SerializeField] private LevelData selectedLevelData;
     public List<AnimalData> allAnimalData;
     public List<LevelData> allLevelData;
     
@@ -95,9 +95,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //*public void PauseGame() => SetGameState(GameState.Pause);*//*
+    #region Getters and Setters
+    public void SetSelectedAnimal(AnimalData animalData) => selectedAnimalData = animalData;
+
+    public AnimalData GetSelectedAnimal() => selectedAnimalData;
+
+    public void SetSelectedLevel(LevelData levelData) => selectedLevelData = levelData;
+
+    public LevelData GetSelectedLevel() => selectedLevelData;
 
     public void SetGameState(GameState newGameState) => gameState = newGameState;
+
+    public GameState GetGameState() => gameState;
+    #endregion
 
     public void ResetSceneCount() => sceneCount = 0;
 
@@ -117,30 +127,5 @@ public class GameManager : MonoBehaviour
         //if (sceneName == "MainMenu" || sceneName == "ModeSelector") admobInit.DestroyBanner();
         //else admobInit.RequestBanner();
         //StartCoroutine(admobInit.ShowInterstitalWithDelay(sceneCount));
-    }
-
-    public static void Vibrate(long milliseconds = 100, int amplitude = 255)
-    {
-        if (!instance.isVibrationOn) return;
-#if UNITY_Android && !UNITY_EDITOR
-        int sdkVersion = new AndroidJavaClass("android.os.Build$VERSION").GetStatic<int>("SDK_INT");
-        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaObject vibrator = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
-
-        if (vibrator != null)
-        {
-            if (sdkVersion >= 26)
-            {
-                AndroidJavaClass vibrationEffectClass = new AndroidJavaClass("android.os.VibrationEffect");
-                AndroidJavaObject vibrationEffect = vibrationEffectClass.CallStatic<AndroidJavaObject>("createOneShot", milliseconds, amplitude);
-                vibrator.Call("vibrate", vibrationEffect);
-            }
-            else
-            {
-                vibrator.Call("vibrate", milliseconds);
-            }
-        }
-#endif
     }
 }

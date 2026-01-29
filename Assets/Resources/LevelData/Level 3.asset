@@ -15,7 +15,7 @@ MonoBehaviour:
   levelPrefab: {fileID: 7476027685774720237, guid: f270f469c66d7d24a907696c0dc0ecc3, type: 3}
   levelImage: {fileID: 0}
   levelNumber: 3
-  collectiblesCollected: 0
-  maxCollectibles: 3
+  maxCollectibles: 1
   isLocked: 1
   isNightMode: 0
+  collectiblesCollected: 0

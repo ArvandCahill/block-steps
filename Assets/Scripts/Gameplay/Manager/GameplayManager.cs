@@ -37,7 +37,7 @@ public class GameplayManager : MonoBehaviour
         if (instance == null) instance = this;
 
         gameManager = GameManager.instance;
-        levelData = gameManager.selectedLevelData;
+        levelData = gameManager.GetSelectedLevel();
         levelPrefab = levelData?.levelPrefab;
         levelData?.ResetLevel();
     }

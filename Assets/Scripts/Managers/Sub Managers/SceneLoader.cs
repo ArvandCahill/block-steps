@@ -34,14 +34,9 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        Enum.TryParse(sceneName, true, out gameManager.gameState);
+        Enum.TryParse(sceneName, true, out GameState gameState);
+        gameManager.SetGameState(gameState);
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void LoadMainMenu()
-    {
-        gameManager.gameState = GameState.MainMenu;
-        LoadScene("Main Menu");
     }
 
     public void RestartScene()

@@ -10,7 +10,7 @@ public class MainMenuManager : MonoBehaviour
 
     private GameManager gameManager => GameManager.instance;
 
-    private void Start()
+    private void Awake()
     {
         InstantiateLevels();
     }
@@ -21,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
         {
             LevelData levelData = gameManager.allLevelData[i];
             Polaroid polaroid = Instantiate(polaroidPrefab, levelContainer);
-            polaroid.Init(levelData);
+            polaroid.Init(levelData, StartLevel);
         }
     }
 
@@ -32,5 +32,11 @@ public class MainMenuManager : MonoBehaviour
             if (navbarItem == item) item.SetActive(true);
             else item.SetActive(false);
         }
+    }
+
+    public void StartLevel(LevelData levelData)
+    {
+        GameManager.instance.SetSelectedLevel(levelData);
+        GameManager.instance.SceneLoader.LoadScene("Gameplay");
     }
 }

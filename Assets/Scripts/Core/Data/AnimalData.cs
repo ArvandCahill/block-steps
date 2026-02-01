@@ -6,6 +6,7 @@ public class AnimalData : ScriptableObject
     [Header("Animal Properties")]
     public int animalID;
     public string animalName;
+    public Sprite animalImage;
     public Mesh animalMesh;
 
     [Header("Animal Stats")]

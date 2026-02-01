@@ -2,32 +2,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
 
 public class Polaroid : MonoBehaviour
 {
-    [SerializeField] private Image levelImage; 
+    public Image image; 
     [SerializeField] private Image lockImage;
     [SerializeField] List<Image> appleImages = new();
-    [SerializeField] private TextMeshProUGUI levelNumber;
+    [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI levelNameText;
     [SerializeField] private Button levelButton;
     [SerializeField] private Transform appleImageParent;
     [SerializeField] private Image appleImage;
 
-    public void Init(LevelData levelData)
+    public void Init(LevelData levelData, Action<LevelData> startLevel)
     {
-        levelImage.sprite = levelData?.levelImage;
+        image.sprite = levelData?.levelImage;
         lockImage.gameObject.SetActive(levelData.isLocked);
-        levelNumber.text = $"Level - {levelData.levelNumber.ToString()}";
+        title.text = $"Level - {levelData.levelNumber.ToString()}";
         levelNameText.text = levelData.levelPrefab.name;
         InstantiateAppleImage(levelData);
         levelButton.interactable = !levelData.isLocked;
-        levelButton.onClick.AddListener(() => StartLevel(levelData));
+        levelButton.onClick.AddListener(() => startLevel(levelData));
     }
 
-    public void Init(AnimalData animalData)
+    public void Init(AnimalData animalData, Action<Polaroid> displayAnimal)
     {
+        Instantiate(appleImage, appleImageParent);
 
+        image.sprite = animalData?.animalImage;
+        lockImage.gameObject.SetActive(!animalData.isUnlocked);
+        title.text = animalData.animalName;
+        levelButton.onClick.AddListener(() => displayAnimal(this));
     }
 
     private void InstantiateAppleImage(LevelData levelData)
@@ -46,11 +52,5 @@ public class Polaroid : MonoBehaviour
                 appleImages[i].color = Color.gray; 
             }
         }
-    }
-
-    public void StartLevel(LevelData levelData)
-    {
-        GameManager.instance.SetSelectedLevel(levelData);
-        GameManager.instance.SceneLoader.LoadScene("Gameplay");
     }
 }

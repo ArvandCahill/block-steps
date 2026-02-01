@@ -28,9 +28,4 @@ public class InputManager : MonoBehaviour
         playerMap = inputAction.Player;
         cameraMap = inputAction.Camera;
     }
-
-    private void Awake()
-    {
-       
-    }
 }

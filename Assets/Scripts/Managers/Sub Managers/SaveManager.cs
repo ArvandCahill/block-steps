@@ -11,12 +11,12 @@ public class SaveManager : MonoBehaviour
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "saveData.sawit");
 
-    void Start()
+    void Awake()
     {
-        LoadGame();
+        LoadSaveData();
     }
 
-    public void LoadGame()
+    public SaveData LoadSaveData()
     {
         if (File.Exists(SavePath))
         {
@@ -24,23 +24,18 @@ public class SaveManager : MonoBehaviour
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 saveData = formatter.Deserialize(stream) as SaveData;
+                return saveData;
             }
         }
         else
         {
             saveData = new SaveData();
+            return saveData;
         }
-
-        GameManager.instance.isFirstTimePlaying = saveData.isFirstTimePlaying;
-        GameManager.instance.isFirstTimeShop = saveData.isFirstTimeShop;
-        GameManager.instance.isBgmOn = saveData.isBgmOn;
-        GameManager.instance.isSfxOn = saveData.isSfxOn;
-        GameManager.instance.isVibrationOn = saveData.isVibrationOn;
-        GameManager.instance.ApplyAudioSettings();
     }
 
     [ContextMenu("Save Game")]
-    public void SaveGame()
+    public void SaveGame(SaveData saveData)
     {
         using (FileStream stream = File.Open(SavePath, FileMode.Create))
         {
@@ -105,7 +100,7 @@ public class SaveManager : MonoBehaviour
     public void AddCurrency(int amount)
     {
         saveData.currency += amount;
-        SaveGame();
+        SaveGame(saveData);
     }
 
     /*public void UnlockSlime(int slimeID)
@@ -125,7 +120,7 @@ public class SaveManager : MonoBehaviour
         if (stage > saveData.unlockedStages)
         {
             saveData.unlockedStages = stage;
-            SaveGame();
+            SaveGame(saveData);
         }
     }
 
@@ -145,21 +140,13 @@ public class SaveManager : MonoBehaviour
     {
         saveData.isFirstTimePlaying = value;
         GameManager.instance.isFirstTimePlaying = value;
-        SaveGame();
-    }
-
-    public void SetFirstTimeShop(bool value)
-    {
-        saveData.isFirstTimeShop = value;
-        GameManager.instance.isFirstTimeShop = value;
-        SaveGame() ;
+        SaveGame(saveData);
     }
 
     public void SaveSettings()
     {
         saveData.isBgmOn = GameManager.instance.isBgmOn;
         saveData.isSfxOn = GameManager.instance.isSfxOn;
-        saveData.isVibrationOn = GameManager.instance.isVibrationOn;
-        SaveGame();
+        SaveGame(saveData);
     }
 }

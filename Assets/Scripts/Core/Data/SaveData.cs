@@ -10,8 +10,6 @@ public class SaveData
 
     public bool isBgmOn = true;
     public bool isSfxOn = true;
-    public bool isVibrationOn = true;
 
     public bool isFirstTimePlaying = true;
-    public bool isFirstTimeShop = true;
 }

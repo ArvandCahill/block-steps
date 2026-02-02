@@ -1,3 +1,4 @@
+using Unity.Behavior;
 using UnityEngine;
 
 public class AnimalUnit : MonoBehaviour
@@ -5,7 +6,6 @@ public class AnimalUnit : MonoBehaviour
     [Header("Core")]
     [SerializeField] private AnimalData animalData;
     public Rigidbody rb;
-    public PlayerController PlayerController;
     public MeshFilter Mesh;
     public Transform visualRoot;
     public Animator animator;
@@ -16,17 +16,21 @@ public class AnimalUnit : MonoBehaviour
     public int Health;
     public float movementSpeed;
 
+    [Header("AI")]
+    [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
+
     public bool stopMovement = false;
 
     public bool isMoving => moveRoutine != null;
 
-    void Start()
+    private void Start()
     {
-        Init();
+        Init(animalData);
     }
 
-    void Init()
+    public void Init(AnimalData animalData)
     {
+        this.animalData = animalData;
         Mesh.mesh = animalData.animalMesh;
         Health = animalData.health;
         movementSpeed = animalData.GetSpeed();
@@ -57,5 +61,10 @@ public class AnimalUnit : MonoBehaviour
         GameplayManager.instance.DisableAI();
         GameEvents.TriggerPlayerFinished(false, GameplayManager.instance.collectiblesCollected);
         enabled = false;
+    }
+
+    public void EnableAI(bool enabled)
+    {
+        behaviorGraphAgent.enabled = enabled;
     }
 }

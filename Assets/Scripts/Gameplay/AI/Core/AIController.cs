@@ -7,6 +7,7 @@ using System.Linq;
 public class AIController : MonoBehaviour
 {
     public List<BehaviorGraphAgent> agents;
+    public List<Vector3Int> blocks = new();
 
     IEnumerator Start()
     {
@@ -17,7 +18,9 @@ public class AIController : MonoBehaviour
             AssignBBVariables(agent);
         }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.25f);
+        blocks = PathFinding.instance.blocks.Where(pair => pair.Value.type == BlockType.Walkable)
+                                                                             .Select(pair => pair.Key).ToList();
         AssignSharedBBVariables();
     }
 
@@ -34,5 +37,18 @@ public class AIController : MonoBehaviour
         agent.SetVariableValue("agent", agent.gameObject.GetComponent<AnimalUnit>());
         agent.SetVariableValue("aiDetector", agent.gameObject.GetComponent<AIDetector>());
         agent.SetVariableValue("aiState", AIState.Idle);
+    }
+
+    public void DisableAI(AnimalUnit unit)
+    {
+        unit.GetComponent<BehaviorGraphAgent>().enabled = false;
+    }
+
+    public void DisableAllAI()
+    {
+        foreach (BehaviorGraphAgent agent in agents)
+        {
+            agent.enabled = false;
+        }
     }
 }

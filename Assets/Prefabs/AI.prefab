@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 423805040189534179, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
+      propertyPath: behaviorGraphAgent
+      value: 
+      objectReference: {fileID: 1248924828418249697}
     - target: {fileID: 1363855635127552457, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
       propertyPath: m_Mass
       value: 100

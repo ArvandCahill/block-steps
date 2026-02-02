@@ -14,7 +14,6 @@ public partial class AiPatrolAction : Action
     protected override Status OnStart()
     {
         PathFinding.instance.Move(Agent.Value, TargetBlock.Value);
-        Debug.Log($"AiPatrol: Moving to {TargetBlock.Value}");
         return Status.Running;
     }
 

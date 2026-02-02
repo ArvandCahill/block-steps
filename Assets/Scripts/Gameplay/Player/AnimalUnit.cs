@@ -19,7 +19,8 @@ public class AnimalUnit : MonoBehaviour
     [Header("AI")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
 
-    public bool stopMovement = false;
+    [Header("Movement")]
+    public bool stopMovement { get; set; } = false;
 
     public bool isMoving => moveRoutine != null;
 

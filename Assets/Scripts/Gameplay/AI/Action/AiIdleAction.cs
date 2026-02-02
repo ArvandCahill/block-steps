@@ -34,7 +34,7 @@ public partial class AiIdleAction : Action
 
         if (pathFinding.blocks[target].isWalkable == false)
         {
-            Debug.LogError($"AIIdle: Target Block {target} is not walkable");
+            Debug.LogWarning($"AIIdle: Target Block is not walkable");
             return Status.Failure;
         }
 

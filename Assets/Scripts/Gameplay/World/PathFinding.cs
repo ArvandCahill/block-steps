@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Collections;
@@ -175,7 +175,11 @@ public class PathFinding : MonoBehaviour
             unit.animator.SetBool("isMoving", false);
             yield return new WaitForSeconds(0.1f);
 
-            if (unit.stopMovement) break;
+            if (unit.stopMovement)
+            {
+                unit.moveRoutine = null;
+                yield break;
+            }
         }
 
         EnableMarker(unit, Vector3.zero, false);
@@ -193,8 +197,9 @@ public class PathFinding : MonoBehaviour
 
         if (unit.isMoving)
         {
-            StopMove(unit);
-            EnableMarker(unit, targetPos, false);
+            unit.stopMovement = true;
+            EnableMarker(unit, targetPos, true);
+            StartCoroutine(QueueMove(unit, targetPos));
             return;
         }
 
@@ -211,9 +216,20 @@ public class PathFinding : MonoBehaviour
         unit.moveRoutine = StartMoveRoutine(unit, path);
     }
 
-    void StopMove(AnimalUnit unit)
+    private IEnumerator QueueMove(AnimalUnit unit, Vector3Int targetPos)
     {
-        unit.stopMovement = true;
+        yield return new WaitUntil(() => !unit.isMoving);
+
+        List<Vector3Int> path = FindPath(GetPlayerPosition(unit.transform.position), targetPos);
+
+        if (path == null || path.Count == 0)
+        {
+            Debug.Log($"Path not found {targetPos}");
+            yield break;
+        }
+
+        unit.stopMovement = false;
+        unit.moveRoutine = StartMoveRoutine(unit, path);
     }
 
     public void EnableMarker(AnimalUnit unit, Vector3 position, bool enable)

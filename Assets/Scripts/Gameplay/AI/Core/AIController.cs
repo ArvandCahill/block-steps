@@ -18,7 +18,7 @@ public class AIController : MonoBehaviour
             AssignBBVariables(agent);
         }
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
         blocks = PathFinding.instance.blocks.Where(pair => pair.Value.type == BlockType.Walkable)
                                                                              .Select(pair => pair.Key).ToList();
         AssignSharedBBVariables();
@@ -26,10 +26,7 @@ public class AIController : MonoBehaviour
 
     void AssignSharedBBVariables()
     {
-        agents[0].SetVariableValue("Pathfinding", PathFinding.instance);
-        agents[0].SetVariableValue("Gameplay Manager", GameplayManager.instance);
-        agents[0].SetVariableValue("patrolArea", PathFinding.instance.blocks.Where(pair => pair.Value.type == BlockType.Walkable)
-                                                                             .Select(pair => pair.Key).ToList());
+        agents[0].SetVariableValue("patrolArea", blocks);
     }
 
     void AssignBBVariables(BehaviorGraphAgent agent)

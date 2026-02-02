@@ -40,11 +40,11 @@ public class GameplayManager : MonoBehaviour
         levelData = gameManager.GetSelectedLevel();
         levelPrefab = levelData?.levelPrefab;
         levelData?.ResetLevel();
+        SpawnEnvironment();
     }
 
     void Start()
     {
-        SpawnEnvironment();
         cameraManager.SetCameraTarget(playerUnit.transform);
         foreach (Image icon in collectiblesIcon)
         {
@@ -57,24 +57,8 @@ public class GameplayManager : MonoBehaviour
     {
         if (levelData != null) Instantiate(levelPrefab, environmentParent);
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
+        playerUnit.Init(gameManager.GetSelectedAnimal());
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
-    }
-
-    public SerializedDictionary<Vector3Int, Block> RegisterBlock()
-    {
-        SerializedDictionary<Vector3Int, Block> blocks = new SerializedDictionary<Vector3Int, Block>();
-        List<Block> allBlocks = environmentParent.GetComponentsInChildren<Block>().ToList();
-
-        foreach (Block block in allBlocks)
-        {
-            Vector3Int pos = block.position;
-            if (!blocks.ContainsKey(pos))
-            {
-                blocks.Add(pos, block);
-            }
-        }
-
-        return blocks;
     }
 
     public void OnCollectiblesPicked()

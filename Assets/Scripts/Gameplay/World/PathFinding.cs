@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.Collections;
+using System.Linq;
 
 public class PathFinding : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PathFinding : MonoBehaviour
     [SerializedDictionary("Position", "Game Object")]
     public SerializedDictionary<Vector3Int, Block> blocks = new SerializedDictionary<Vector3Int, Block>();
 
+    [Header("References")]
+    [SerializeField] private Transform environmentParent;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private AnimationClip moveAnim;
     [SerializeField] private Transform marker;
@@ -25,13 +28,30 @@ public class PathFinding : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
+        blocks = RegisterBlock();
     }
 
-    IEnumerator Start()
+    void Start()
     {
-        yield return new WaitUntil(() => GameplayManager.instance != null);
-        blocks = GameplayManager.instance.RegisterBlock();
+        if (GameplayManager.instance != null)
         blocks.Remove(GameplayManager.instance.finishPoint.GetPosition());
+    }
+
+    public SerializedDictionary<Vector3Int, Block> RegisterBlock()
+    {
+        SerializedDictionary<Vector3Int, Block> blocks = new SerializedDictionary<Vector3Int, Block>();
+        List<Block> allBlocks = environmentParent.GetComponentsInChildren<Block>().ToList();
+
+        foreach (Block block in allBlocks)
+        {
+            Vector3Int pos = block.GetPosition();
+            if (!blocks.ContainsKey(pos))
+            {
+                blocks.Add(pos, block);
+            }
+        }
+
+        return blocks;
     }
 
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)
@@ -182,7 +202,7 @@ public class PathFinding : MonoBehaviour
 
         if (path == null || path.Count == 0)
         {
-            Debug.Log("Path not found");
+            Debug.Log($"Path not found {targetPos}");
             return;
         }
 

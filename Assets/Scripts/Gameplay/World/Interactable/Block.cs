@@ -2,17 +2,20 @@ using UnityEngine;
 
 public abstract class Block : Interactable
 {
-    public Vector3Int position;
+    [SerializeField] private Vector3Int position;
     public BlockType type;
     public bool isWalkable;
 
+    [TextArea] public string debugInfo;
+
     protected void OnEnable()
     {
-        position = Vector3Int.RoundToInt(transform.position);
+        position = base.GetPosition();
         isWalkable = !IsBlockedAbove();
 
         if (type == BlockType.Start) GameplayManager.instance.startPoint = transform;
         if (type == BlockType.Finish) GameplayManager.instance.finishPoint = this;
+        if (type == BlockType.Decoration) isWalkable = false;
     }
 
     public override void Interact(Vector3 position)
@@ -24,6 +27,35 @@ public abstract class Block : Interactable
 
     protected bool IsBlockedAbove()
     {
-        return Physics.Raycast(transform.position, Vector3.up, 1.1f);
+        RaycastHit hit;
+
+        Vector3 center = transform.position + Vector3.up * 0.5f;
+        Vector3 halfExtents = Vector3.one * 0.3f; 
+        Vector3 direction = Vector3.up;
+        float distance = 0.6f;
+
+        bool isBlocked = Physics.BoxCast(
+            center,
+            halfExtents,
+            direction,
+            out hit,
+            Quaternion.identity,
+            distance
+        );
+
+        Debug.DrawRay(
+            center,
+            direction * distance,
+            isBlocked ? Color.red : Color.green,
+            5f
+        );
+
+        if (isBlocked)
+            debugInfo = hit.collider.name;
+        else
+            debugInfo = "Clear";
+
+        return isBlocked;
     }
+
 }

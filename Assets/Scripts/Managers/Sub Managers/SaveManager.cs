@@ -11,12 +11,14 @@ public class SaveManager : MonoBehaviour
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "saveData.sawit");
 
-    void Awake()
-    {
-        LoadSaveData();
-    }
+    private GameManager GameManager => GameManager.instance;
 
-    public SaveData LoadSaveData()
+    private List<AnimalData> AllAnimalData => GameManager.allAnimalData;
+
+    private List<LevelData> AllLevelData => GameManager.allLevelData;
+
+
+    public void LoadSaveData()
     {
         if (File.Exists(SavePath))
         {
@@ -24,14 +26,55 @@ public class SaveManager : MonoBehaviour
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 saveData = formatter.Deserialize(stream) as SaveData;
-                return saveData;
             }
         }
         else
         {
             saveData = new SaveData();
-            return saveData;
         }
+
+        GameManager.isBgmOn = saveData.isBgmOn;
+        GameManager.isSfxOn = saveData.isSfxOn;
+        GameManager.currency = saveData.currency;
+        GameManager.isFirstTimePlaying = saveData.isFirstTimePlaying;
+
+        LoadUnlockedAnimals();
+    }
+
+    void LoadUnlockedAnimals()
+    {
+        foreach (var animal in AllAnimalData)
+        {
+            if (animal.isUnlockedAtStart && !saveData.unlockedAnimalIds.Contains(animal.animalID))
+            {
+                UnlockAnimal(animal.animalID);
+            }
+
+            if (animal.animalID == saveData.selectedAnimalId)
+            {
+                GameManager.SetSelectedAnimal(animal);
+            }
+
+            animal.isUnlocked = IsAnimalUnlocked(animal.animalID);
+        }
+    }
+
+    public void UnlockAnimal(int animalID)
+    {
+        if (!saveData.unlockedAnimalIds.Contains(animalID))
+        {
+            saveData.unlockedAnimalIds.Add(animalID);
+            SaveGame(saveData);
+
+            var animal = AllAnimalData.FirstOrDefault(s => s.animalID == animalID);
+            if (animal != null) animal.isUnlocked = true;
+        }
+    }
+
+    public void SetSelectedAnimalId(int animalID)
+    {
+        saveData.selectedAnimalId = animalID;
+        SaveGame(saveData);
     }
 
     [ContextMenu("Save Game")]
@@ -52,13 +95,13 @@ public class SaveManager : MonoBehaviour
         
     }
 
-    [ContextMenu("cheat: Unlock All Slimes")]  
-    public void UnlockAllSlimes()
+    [ContextMenu("cheat: Unlock All Animals")]  
+    public void UnlockAllAnimals()
     {
         
     }
 
-    [ContextMenu("cheat: Unlock All Stages")]
+    [ContextMenu("cheat: Unlock All Level")]
     /*public void UnlockAllStages()
     {
         saveData.unlockedStages = allStages.Count;
@@ -131,9 +174,9 @@ public class SaveManager : MonoBehaviour
             .ToList();
     }*/
 
-    public bool IsSlimeUnlocked(int slimeID)
+    public bool IsAnimalUnlocked(int slimeID)
     {
-        return saveData.unlockedSlimeIds.Contains(slimeID);
+        return saveData.unlockedAnimalIds.Contains(slimeID);
     }
 
     public void SetFirstTimePlaying(bool value)
@@ -149,4 +192,5 @@ public class SaveManager : MonoBehaviour
         saveData.isSfxOn = GameManager.instance.isSfxOn;
         SaveGame(saveData);
     }
+        
 }

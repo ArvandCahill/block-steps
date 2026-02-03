@@ -235,6 +235,7 @@ public class PathFinding : MonoBehaviour
     public void EnableMarker(AnimalUnit unit, Vector3 position, bool enable)
     {
         if (!unit.isPlayer) return;
+        if (marker == null) return;
         marker.gameObject.SetActive(enable);
         marker.position = position + Vector3.up;
     }

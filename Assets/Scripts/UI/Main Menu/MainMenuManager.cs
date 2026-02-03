@@ -6,13 +6,15 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private List<NavbarItem> navbarItems;
     [SerializeField] private Transform levelContainer;
-    [SerializeField] Polaroid polaroidPrefab;
+    [SerializeField] private Polaroid polaroidPrefab;
+    [SerializeField] private Shop shop;
 
     private GameManager gameManager => GameManager.instance;
 
     private void Awake()
     {
         InstantiateLevels();
+        shop.InstantiatePolaroids();
     }
 
     private void InstantiateLevels()

@@ -18,4 +18,4 @@ MonoBehaviour:
   maxCollectibles: 3
   isLocked: 0
   isNightMode: 0
-  collectiblesCollected: 2
+  collectiblesCollected: 0

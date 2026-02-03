@@ -6,7 +6,7 @@ public class Collectibles : MonoBehaviour
     {
         if (!col.CompareTag("Player")) return;
 
-        GameplayManager.instance.OnCollectiblesPicked();
+        GameEvents.TriggerCollectiblePicked();
         gameObject.SetActive(false);
     }
 }

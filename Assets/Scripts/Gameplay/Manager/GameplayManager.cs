@@ -16,7 +16,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private AIController aiController;
     [SerializeField] private CameraManager cameraManager;   
-    [SerializeField] private LevelData levelData;
+    [SerializeField] public LevelData levelData;
 
     [Header("Environment")]
     [SerializeField] private Transform environmentParent;
@@ -27,10 +27,18 @@ public class GameplayManager : MonoBehaviour
     private GameManager gameManager;
     public bool isPaused = false;
 
-    [Header("UI")]
-    [SerializeField] private Image[] collectiblesIcon;
     public int collectiblesCollected = 0;
     #endregion
+
+    private void OnEnable()
+    {
+        GameEvents.OnCollectiblePicked += OnCollectiblesPicked;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnCollectiblePicked -= OnCollectiblesPicked;
+    }
 
     void Awake()
     {
@@ -46,10 +54,7 @@ public class GameplayManager : MonoBehaviour
     void Start()
     {
         cameraManager.SetCameraTarget(playerUnit.transform);
-        foreach (Image icon in collectiblesIcon)
-        {
-            SetAlpha(icon, 0.5f);
-        }
+        
         finishPoint.gameObject.SetActive(false);
     }
 
@@ -64,12 +69,7 @@ public class GameplayManager : MonoBehaviour
     public void OnCollectiblesPicked()
     {
         levelData.CollectiblesCollected();
-
-        if (collectiblesCollected < collectiblesIcon.Length)
-        {
-            SetAlpha(collectiblesIcon[collectiblesCollected], 1.0f);
-            collectiblesCollected++;
-        }
+        collectiblesCollected++;
 
         if (levelData.IsFinish())
         {
@@ -89,13 +89,6 @@ public class GameplayManager : MonoBehaviour
     public List<Vector3Int> GetAllBlockPos()
     {
         return null;
-    }
-
-    private void SetAlpha(Image img, float alpha)
-    {
-        Color c = img.color;
-        c.a = alpha;
-        img.color = c;
     }
 
     public void Pause()

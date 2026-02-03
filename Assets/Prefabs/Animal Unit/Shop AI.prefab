@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Graph
       value: 
       objectReference: {fileID: 6104718732437355968, guid: 919349e45fe32264d95f68b02db4442e, type: 2}
+    - target: {fileID: 2281844378087477893, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4694252595903224369, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
       propertyPath: m_Name
       value: Shop

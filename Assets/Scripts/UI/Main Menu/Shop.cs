@@ -1,37 +1,117 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 using DG.Tweening;
+using AYellowpaper.SerializedCollections;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private Transform polaroidContainer;
-    [SerializeField] private Polaroid polaroidPrefab;
+    [Header("State")]
     [SerializeField] private Polaroid selectedPolaroid;
+    [SerializeField] private Polaroid displayedPolaroid;
+    [SerializeField] private AnimalUnit displayedAnimal;
 
-    List<Polaroid> polaroids = new List<Polaroid>();
+    [Header("References")]
+    [SerializeField] private Block blockTarget;
+    [SerializeField] private Transform polaroidContainer;
+    [SerializeField] private Transform animalContainer;
+    [SerializeField] private ShopButton shopButton;
 
-    private void Awake()
+    [Header("Prefabs")]
+    [SerializeField] private Polaroid polaroidPrefab;
+    [SerializeField] private AnimalUnit animalUnitPrefab;
+
+    [SerializedDictionary("Polaroid", "Animal Unit")]
+    [SerializeField] private SerializedDictionary<Polaroid, AnimalUnit> animals = new();
+
+    private GameManager gameManager => GameManager.instance;
+
+    private void Start()
     {
-        InstantiatePolaroid();
+        DisplayFirstAnimal();
     }
 
-    private void InstantiatePolaroid()
+    public void InstantiatePolaroids()
     {
-        for (int i = 0; i < GameManager.instance.allAnimalData.Count; i++)
+        foreach (AnimalData animalData in GameManager.instance.allAnimalData)
         {
-            AnimalData animalData = GameManager.instance.allAnimalData[i];
             Polaroid polaroid = Instantiate(polaroidPrefab, polaroidContainer);
-            polaroids.Add(polaroid);
-            polaroid.Init(animalData, DisplayAnimal);
-        }
+            AnimalUnit animalUnit = Instantiate(
+                animalUnitPrefab,
+                animalContainer.position,
+                Quaternion.identity,
+                animalContainer
+            );
 
-        DisplayAnimal(polaroids[0]);
+            polaroid.Init(animalData, OnPolaroidSelected);
+            animalUnit.Init(animalData);
+            animalUnit.name = animalData.animalName;
+
+            animals.Add(polaroid, animalUnit);
+
+            if (animalData.animalID == gameManager.GetSelectedAnimal().animalID) SetSelectedAnimal(animalUnit);
+        }
     }
 
-    private void DisplayAnimal(Polaroid polaroid)
+    private void DisplayFirstAnimal()
     {
-        selectedPolaroid?.transform.DOScale(0.65f, 0.2f).SetEase(Ease.OutBack);
-        selectedPolaroid = polaroid;
-        polaroid.transform.DOScale(0.75f, 0.2f).SetEase(Ease.OutBack);
+        if (animals.Count == 0) return;
+        StartCoroutine(DisplayAnimal(animals.Keys.First()));
+    }
+
+    private void OnPolaroidSelected(Polaroid polaroid)
+    {
+        StartCoroutine(DisplayAnimal(polaroid));
+    }
+
+    private IEnumerator DisplayAnimal(Polaroid polaroid)
+    {
+        if (displayedPolaroid == polaroid) yield break;
+
+        ResetPreviousSelection();
+
+        SelectPolaroid(polaroid);
+        shopButton.UpdateBuyButtonState(animals[polaroid]);
+        yield return MoveAnimalToBlock(animals[polaroid]);
+    }
+
+    private void ResetPreviousSelection()
+    {
+        if(displayedAnimal != null) PathFinding.instance.Move(displayedAnimal, new Vector3Int(0, 0, 6));
+        displayedAnimal?.EnableAI(true);
+        displayedPolaroid?.transform
+            .DOScale(0.65f, 0.2f)
+            .SetEase(Ease.OutBack);
+    }
+
+    private void SelectPolaroid(Polaroid polaroid)
+    {
+        displayedPolaroid = polaroid;
+        polaroid.transform
+            .DOScale(0.75f, 0.2f)
+            .SetEase(Ease.OutBack);
+
+        displayedAnimal = animals[polaroid];
+        displayedAnimal.EnableAI(false);
+    }
+
+    private IEnumerator MoveAnimalToBlock(AnimalUnit animal)
+    {
+        blockTarget.isWalkable = true;
+        animal.stopMovement = true;
+        PathFinding.instance.Move(animal, blockTarget.GetPosition());
+        Debug.Log($"Moving {animal.name} to {blockTarget.GetPosition()}");
+
+        yield return new WaitForSeconds(0.5f);
+
+        blockTarget.isWalkable = false;
+    }
+
+    public void SetSelectedAnimal(AnimalUnit animalUnit)
+    {
+        selectedPolaroid?.EnableApple(false);
+        selectedPolaroid = animals.FirstOrDefault(x => x.Value == animalUnit).Key;
+        selectedPolaroid.EnableApple(true);
+        gameManager.SetSelectedAnimal(animalUnit.animalData);
     }
 }

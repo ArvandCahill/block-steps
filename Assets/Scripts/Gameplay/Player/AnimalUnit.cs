@@ -4,7 +4,7 @@ using UnityEngine;
 public class AnimalUnit : MonoBehaviour
 {
     [Header("Core")]
-    [SerializeField] private AnimalData animalData;
+    public AnimalData animalData;
     public Rigidbody rb;
     public MeshFilter Mesh;
     public Transform visualRoot;

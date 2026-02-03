@@ -251,6 +251,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8074025373292025303, guid: 6203400faa9e1fc459a2aaba5f072984, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8110913831070122089, guid: 6203400faa9e1fc459a2aaba5f072984, type: 3}
       propertyPath: m_text
       value: 'Fox

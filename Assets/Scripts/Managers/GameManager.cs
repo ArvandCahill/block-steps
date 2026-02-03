@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Save Settings")]
     public int currency = 0;
-    private List<int> unlockedUnit = new();
-    private int unlockedStages = 1;
+    [SerializeField] private List<int> unlockedUnit = new();
+    [SerializeField] private int unlockedStages = 1;
     public bool isFirstTimePlaying;
 
     [Header("Resource")]
@@ -60,10 +60,10 @@ public class GameManager : MonoBehaviour
             admobInit.RequestBanner();
         }*/
 
+        LoadResource();
         SceneLoader = GetComponent<SceneLoader>();
         saveManager = GetComponent<SaveManager>();
-        LoadResource();
-        LoadGame(saveManager.LoadSaveData());
+        saveManager.LoadSaveData();
     }
 
     void Start()
@@ -84,7 +84,11 @@ public class GameManager : MonoBehaviour
     }
 
     #region Getters and Setters
-    public void SetSelectedAnimal(AnimalData animalData) => selectedAnimalData = animalData;
+    public void SetSelectedAnimal(AnimalData animalData)
+    {
+        selectedAnimalData = animalData;
+        saveManager.SetSelectedAnimalId(animalData.animalID);
+    }
 
     public AnimalData GetSelectedAnimal() => selectedAnimalData;
 
@@ -101,15 +105,6 @@ public class GameManager : MonoBehaviour
     {
         allAnimalData = ResourcesLoader.LoadAllAnimalData();
         allLevelData = ResourcesLoader.LoadAllLevelData();
-    }
-
-    private void LoadGame(SaveData saveData)
-    {
-        isBgmOn = saveData.isBgmOn;
-        isSfxOn = saveData.isSfxOn;
-        currency = saveData.currency;
-        unlockedStages = saveData.unlockedStages;
-        isFirstTimePlaying = saveData.isFirstTimePlaying;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

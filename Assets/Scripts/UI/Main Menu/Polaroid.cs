@@ -53,4 +53,10 @@ public class Polaroid : MonoBehaviour
             }
         }
     }
+
+    public void EnableApple(bool enable)
+    {
+        appleImageParent.gameObject.SetActive(enable);
+        Debug.Log("Apple Enabled: " + enable);
+    }
 }

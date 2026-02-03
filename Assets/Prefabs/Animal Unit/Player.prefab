@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2802236303234768782}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.19080894, y: 0, z: 0, w: 0.9816273}
+  m_LocalPosition: {x: 0, y: 3.0562665, z: -0.81799376}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1812767504423157632}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -22, y: 0, z: 0}
 --- !u!33 &8107195317931161087
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -184,14 +184,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Gameplay::PlayerUnit
   animalData: {fileID: 11400000, guid: 1dfe0c90a60d72d4aa7fa7c50ca5c72e, type: 2}
   rb: {fileID: 1363855635127552457}
-  PlayerController: {fileID: 6869573666408017978}
   Mesh: {fileID: 8107195317931161087}
   visualRoot: {fileID: 1812767504423157632}
   animator: {fileID: 2061864422954218763}
   isPlayer: 1
   Health: 0
   movementSpeed: 0
-  stopMovement: 0
+  behaviorGraphAgent: {fileID: 0}
 --- !u!114 &6869573666408017978
 MonoBehaviour:
   m_ObjectHideFlags: 0

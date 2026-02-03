@@ -154,7 +154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 491.6716, y: -100}
+  m_AnchoredPosition: {x: 491.67163, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &153114116
@@ -999,7 +999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 241.67157, y: -100}
+  m_AnchoredPosition: {x: 241.67163, y: -100}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534819590
@@ -1640,7 +1640,7 @@ PrefabInstance:
     - target: {fileID: 6573215634301694122, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
       propertyPath: selectedLevelData
       value: 
-      objectReference: {fileID: 11400000, guid: b59c6a084acc6994b82b15809507f00d, type: 2}
+      objectReference: {fileID: 11400000, guid: cd067c239f8e4104e9eccb6e77846e85, type: 2}
     - target: {fileID: 6573215634301694122, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
       propertyPath: selectedAnimalData
       value: 
@@ -1973,8 +1973,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 909603330}
         Gain: 3
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1986,8 +1984,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 1724510582}
         Gain: -3
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1999,8 +1995,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 618923923}
         Gain: -1
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:

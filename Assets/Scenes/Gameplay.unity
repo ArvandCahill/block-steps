@@ -227,6 +227,18 @@ MonoBehaviour:
           m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Button, Game.UI
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &22908790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,6 +1400,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 796249262574624423, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 796249262574624423, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 796249262594016345, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 796249262594016345, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 796249262594016345, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 796249262594112323, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3700390754030458174, guid: ef70906756a8b7549a6b40a636d3bcb0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1847,6 +1883,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 909603330}
         Gain: 3
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1858,6 +1896,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 1724510582}
         Gain: -3
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1869,6 +1909,8 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 618923923}
         Gain: -1
+        LegacyInput: 
+        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:

@@ -37,6 +37,7 @@ public class SceneLoader : MonoBehaviour
         Enum.TryParse(sceneName, true, out GameState gameState);
         gameManager.SetGameState(gameState);
         SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1.0f;
     }
 
     public void RestartScene()

@@ -27,14 +27,8 @@ public class PathFinding : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null) instance = this;
+        instance = this;
         blocks = RegisterBlock();
-    }
-
-    void Start()
-    {
-        if (GameplayManager.instance != null)
-        blocks.Remove(GameplayManager.instance.finishPoint.GetPosition());
     }
 
     public SerializedDictionary<Vector3Int, Block> RegisterBlock()
@@ -48,6 +42,7 @@ public class PathFinding : MonoBehaviour
             if (!blocks.ContainsKey(pos))
             {
                 blocks.Add(pos, block);
+                block.debugInfo = $"registered {block.name}";
             }
         }
 

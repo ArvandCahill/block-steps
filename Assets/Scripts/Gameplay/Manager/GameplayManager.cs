@@ -20,9 +20,12 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Environment")]
     [SerializeField] private Transform environmentParent;
-    [SerializeField] private GameObject levelPrefab;
     public Transform startPoint;
     public Block finishPoint;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject levelPrefab;
+    [SerializeField] private GameObject flag;
 
     private GameManager gameManager;
     public bool isPaused = false;
@@ -54,7 +57,6 @@ public class GameplayManager : MonoBehaviour
     void Start()
     {
         cameraManager.SetCameraTarget(playerUnit.transform);
-        
         finishPoint.gameObject.SetActive(false);
     }
 
@@ -63,6 +65,7 @@ public class GameplayManager : MonoBehaviour
         if (levelData != null) Instantiate(levelPrefab, environmentParent);
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         playerUnit.Init(gameManager.GetSelectedAnimal());
+        Instantiate(flag, finishPoint.transform.position + Vector3.up, Quaternion.identity, finishPoint.transform);
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -86,16 +89,12 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    public List<Vector3Int> GetAllBlockPos()
-    {
-        return null;
-    }
-
     public void Pause()
     {
         if (isPaused)
         {
             InputManager.instance.playerMap.Enable();
+            InputManager.instance.cameraMap.Enable();
             Time.timeScale = 1.0f;
             isPaused = false;
         }
@@ -103,6 +102,7 @@ public class GameplayManager : MonoBehaviour
         else
         {
             InputManager.instance.playerMap.Disable();
+            InputManager.instance.cameraMap.Disable();
             Time.timeScale = 0f;
             isPaused = true;
         }

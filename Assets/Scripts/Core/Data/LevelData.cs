@@ -10,9 +10,8 @@ public class LevelData : ScriptableObject
     [Range(1, 5)] public int maxCollectibles;
     public bool isLocked;
     public bool isNightMode;
-
     public int collectiblesCollected;
-
+    public bool isLevelFinished = false;
 
     public void ResetLevel()
     {
@@ -27,6 +26,8 @@ public class LevelData : ScriptableObject
 
     public bool IsFinish()
     {
-        return collectiblesCollected >= maxCollectibles;
+        bool isFinish = collectiblesCollected >= maxCollectibles;
+        isLevelFinished = isFinish;
+        return isFinish;
     }
 }

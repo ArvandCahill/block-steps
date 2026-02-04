@@ -13,9 +13,19 @@ public abstract class Block : Interactable
         position = base.GetPosition();
         isWalkable = !IsBlockedAbove();
 
-        if (type == BlockType.Start) GameplayManager.instance.startPoint = transform;
-        if (type == BlockType.Finish) GameplayManager.instance.finishPoint = this;
-        if (type == BlockType.Decoration) isWalkable = false;
+        switch(type)
+        {
+            case BlockType.Start:
+                GameplayManager.instance.startPoint = transform;
+                break;
+            case BlockType.Finish:
+                GameplayManager.instance.finishPoint = this;
+                gameObject.AddComponent<FinishBlock>();
+                break;
+            case BlockType.Decoration:
+                isWalkable = false;
+                break;
+        }
     }
 
     public override void Interact(Vector3 position)

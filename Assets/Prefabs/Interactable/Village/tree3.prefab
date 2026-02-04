@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4274140863115881174
 Transform:
@@ -53,6 +53,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 3
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &8961672350031796983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -153,7 +154,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3684217494258441102
 Transform:

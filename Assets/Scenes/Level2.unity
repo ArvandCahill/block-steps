@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: ebf0e95a685a42e4db76c37a9020af90
+  m_OcclusionCullingData: {fileID: 36300000, guid: 71308282bb45ba245ac080b593559f4c, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -1205,10 +1205,6 @@ MonoBehaviour:
   startPoint: {fileID: 0}
   finishPoint: {fileID: 1187375637479225174}
   isPaused: 0
-  collectiblesIcon:
-  - {fileID: 892198626}
-  - {fileID: 0}
-  - {fileID: 0}
   collectiblesCollected: 0
 --- !u!114 &815156547
 MonoBehaviour:

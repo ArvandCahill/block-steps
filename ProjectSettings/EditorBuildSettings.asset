@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestingScene.unity
     guid: 6e6efcd8d29f90e4fb4d81d29689ba39
   - enabled: 0
-    path: Assets/Scenes/0.unity
+    path: Assets/Scenes/Level1.unity
     guid: f3aeb01d5e1330b40b64ba72f3392ebd
   m_configObjects:
     com.unity.adaptivePerformance.basic.provider_settings: {fileID: 11400000, guid: 562a6a739e9e9274d88380a73ad933a6, type: 2}

@@ -1960,8 +1960,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 909603330}
         Gain: 3
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1973,8 +1971,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 1724510582}
         Gain: -3
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -1986,8 +1982,6 @@ MonoBehaviour:
       Input:
         InputAction: {fileID: 618923923}
         Gain: -1
-        LegacyInput: 
-        LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
@@ -2494,7 +2488,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1776618743
 Transform:

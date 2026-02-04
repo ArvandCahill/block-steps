@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,12 +35,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelData selectedLevelData;
     public List<AnimalData> allAnimalData;
     public List<LevelData> allLevelData;
-    
+
+    [Header("UI")]
+    [SerializeField] private CanvasGroup panel;
+
     [HideInInspector] public bool isAnimating;
     private int sceneCount = 0;
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+
         if (instance == null)
         {
             instance = this;
@@ -68,8 +73,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 60;
-
         audioManager?.Initialize();
 
         uiManager?.HideAllPopups();
@@ -113,9 +116,25 @@ public class GameManager : MonoBehaviour
         sceneCount++;
 
         uiManager?.HideAllPopups();
-
         //if (sceneName == "MainMenu" || sceneName == "ModeSelector") admobInit.DestroyBanner();
         //else admobInit.RequestBanner();
         //StartCoroutine(admobInit.ShowInterstitalWithDelay(sceneCount));
+    }
+
+    public void LoadingScreen(bool enable)
+    {
+        if (enable)
+        {
+            panel.gameObject.SetActive(enable);
+            panel.DOFade(1, 0f);
+        }
+
+        else
+        {
+            panel.DOFade(0, 1f).onComplete = (() =>
+            {
+                panel.gameObject.SetActive(enable);
+            });
+        }
     }
 }

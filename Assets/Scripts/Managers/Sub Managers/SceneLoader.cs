@@ -18,6 +18,7 @@ public class SceneLoader : MonoBehaviour
         if (isLoading) yield break;
         isLoading = true;
 
+        gameManager.LoadingScreen(true);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
@@ -27,18 +28,14 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
 
-        /*gameManager.gameState = Enum.TryParse()*/
-
+        Enum.TryParse(sceneName, true, out GameState gameState);
+        gameManager.SetGameState(gameState);
+        gameManager.LoadingScreen(false);
+        isLoading = false;
         Debug.Log("Scene " + sceneName + " has been loaded!");
     }
 
-    public void LoadScene(string sceneName)
-    {
-        Enum.TryParse(sceneName, true, out GameState gameState);
-        gameManager.SetGameState(gameState);
-        SceneManager.LoadScene(sceneName);
-        Time.timeScale = 1.0f;
-    }
+    public void LoadScene(string sceneName) => StartCoroutine(LoadSceneAsync(sceneName));
 
     public void RestartScene()
     {

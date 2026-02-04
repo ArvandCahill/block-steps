@@ -11,6 +11,7 @@ public class AIController : MonoBehaviour
 
     IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.5f);
         agents = new List<BehaviorGraphAgent>(FindObjectsByType<BehaviorGraphAgent>(FindObjectsSortMode.None));
 
         foreach (BehaviorGraphAgent agent in agents)
@@ -18,7 +19,7 @@ public class AIController : MonoBehaviour
             AssignBBVariables(agent);
         }
 
-        yield return new WaitForSeconds(0.5f);
+
         blocks = PathFinding.instance.blocks.Where(pair => pair.Value.type == BlockType.Walkable)
                                                                              .Select(pair => pair.Key).ToList();
         AssignSharedBBVariables();

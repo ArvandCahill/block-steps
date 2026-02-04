@@ -7,13 +7,17 @@ public abstract class Interactable : MonoBehaviour, Iinteractable
 
     [SerializeField] private float duration = 0.2f;
 
-    private Material material;
+    private Renderer rend;
+    private MaterialPropertyBlock mpb;
     private Coroutine fadeRoutine;
     private bool isTransparent;
 
+    private static readonly int ColorID = Shader.PropertyToID("_Color");
+
     private void Awake()
     {
-        material = GetComponentInChildren<Renderer>().material;
+        rend = GetComponentInChildren<Renderer>();
+        mpb = new MaterialPropertyBlock();
     }
 
     public Vector3Int GetPosition()
@@ -29,7 +33,6 @@ public abstract class Interactable : MonoBehaviour, Iinteractable
     public void FadeOut()
     {
         if (isTransparent) return;
-
         StartFadeTo(0.2f);
         isTransparent = true;
     }
@@ -37,7 +40,6 @@ public abstract class Interactable : MonoBehaviour, Iinteractable
     public void FadeIn()
     {
         if (!isTransparent) return;
-
         StartFadeTo(1f);
         isTransparent = false;
     }
@@ -52,19 +54,30 @@ public abstract class Interactable : MonoBehaviour, Iinteractable
 
     private IEnumerator FadeRoutine(float targetAlpha)
     {
-        Color color = material.color;
+        rend.GetPropertyBlock(mpb);
+
+        Color color = mpb.HasColor(ColorID)
+            ? mpb.GetColor(ColorID)
+            : rend.sharedMaterial.color;
+
         float startAlpha = color.a;
         float t = 0f;
 
         while (t < 1f)
         {
             t += Time.deltaTime / duration;
-            float alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-            material.color = new Color(color.r, color.g, color.b, alpha);
+            color.a = Mathf.Lerp(startAlpha, targetAlpha, t);
+
+            mpb.SetColor(ColorID, color);
+            rend.SetPropertyBlock(mpb);
+
             yield return null;
         }
 
-        material.color = new Color(color.r, color.g, color.b, targetAlpha);
+        color.a = targetAlpha;
+        mpb.SetColor(ColorID, color);
+        rend.SetPropertyBlock(mpb);
+
         fadeRoutine = null;
     }
 }

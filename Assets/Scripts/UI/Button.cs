@@ -11,6 +11,7 @@ public class ButtonUI : MonoBehaviour
         switch (buttonType)
         {
             case ButtonType.LoadScene:
+                Time.timeScale = 1;
                 GameManager.instance.SceneLoader.LoadScene(name);
                 break;
             case ButtonType.UIAction:

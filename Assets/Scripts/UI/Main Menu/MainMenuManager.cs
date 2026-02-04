@@ -11,7 +11,7 @@ public class MainMenuManager : MonoBehaviour
 
     private GameManager gameManager => GameManager.instance;
 
-    private void Awake()
+    private void Start()
     {
         InstantiateLevels();
         shop.InstantiatePolaroids();

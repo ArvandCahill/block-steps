@@ -26,14 +26,10 @@ public class Polaroid : MonoBehaviour
         levelButton.onClick.AddListener(() => startLevel(levelData));
     }
 
-    public void Init(AnimalData animalData, Action<Polaroid> displayAnimal)
+    public void Init(AnimalUnit animalUnit, Action<AnimalUnit> displayAnimal)
     {
-        Instantiate(appleImage, appleImageParent);
-
-        image.sprite = animalData?.animalImage;
-        lockImage.gameObject.SetActive(!animalData.isUnlocked);
-        title.text = animalData.animalName;
-        levelButton.onClick.AddListener(() => displayAnimal(this));
+        Refresh(animalUnit);
+        levelButton.onClick.AddListener(() => displayAnimal(animalUnit));
     }
 
     private void InstantiateAppleImage(LevelData levelData)
@@ -53,6 +49,20 @@ public class Polaroid : MonoBehaviour
             }
         }
     }
+
+    public void Refresh(AnimalUnit animalUnit)
+    {
+        var data = animalUnit.animalData;
+
+        image.sprite = data.animalImage;
+        title.text = data.animalName;
+
+        bool unlocked = data.CheckMilestone(GameManager.instance.Currency);
+
+        lockImage.gameObject.SetActive(!unlocked);
+        levelButton.interactable = unlocked;
+    }
+
 
     public void EnableApple(bool enable)
     {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using static Codice.CM.Common.CmCallContext;
 
 public class SaveManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class SaveManager : MonoBehaviour
 
         GameManager.isBgmOn = saveData.isBgmOn;
         GameManager.isSfxOn = saveData.isSfxOn;
-        GameManager.currency = saveData.currency;
+        GameManager.Currency = saveData.currency;
         GameManager.isFirstTimePlaying = saveData.isFirstTimePlaying;
 
         LoadUnlockedAnimals();
@@ -45,21 +46,16 @@ public class SaveManager : MonoBehaviour
     {
         foreach (var animal in AllAnimalData)
         {
-            if (animal.isUnlockedAtStart && !saveData.unlockedAnimalIds.Contains(animal.animalID))
-            {
-                UnlockAnimal(animal.animalID);
-            }
+            animal.CheckMilestone(GameManager.Currency);
 
             if (animal.animalID == saveData.selectedAnimalId)
             {
                 GameManager.SetSelectedAnimal(animal);
             }
-
-            animal.isUnlocked = IsAnimalUnlocked(animal.animalID);
         }
     }
 
-    public void UnlockAnimal(int animalID)
+    /*public void UnlockAnimal(int animalID)
     {
         if (!saveData.unlockedAnimalIds.Contains(animalID))
         {
@@ -69,7 +65,7 @@ public class SaveManager : MonoBehaviour
             var animal = AllAnimalData.FirstOrDefault(s => s.animalID == animalID);
             if (animal != null) animal.isUnlocked = true;
         }
-    }
+    }*/
 
     public void SetSelectedAnimalId(int animalID)
     {
@@ -90,15 +86,23 @@ public class SaveManager : MonoBehaviour
     }
 
     [ContextMenu("Reset Save")]
-    public void ResetSave()
+    private void ResetSaveData()
     {
-        
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+            Debug.Log("Save data reset.");
+        }
+        else
+        {
+            Debug.Log("No save data found to reset.");
+        }
     }
 
-    [ContextMenu("cheat: Unlock All Animals")]  
+    [ContextMenu("cheat: Unlock All Animals")]
     public void UnlockAllAnimals()
     {
-        
+
     }
 
     [ContextMenu("cheat: Unlock All Level")]
@@ -192,5 +196,5 @@ public class SaveManager : MonoBehaviour
         saveData.isSfxOn = GameManager.instance.isSfxOn;
         SaveGame(saveData);
     }
-        
+
 }

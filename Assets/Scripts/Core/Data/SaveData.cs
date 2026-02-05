@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class SaveData
 {
     public int selectedAnimalId = 0;
-    public int currency;
-    public List<int> unlockedAnimalIds = new List<int>();
+    public int currency = 0;
     public int unlockedStages = 1;
+    public List<int> unlockedAnimalIds = new List<int>();
 
     public bool isBgmOn = true;
     public bool isSfxOn = true;

@@ -18,18 +18,20 @@ public class ShopButton : MonoBehaviour
     {
         button.onClick.RemoveAllListeners();
 
-        if (unit.animalData.isUnlocked)
+        if (unit.animalData.CheckMilestone(gameManager.Currency))
         {
             button.onClick.AddListener(() => SelectAnimal(unit));
 
             if (unit.animalData == gameManager.GetSelectedAnimal())
             {
+                apple.SetActive(false);
                 button.interactable = false;
                 text.text = "Selected";
             }
 
             else
             {
+                apple.SetActive(false);
                 button.interactable = true;
                 text.text = "Select";
             }

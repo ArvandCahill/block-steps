@@ -16,7 +16,7 @@ public class AnimalData : ScriptableObject
     [Header("Shop Properties")]
     public int price;
     public bool isUnlockedAtStart;
-    public bool isUnlocked;
+    private bool isUnlocked;
 
     public float GetSpeed()
     {
@@ -27,5 +27,11 @@ public class AnimalData : ScriptableObject
             MovementSpeed.Fast => 1.5f,
             _ => 1
         };
+    }
+
+    public bool CheckMilestone(int currency)
+    {
+        isUnlocked = currency >= price;
+        return isUnlocked;
     }
 }

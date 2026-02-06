@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Project Path="Game.Gameplay.csproj" />
+  <Project Path="AYellowpaper.SerializedCollections.csproj" />
+  <Project Path="AYellowpaper.SerializeInterfaces.Editor.csproj" />
+  <Project Path="Game.Plugin.csproj" />
+  <Project Path="AYellowpaper.SerializedCollections.Editor.csproj" />
+  <Project Path="Game.UI.csproj" />
+  <Project Path="Game.Managers.csproj" />
+  <Project Path="Game.Core.csproj" />
+  <Project Path="AYellowpaper.SerializeInterfaces.csproj" />
+</Solution>

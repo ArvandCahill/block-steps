@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4331b9e7a87e6b040b2af0f88471f3fe, type: 3}
-  m_Name: Axolotl
+  m_Name: Bear
   m_EditorClassIdentifier: Game.Core::AnimalData
-  animalID: 20
-  animalName: Axolotl
+  animalID: 6
+  animalName: Bear
   animalImage: {fileID: 0}
-  animalMesh: {fileID: -2432090755550338912, guid: fec2eb8c1a2a8d547b16823abe1b04b1, type: 3}
+  animalMesh: {fileID: -2432090755550338912, guid: 5a18dda46d4f59e44a59b7af819b2a6b, type: 3}
   health: 3
   movementSpeed: 1
-  price: 0
+  price: 2
   isUnlockedAtStart: 0
+  isUnlocked: 0

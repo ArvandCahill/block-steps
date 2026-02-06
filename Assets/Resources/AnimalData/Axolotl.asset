@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4331b9e7a87e6b040b2af0f88471f3fe, type: 3}
   m_Name: Axolotl
   m_EditorClassIdentifier: Game.Core::AnimalData
-  animalID: 0
+  animalID: 20
   animalName: Axolotl
   animalImage: {fileID: 0}
   animalMesh: {fileID: -2432090755550338912, guid: fec2eb8c1a2a8d547b16823abe1b04b1, type: 3}

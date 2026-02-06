@@ -22,9 +22,19 @@ public class Shop : MonoBehaviour
     [SerializeField] private AnimalUnit animalUnitPrefab;
 
     [SerializedDictionary("Polaroid", "Animal Unit")]
-    [SerializeField] private SerializedDictionary<Polaroid, AnimalUnit> animals = new();
+    [SerializeField] private SerializedDictionary<AnimalUnit, Polaroid> animals = new();
 
     private GameManager gameManager => GameManager.instance;
+
+    private void OnEnable()
+    {
+        GameEvents.OnCurrencyValueChanged += UpdateMilestones;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnCurrencyValueChanged -= UpdateMilestones;
+    }
 
     private void Start()
     {
@@ -43,11 +53,11 @@ public class Shop : MonoBehaviour
                 animalContainer
             );
 
-            polaroid.Init(animalData, OnPolaroidSelected);
             animalUnit.Init(animalData);
+            polaroid.Init(animalUnit, OnPolaroidSelected);
             animalUnit.name = animalData.animalName;
 
-            animals.Add(polaroid, animalUnit);
+            animals.Add(animalUnit, polaroid);
 
             if (animalData.animalID == gameManager.GetSelectedAnimal().animalID) SetSelectedAnimal(animalUnit);
         }
@@ -59,20 +69,20 @@ public class Shop : MonoBehaviour
         StartCoroutine(DisplayAnimal(animals.Keys.First()));
     }
 
-    private void OnPolaroidSelected(Polaroid polaroid)
+    private void OnPolaroidSelected(AnimalUnit animal)
     {
-        StartCoroutine(DisplayAnimal(polaroid));
+        StartCoroutine(DisplayAnimal(animal));
     }
 
-    private IEnumerator DisplayAnimal(Polaroid polaroid)
+    private IEnumerator DisplayAnimal(AnimalUnit animal)
     {
-        if (displayedPolaroid == polaroid) yield break;
+        if (displayedPolaroid == animals[animal]) yield break;
 
         ResetPreviousSelection();
 
-        SelectPolaroid(polaroid);
-        shopButton.UpdateBuyButtonState(animals[polaroid]);
-        yield return MoveAnimalToBlock(animals[polaroid]);
+        SelectPolaroid(animal);
+        shopButton.UpdateBuyButtonState(animal);
+        yield return MoveAnimalToBlock(animal);
     }
 
     private void ResetPreviousSelection()
@@ -84,14 +94,14 @@ public class Shop : MonoBehaviour
             .SetEase(Ease.OutBack);
     }
 
-    private void SelectPolaroid(Polaroid polaroid)
+    private void SelectPolaroid(AnimalUnit animal)
     {
-        displayedPolaroid = polaroid;
-        polaroid.transform
+        displayedPolaroid = animals[animal];
+        displayedPolaroid.transform
             .DOScale(0.75f, 0.2f)
             .SetEase(Ease.OutBack);
 
-        displayedAnimal = animals[polaroid];
+        displayedAnimal = animal;
         displayedAnimal.EnableAI(false);
     }
 
@@ -110,8 +120,17 @@ public class Shop : MonoBehaviour
     public void SetSelectedAnimal(AnimalUnit animalUnit)
     {
         selectedPolaroid?.EnableApple(false);
-        selectedPolaroid = animals.FirstOrDefault(x => x.Value == animalUnit).Key;
+        selectedPolaroid = animals[animalUnit];
         selectedPolaroid.EnableApple(true);
         gameManager.SetSelectedAnimal(animalUnit.animalData);
+    }
+
+    private void UpdateMilestones(int currency)
+    {
+        foreach (var pair in animals)
+        {
+            pair.Key.animalData.CheckMilestone(currency);
+            pair.Value.Refresh(pair.Key);
+        }
     }
 }

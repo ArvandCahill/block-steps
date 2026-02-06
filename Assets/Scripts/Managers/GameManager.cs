@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public bool isSfxOn = true;
 
     [Header("Save Settings")]
-    public int currency = 0;
+    [SerializeField] private int currency = 0;
     [SerializeField] private List<int> unlockedUnit = new();
     [SerializeField] private int unlockedStages = 1;
     public bool isFirstTimePlaying;
@@ -71,6 +71,36 @@ public class GameManager : MonoBehaviour
         saveManager.LoadSaveData();
     }
 
+    #region Properties
+    public int Currency
+    {
+        get { return currency; } 
+        set 
+        {
+            currency = value; 
+            GameEvents.TriggerCurrencyValueChanged(currency);
+        }
+    }
+
+    #endregion
+
+   #region Getters and Setters
+    public void SetSelectedAnimal(AnimalData animalData)
+    {
+        selectedAnimalData = animalData;
+        saveManager.SetSelectedAnimalId(animalData.animalID);
+    }
+
+    public AnimalData GetSelectedAnimal() => selectedAnimalData;
+
+    public void SetSelectedLevel(LevelData levelData) => selectedLevelData = levelData;
+
+    public LevelData GetSelectedLevel() => selectedLevelData;
+
+    public void SetGameState(GameState newGameState) => gameState = newGameState;
+
+    #endregion
+
     void Start()
     {
         audioManager?.Initialize();
@@ -86,21 +116,6 @@ public class GameManager : MonoBehaviour
         audioManager?.SetSfxActive(isSfxOn);
     }
 
-    #region Getters and Setters
-    public void SetSelectedAnimal(AnimalData animalData)
-    {
-        selectedAnimalData = animalData;
-        saveManager.SetSelectedAnimalId(animalData.animalID);
-    }
-
-    public AnimalData GetSelectedAnimal() => selectedAnimalData;
-
-    public void SetSelectedLevel(LevelData levelData) => selectedLevelData = levelData;
-
-    public LevelData GetSelectedLevel() => selectedLevelData;
-
-    public void SetGameState(GameState newGameState) => gameState = newGameState;
-    #endregion
 
     public void ResetSceneCount() => sceneCount = 0;
 

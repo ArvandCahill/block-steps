@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5574597636057083379}
   - component: {fileID: 7764899652623770526}
   - component: {fileID: 3269486405843003773}
+  - component: {fileID: 7089423391954771400}
   m_Layer: 5
   m_Name: LevelImage
   m_TagString: Untagged
@@ -76,6 +77,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7089423391954771400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439394376796767928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109c41f08973846429af681aea0a30c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Nobi.UiRoundedCorners::Nobi.UiRoundedCorners.ImageWithIndependentRoundedCorners
+  r: {x: 10, y: 10, z: 10, w: 10}
+  rect2props: {x: 0.000015258789, y: -0.000030517578, z: 204.70743, w: 204.70743}
+  image: {fileID: 3269486405843003773}
 --- !u!1 &3620733115243697439
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +104,7 @@ GameObject:
   - component: {fileID: 556616796509129987}
   - component: {fileID: 565124619135023423}
   - component: {fileID: 1922169126499923361}
+  - component: {fileID: 5206264080154709587}
   m_Layer: 5
   m_Name: Lock
   m_TagString: Untagged
@@ -164,6 +181,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &5206264080154709587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3620733115243697439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109c41f08973846429af681aea0a30c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Nobi.UiRoundedCorners::Nobi.UiRoundedCorners.ImageWithIndependentRoundedCorners
+  r: {x: 10, y: 10, z: 10, w: 10}
+  rect2props: {x: 0.000015258789, y: -0.000030517578, z: 204.70743, w: 204.70743}
+  image: {fileID: 565124619135023423}
 --- !u!1 &4492058869429937615
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +346,8 @@ GameObject:
   - component: {fileID: 5462929850708513333}
   - component: {fileID: 1267742736460660073}
   - component: {fileID: 8520557641474015776}
+  - component: {fileID: 3397979677046924013}
+  - component: {fileID: 7863304524572150765}
   m_Layer: 5
   m_Name: Polaroid
   m_TagString: Untagged
@@ -415,7 +449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 195480dfb430e6740a8d0b94aeccd15c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -445,6 +479,36 @@ MonoBehaviour:
   levelButton: {fileID: 6479325750114891857}
   appleImageParent: {fileID: 2969133263400699140}
   appleImage: {fileID: 6302272059882348784, guid: c0c51fb0ff1a25f49bcd20581dbe3372, type: 3}
+--- !u!114 &3397979677046924013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261549833246252489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109c41f08973846429af681aea0a30c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Nobi.UiRoundedCorners::Nobi.UiRoundedCorners.ImageWithIndependentRoundedCorners
+  r: {x: 40, y: 10, z: 40, w: 10}
+  rect2props: {x: 0, y: -0.000045776367, z: 242.18408, w: 263.3973}
+  image: {fileID: 1267742736460660073}
+--- !u!114 &7863304524572150765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261549833246252489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5805307932928790469
 GameObject:
   m_ObjectHideFlags: 0

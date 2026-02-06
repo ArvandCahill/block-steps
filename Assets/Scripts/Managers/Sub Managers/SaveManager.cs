@@ -40,6 +40,7 @@ public class SaveManager : MonoBehaviour
         GameManager.isFirstTimePlaying = saveData.isFirstTimePlaying;
 
         LoadUnlockedAnimals();
+        LoadUnlockedStage();
     }
 
     void LoadUnlockedAnimals()
@@ -106,15 +107,11 @@ public class SaveManager : MonoBehaviour
     }
 
     [ContextMenu("cheat: Unlock All Level")]
-    /*public void UnlockAllStages()
+    public void UnlockAllLevels()
     {
-        saveData.unlockedStages = allStages.Count;
-        foreach (var stage in allStages)
-        {
-            stage.isUnlocked = true;
-        }
-        SaveGame();
-    }*/
+        saveData.unlockedLevels = AllLevelData.Count;
+        LoadUnlockedStage();
+    }
 
     [ContextMenu("cheat: Currency")]
     public void CheatCurrency()
@@ -122,27 +119,27 @@ public class SaveManager : MonoBehaviour
         AddCurrency(999999999);
     }
 
-    [ContextMenu("cheat: unlock Next Stage")]
-    /*public void UnlockNextStage()
+    [ContextMenu("cheat: unlock Next Level")]
+    public void UnlockNextStage()
     {
-        if (saveData.unlockedStages < allStages.Count)
+        if (saveData.unlockedLevels < AllLevelData.Count)
         {
-            saveData.unlockedStages++;
+            saveData.unlockedLevels++;
             LoadUnlockedStage();
         }
         else
         {
             Debug.Log("All stages are already unlocked.");
         }
-    }*/
+    }
 
-    /*void LoadUnlockedStage()
+    void LoadUnlockedStage()
     {
-        for(int i = 0; i < saveData.unlockedStages; i++)
+        for(int i = 0; i < saveData.unlockedLevels; i++)
         {
-            allStages[i].isUnlocked = true;
+            AllLevelData[i].isUnlocked = true;
         }
-    }*/
+    }
 
     public void AddCurrency(int amount)
     {
@@ -162,11 +159,11 @@ public class SaveManager : MonoBehaviour
         }
     }*/
 
-    public void UnlockStage(int stage)
+    public void UnlockLevel(int stage)
     {
-        if (stage > saveData.unlockedStages)
+        if (stage > saveData.unlockedLevels)
         {
-            saveData.unlockedStages = stage;
+            saveData.unlockedLevels = stage;
             SaveGame(saveData);
         }
     }

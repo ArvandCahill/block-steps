@@ -7,8 +7,9 @@ public class LevelData : ScriptableObject
     public GameObject levelPrefab;
     public Sprite levelImage;
     public int levelNumber;
+    public string levelName;
     [Range(1, 5)] public int maxCollectibles;
-    public bool isLocked;
+    public bool isUnlocked;
     public bool isNightMode;
     public int collectiblesCollected;
     public bool isLevelFinished = false;

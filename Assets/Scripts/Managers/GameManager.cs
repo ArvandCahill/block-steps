@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newGameState) => gameState = newGameState;
 
+    public GameState GetGameState() => gameState;
+
     #endregion
 
     void Start()

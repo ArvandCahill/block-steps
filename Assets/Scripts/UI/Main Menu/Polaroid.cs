@@ -6,7 +6,7 @@ using System;
 
 public class Polaroid : MonoBehaviour
 {
-    public Image image; 
+    [SerializeField] private Image image; 
     [SerializeField] private Image lockImage;
     [SerializeField] List<Image> appleImages = new();
     [SerializeField] private TextMeshProUGUI title;
@@ -17,19 +17,19 @@ public class Polaroid : MonoBehaviour
 
     public void Init(LevelData levelData, Action<LevelData> startLevel)
     {
-        image.sprite = levelData?.levelImage;
-        lockImage.gameObject.SetActive(levelData.isLocked);
-        title.text = $"Level - {levelData.levelNumber.ToString()}";
-        levelNameText.text = levelData.levelPrefab.name;
-        InstantiateAppleImage(levelData);
-        levelButton.interactable = !levelData.isLocked;
+        levelButton.onClick.RemoveAllListeners();
         levelButton.onClick.AddListener(() => startLevel(levelData));
+
+        Refresh(levelData);
     }
+
 
     public void Init(AnimalUnit animalUnit, Action<AnimalUnit> displayAnimal)
     {
-        Refresh(animalUnit);
+        levelButton.onClick.RemoveAllListeners();
         levelButton.onClick.AddListener(() => displayAnimal(animalUnit));
+
+        Refresh(animalUnit);
     }
 
     private void InstantiateAppleImage(LevelData levelData)
@@ -61,6 +61,21 @@ public class Polaroid : MonoBehaviour
 
         lockImage.gameObject.SetActive(!unlocked);
         levelButton.interactable = unlocked;
+    }
+
+    public void Refresh(LevelData levelData)
+    {
+        image.sprite = levelData.levelImage;
+
+        bool locked = !levelData.isUnlocked;
+
+        lockImage.gameObject.SetActive(locked);
+        levelButton.interactable = !locked;
+
+        Debug.Log($"Refreshing Polaroid for Level {levelData.levelNumber}: Unlocked = {levelData.isUnlocked}, Collectibles Collected = {levelData.collectiblesCollected}/{levelData.maxCollectibles}");
+
+        title.text = $"Level - {levelData.levelNumber}";
+        levelNameText.text = levelData.levelName;
     }
 
 

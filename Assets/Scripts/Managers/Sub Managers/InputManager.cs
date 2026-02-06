@@ -28,4 +28,16 @@ public class InputManager : MonoBehaviour
         playerMap = inputAction.Player;
         cameraMap = inputAction.Camera;
     }
+
+    public void EnableAllMap()
+    {
+        playerMap.Enable();
+        cameraMap.Enable();
+    }
+
+    public void DisableAllMap()
+    {
+        playerMap.Disable();
+        cameraMap.Disable();
+    }
 }

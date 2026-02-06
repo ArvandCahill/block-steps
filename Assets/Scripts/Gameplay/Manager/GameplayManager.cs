@@ -88,23 +88,4 @@ public class GameplayManager : MonoBehaviour
             agent.enabled = false;
         }
     }
-
-    public void Pause()
-    {
-        if (isPaused)
-        {
-            InputManager.instance.playerMap.Enable();
-            InputManager.instance.cameraMap.Enable();
-            Time.timeScale = 1.0f;
-            isPaused = false;
-        }
-
-        else
-        {
-            InputManager.instance.playerMap.Disable();
-            InputManager.instance.cameraMap.Disable();
-            Time.timeScale = 0f;
-            isPaused = true;
-        }
-    }
 }

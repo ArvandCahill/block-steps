@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public static class GameEvents
@@ -7,7 +8,7 @@ public static class GameEvents
     public static event Action<Vector3> OnPlayerMoving;
     public static event Action<Vector3> OnPlayerStopped;
     public static event Action OnCollectiblePicked;
-    public static event Action<bool,int> OnPlayerFinished;
+    public static event Action<bool> OnPlayerFinished;
     public static event Action<int> OnCurrencyValueChanged;
 
     public static void TriggerGamePaused()
@@ -30,9 +31,10 @@ public static class GameEvents
         OnCollectiblePicked?.Invoke();
     }
 
-    public static void TriggerPlayerFinished(bool isWinning, int collectibles)
+    public static IEnumerator TriggerPlayerFinished(bool isWinning, int collectibles)
     {
-        OnPlayerFinished?.Invoke(isWinning, collectibles);
+        yield return new WaitForSeconds(2f);
+        OnPlayerFinished?.Invoke(isWinning);
     }
 
     public static void TriggerCurrencyValueChanged(int currency)

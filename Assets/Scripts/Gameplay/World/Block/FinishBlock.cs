@@ -6,6 +6,6 @@ public class FinishBlock : MonoBehaviour
     {
         if (!collision.collider.CompareTag("Player")) return;
 
-        GameEvents.TriggerPlayerFinished(true, GameplayManager.instance.collectiblesCollected);
+        StartCoroutine(GameEvents.TriggerPlayerFinished(true, GameplayManager.instance.collectiblesCollected));
     }
 }

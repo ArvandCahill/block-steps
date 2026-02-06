@@ -7,7 +7,8 @@ public enum GameState
     Building,
     Paused,
     GameOver,
-    Victory
+    Win,
+    Lose
 }
 
 public enum InputState

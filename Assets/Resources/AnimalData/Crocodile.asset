@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 9
   animalName: Crocodile
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: 2cabc8f4d95a13c45956a16241af6882, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 8146447e38b1bae48981e8641d822a5b, type: 3}
   health: 3
   movementSpeed: 1
   price: 6
   isUnlockedAtStart: 0
-  isUnlocked: 0

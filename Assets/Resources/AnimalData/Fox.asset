@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 2
   animalName: Fox
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: 7e8c57350f3c2644db0101b077d4817c, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 85518970a96650c4fb5b58997a3d3dc5, type: 3}
   health: 3
   movementSpeed: 1

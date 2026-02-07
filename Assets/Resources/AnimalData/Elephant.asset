@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 12
   animalName: Elephant
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: f1cef236877fb8d41ba91b903f91903d, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 9679281cb060f624795d7b528e1c6a39, type: 3}
   health: 3
   movementSpeed: 1
   price: 4
   isUnlockedAtStart: 0
-  isUnlocked: 0

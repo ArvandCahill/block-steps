@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 10
   animalName: Cow
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: eea6e8234d04fbd41aecef0e37572127, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: c7b50647d9a4e3745a29501661d33e7e, type: 3}
   health: 3
   movementSpeed: 1
   price: 4
   isUnlockedAtStart: 0
-  isUnlocked: 0

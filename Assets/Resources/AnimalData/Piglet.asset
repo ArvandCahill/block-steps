@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4331b9e7a87e6b040b2af0f88471f3fe, type: 3}
   m_Name: Piglet
   m_EditorClassIdentifier: Game.Core::AnimalData
-  animalID: 0
-  animalName: 19
-  animalImage: {fileID: 0}
+  animalID: 19
+  animalName: Piglet
+  animalImage: {fileID: 21300000, guid: 08816e598b223cc4f95965b1776ed2ea, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 8989809b99bd93340a9efe7eed942527, type: 3}
   health: 3
   movementSpeed: 1
   price: 2
   isUnlockedAtStart: 0
-  isUnlocked: 0

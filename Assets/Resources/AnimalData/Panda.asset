@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 4
   animalName: Panda
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: b87038daa66e31b42acd078d0713b70e, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 8bb1e0aac63822648b34816cdccfebef, type: 3}
   health: 3
   movementSpeed: 1
   price: 4
   isUnlockedAtStart: 0
-  isUnlocked: 0

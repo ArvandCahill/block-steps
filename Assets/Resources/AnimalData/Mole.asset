@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 14
   animalName: Mole
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: 02ef26a6d55612a4a8b0cb7b2f5d8811, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: 393488f0cc98f4847acaad82fe046f86, type: 3}
   health: 3
   movementSpeed: 1
   price: 4
   isUnlockedAtStart: 0
-  isUnlocked: 0

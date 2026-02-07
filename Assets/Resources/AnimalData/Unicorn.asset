@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::AnimalData
   animalID: 3
   animalName: Unicorn
-  animalImage: {fileID: 0}
+  animalImage: {fileID: 21300000, guid: e553f5bc5fa20be4a970639aca736b00, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: d974aeda84a564a468bf1345d18e1557, type: 3}
   health: 3
   movementSpeed: 1

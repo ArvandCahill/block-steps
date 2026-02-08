@@ -22,7 +22,7 @@ public class AnimalData : ScriptableObject
     {
         return movementSpeed switch
         {
-            MovementSpeed.Slow => 0.8f,
+            MovementSpeed.Slow => 0.3f,
             MovementSpeed.Normal => 1.2f,
             MovementSpeed.Fast => 1.5f,
             _ => 1

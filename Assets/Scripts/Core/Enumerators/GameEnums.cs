@@ -48,3 +48,10 @@ public enum ButtonType
     UIAction,
     Restart
 }
+
+public enum PolaroidViewState
+{
+    Grid,       
+    Zoomed,     
+    Animating   
+}

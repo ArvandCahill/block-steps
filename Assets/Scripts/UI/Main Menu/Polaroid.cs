@@ -107,7 +107,6 @@ public class Polaroid : MonoBehaviour
 
         bool unlocked = data.CheckMilestone(GameManager.instance.Currency);
         lockImage.gameObject.SetActive(!unlocked);
-        levelButton.interactable = unlocked;
     }
 
     #endregion

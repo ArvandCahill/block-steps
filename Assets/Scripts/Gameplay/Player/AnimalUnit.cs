@@ -57,6 +57,7 @@ public class AnimalUnit : MonoBehaviour
 
     public void Die()
     {
+        InputManager.instance.DisableAllMap();
         GameplayManager.instance.DisableAI();
         stopMovement = true;
         animator.SetTrigger("die");

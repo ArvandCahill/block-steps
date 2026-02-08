@@ -150,6 +150,45 @@ public class GameManager : MonoBehaviour
         allLevelData = ResourcesLoader.LoadAllLevelData();
     }
 
+    public void LoadNextLevel()
+    {
+        if (selectedLevelData == null)
+        {
+            Debug.LogWarning("SelectedLevelData is null, can't load next level.");
+            return;
+        }
+
+        int currentIndex = allLevelData.IndexOf(selectedLevelData);
+
+        if (currentIndex < 0)
+        {
+            Debug.LogError("Current level not found in allLevelData list.");
+            return;
+        }
+
+        int nextIndex = currentIndex + 1;
+
+        if (nextIndex < allLevelData.Count)
+        {
+            LevelData nextLevel = allLevelData[nextIndex];
+
+            SetSelectedLevel(nextLevel);
+
+            if (nextIndex + 1 > unlockedStages)
+            {
+                unlockedStages = nextIndex + 1;
+            }
+
+            SceneLoader.RestartScene();
+        }
+        else
+        {
+            LoadingScreen(true);
+            SceneLoader.LoadScene("MainMenu"); 
+        }
+    }
+
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         string sceneName = scene.name;

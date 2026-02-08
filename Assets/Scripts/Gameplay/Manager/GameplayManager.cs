@@ -81,6 +81,11 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    public void NextLevel()
+    {
+        GameManager.instance.LoadNextLevel();
+    }
+
     public void DisableAI()
     {
         foreach (BehaviorGraphAgent agent in aiController.agents)

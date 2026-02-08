@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2802236303234768782, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4858535529147209678, guid: ffc06c03f30ee0240ba5da71d6351234, type: 3}
       propertyPath: m_Size.x
       value: 1.94

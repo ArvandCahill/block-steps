@@ -24,16 +24,29 @@ public class Shop : MonoBehaviour
     [SerializedDictionary("Polaroid", "Animal Unit")]
     [SerializeField] private SerializedDictionary<AnimalUnit, Polaroid> animals = new();
 
+    [Header("Scroll View Animation")]
+    [SerializeField] private RectTransform scrollView;
+    [SerializeField] private float scrollAnimDuration = 0.4f;
+    [SerializeField] private float scrollOffset = -600f;
+    private Vector2 scrollOriginalPos;
+
+
     private GameManager gameManager => GameManager.instance;
 
     private void OnEnable()
     {
         GameEvents.OnCurrencyValueChanged += UpdateMilestones;
+        AnimateScrollViewIn();
     }
 
     private void OnDisable()
     {
         GameEvents.OnCurrencyValueChanged -= UpdateMilestones;
+    }
+
+    private void Awake()
+    {
+        scrollOriginalPos = scrollView.anchoredPosition;
     }
 
     private void Start()
@@ -133,4 +146,34 @@ public class Shop : MonoBehaviour
             pair.Value.Refresh(pair.Key);
         }
     }
+
+    private void AnimateScrollViewIn()
+    {
+        if (scrollView == null) return;
+
+        shopButton.gameObject.SetActive(true);
+
+        scrollView.DOKill();
+
+        scrollView.anchoredPosition = scrollOriginalPos + Vector2.up * scrollOffset;
+
+        scrollView
+            .DOAnchorPos(scrollOriginalPos, scrollAnimDuration)
+            .SetEase(Ease.OutBack);
+    }
+
+    public void CloseShop()
+    {
+        if (scrollView == null) return;
+
+        shopButton.gameObject.SetActive(false);
+
+        scrollView.DOKill();
+
+        scrollView
+            .DOAnchorPos(scrollOriginalPos + Vector2.up * scrollOffset, scrollAnimDuration)
+            .SetEase(Ease.InCubic)
+            .OnComplete(() => gameObject.SetActive(false));
+    }
+
 }

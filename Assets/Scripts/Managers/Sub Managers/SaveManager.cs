@@ -33,8 +33,6 @@ public class SaveManager : MonoBehaviour
             saveData = new SaveData();
         }
 
-        Debug.Log(saveData.isSfxOn);
-
         GameManager.IsBgmOn = saveData.isBgmOn;
         GameManager.IsSfxOn = saveData.isSfxOn;
 

@@ -32,17 +32,17 @@ public class AudioManager
     [HideInInspector] public float savedBgmVolume;
     [HideInInspector] public float savedSfxVolume;
 
-    public void Initialize()
+    public void Initialize(bool bgmOn, bool sfxOn)
     {
-        savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
-        savedBgmVolume = PlayerPrefs.GetFloat("BgmVolume", 1f);
-        savedSfxVolume = PlayerPrefs.GetFloat("SfxVolume", 1f);
+        SetBgmActive(bgmOn);
+        SetSfxActive(sfxOn);
 
         SetAudioMixerValue();
 
-        if (bgmList.Count > 0)
+        if (bgmOn && bgmList.Count > 0)
             PlayBGM(0);
     }
+
 
     public void PlayBGM(int index)
     {

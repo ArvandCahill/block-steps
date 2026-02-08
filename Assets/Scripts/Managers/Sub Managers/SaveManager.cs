@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using static Codice.CM.Common.CmCallContext;
 
 public class SaveManager : MonoBehaviour
 {
-    [field: SerializeField] public SaveData saveData { get; private set; }
+    public SaveData saveData { get; private set; }
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "saveData.sawit");
 
@@ -34,8 +33,11 @@ public class SaveManager : MonoBehaviour
             saveData = new SaveData();
         }
 
-        GameManager.isBgmOn = saveData.isBgmOn;
-        GameManager.isSfxOn = saveData.isSfxOn;
+        Debug.Log(saveData.isSfxOn);
+
+        GameManager.IsBgmOn = saveData.isBgmOn;
+        GameManager.IsSfxOn = saveData.isSfxOn;
+
         GameManager.Currency = saveData.currency;
         GameManager.isFirstTimePlaying = saveData.isFirstTimePlaying;
 
@@ -56,18 +58,6 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    /*public void UnlockAnimal(int animalID)
-    {
-        if (!saveData.unlockedAnimalIds.Contains(animalID))
-        {
-            saveData.unlockedAnimalIds.Add(animalID);
-            SaveGame(saveData);
-
-            var animal = AllAnimalData.FirstOrDefault(s => s.animalID == animalID);
-            if (animal != null) animal.isUnlocked = true;
-        }
-    }*/
-
     public void SetSelectedAnimalId(int animalID)
     {
         saveData.selectedAnimalId = animalID;
@@ -83,7 +73,7 @@ public class SaveManager : MonoBehaviour
             formatter.Serialize(stream, saveData);
         }
 
-        Debug.Log("Game saved at " + SavePath);
+        /*Debug.Log("Game saved at " + SavePath);*/
     }
 
     [ContextMenu("Reset Save")]
@@ -116,7 +106,7 @@ public class SaveManager : MonoBehaviour
     [ContextMenu("cheat: Currency")]
     public void CheatCurrency()
     {
-        AddCurrency(999999999);
+        AddCurrency(99);
     }
 
     [ContextMenu("cheat: unlock Next Level")]
@@ -147,18 +137,6 @@ public class SaveManager : MonoBehaviour
         SaveGame(saveData);
     }
 
-    /*public void UnlockSlime(int slimeID)
-    {
-        if (!saveData.unlockedSlimeIds.Contains(slimeID))
-        {
-            saveData.unlockedSlimeIds.Add(slimeID);
-            SaveGame();
-
-            var slime = allSlimes.FirstOrDefault(s => s.slimeID == slimeID);
-            if (slime != null) slime.isUnlocked = true;
-        }
-    }*/
-
     public void UnlockLevel(int stage)
     {
         if (stage > saveData.unlockedLevels)
@@ -167,13 +145,6 @@ public class SaveManager : MonoBehaviour
             SaveGame(saveData);
         }
     }
-
-    /*public List<SlimeData> GetUnlockedSlimes()
-    {
-        return allSlimes
-            .Where(slime => saveData.unlockedSlimeIds.Contains(slime.slimeID))
-            .ToList();
-    }*/
 
     public bool IsAnimalUnlocked(int slimeID)
     {
@@ -189,9 +160,9 @@ public class SaveManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        saveData.isBgmOn = GameManager.instance.isBgmOn;
-        saveData.isSfxOn = GameManager.instance.isSfxOn;
+        saveData.isSfxOn = GameManager.instance.IsSfxOn;
+        Debug.Log(saveData.isSfxOn);
+        saveData.isBgmOn = GameManager.instance.IsBgmOn;
         SaveGame(saveData);
     }
-
 }

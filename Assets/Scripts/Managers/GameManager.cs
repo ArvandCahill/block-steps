@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState gameState;
 
     [Header("Game Settings")]
-    public bool isBgmOn = true;
-    public bool isSfxOn = true;
+    [SerializeField] private bool isBgmOn = true;
+    [SerializeField] private bool isSfxOn = true;
 
     [Header("Save Settings")]
     [SerializeField] private int currency = 0;
@@ -82,6 +82,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool IsBgmOn
+    {
+        get { return isBgmOn; }
+        set 
+        { 
+            if (value == isBgmOn) return;
+
+            isBgmOn = value; 
+            audioManager?.SetBgmActive(IsBgmOn);
+        }
+    }
+
+    public bool IsSfxOn
+    {
+        get { return isSfxOn; }
+        set 
+        { 
+            if (value == isSfxOn) return;
+
+            isSfxOn = value; 
+            audioManager?.SetSfxActive(IsSfxOn);
+        }
+    }
+
     #endregion
 
    #region Getters and Setters
@@ -105,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        audioManager?.Initialize();
+        audioManager?.Initialize(IsBgmOn, IsSfxOn);
 
         uiManager?.HideAllPopups();
 
@@ -114,10 +138,9 @@ public class GameManager : MonoBehaviour
 
     public void ApplyAudioSettings()
     {
-        audioManager?.SetBgmActive(isBgmOn);
-        audioManager?.SetSfxActive(isSfxOn);
+        audioManager?.SetBgmActive(IsBgmOn);
+        audioManager?.SetSfxActive(IsSfxOn);
     }
-
 
     public void ResetSceneCount() => sceneCount = 0;
 

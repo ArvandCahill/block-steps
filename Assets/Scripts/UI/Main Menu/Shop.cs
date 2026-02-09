@@ -151,7 +151,7 @@ public class Shop : MonoBehaviour
     {
         if (scrollView == null) return;
 
-        shopButton.gameObject.SetActive(true);
+        shopButton.transform.parent.gameObject.SetActive(true);
 
         scrollView.DOKill();
 
@@ -166,7 +166,7 @@ public class Shop : MonoBehaviour
     {
         if (scrollView == null) return;
 
-        shopButton.gameObject.SetActive(false);
+        shopButton.transform.parent.gameObject.SetActive(false);
 
         scrollView.DOKill();
 
@@ -175,5 +175,4 @@ public class Shop : MonoBehaviour
             .SetEase(Ease.InCubic)
             .OnComplete(() => gameObject.SetActive(false));
     }
-
 }

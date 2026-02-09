@@ -33,7 +33,7 @@ public static class GameEvents
 
     public static IEnumerator TriggerPlayerFinished(bool isWinning, int collectibles)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         OnPlayerFinished?.Invoke(isWinning);
     }
 

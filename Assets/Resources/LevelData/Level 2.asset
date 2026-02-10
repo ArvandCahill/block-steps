@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d766e7fa4807e41a1b42e9d164446d, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: Game.Core::LevelData
-  levelPrefab: {fileID: 3460411290651650848, guid: 7c2a77ac459a26c4b97e21daeaa5e9ed, type: 3}
-  levelImage: {fileID: 0}
+  levelPrefab: {fileID: 1261415366275919296, guid: f7bf38d76e4dd0d4691a2f56c7d95936, type: 3}
+  levelImage: {fileID: 21300000, guid: 3cf88b65c9c3fa74f813b19f67b85363, type: 3}
   levelNumber: 2
-  levelName: 
-  maxCollectibles: 3
+  levelName: CandyLand
+  maxCollectibles: 5
   isUnlocked: 0
   isNightMode: 0
   collectiblesCollected: 0

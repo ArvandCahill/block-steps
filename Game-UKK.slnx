@@ -1,11 +1,15 @@
 ﻿<Solution>
   <Project Path="Game.Gameplay.csproj" />
   <Project Path="AYellowpaper.SerializedCollections.csproj" />
+  <Project Path="IngameDebugConsole.Runtime.csproj" />
   <Project Path="AYellowpaper.SerializeInterfaces.Editor.csproj" />
   <Project Path="Game.Plugin.csproj" />
   <Project Path="AYellowpaper.SerializedCollections.Editor.csproj" />
   <Project Path="Game.UI.csproj" />
   <Project Path="Game.Managers.csproj" />
   <Project Path="Game.Core.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="AYellowpaper.SerializeInterfaces.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="IngameDebugConsole.Editor.csproj" />
 </Solution>

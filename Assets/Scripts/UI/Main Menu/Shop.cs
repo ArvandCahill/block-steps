@@ -13,6 +13,7 @@ public class Shop : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Block blockTarget;
+    [SerializeField] private Block blockDefault;
     [SerializeField] private Transform polaroidContainer;
     [SerializeField] private Transform animalContainer;
     [SerializeField] private ShopButton shopButton;
@@ -100,7 +101,11 @@ public class Shop : MonoBehaviour
 
     private void ResetPreviousSelection()
     {
-        if(displayedAnimal != null) PathFinding.instance.Move(displayedAnimal, new Vector3Int(0, 0, 6));
+        if (displayedAnimal != null)
+        {
+            PathFinding.instance.Move(displayedAnimal, blockDefault.GetPosition());
+            Debug.Log("move previous animal");
+        }
         displayedAnimal?.EnableAI(true);
         displayedPolaroid?.transform
             .DOScale(0.65f, 0.2f)

@@ -8,6 +8,11 @@ public class Collectibles : MonoBehaviour
     {
         if (!col.CompareTag("Player")) return;
 
+        if (mesh == null)
+        {
+            gameObject.SetActive(false);
+        }
+
         collectibleParticles.Play();
         GameEvents.TriggerCollectiblePicked();
         mesh.SetActive(false);

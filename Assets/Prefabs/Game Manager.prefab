@@ -244,7 +244,8 @@ MonoBehaviour:
     audioMixer: {fileID: 24100000, guid: b4d64140f7ff4a141bda0dc2168e535c, type: 2}
     audioMixerGroup: {fileID: 0}
     bgmSource: {fileID: 1891108589274427595}
-    bgmList: []
+    bgmList:
+    - {fileID: 8300000, guid: e9794e80c36409e46b6490f1e0883be5, type: 3}
     currentBgmIndex: 0
     bgmMixerParam: BGM_VOLUME
     sfxSource: {fileID: 8616484310266767770}
@@ -256,7 +257,9 @@ MonoBehaviour:
     sfxList:
       _serializedList:
       - Key: Tap
-        Value: {fileID: 8300000, guid: ba3f9aacf0258944ab2a81f5e98de0dc, type: 3}
+        Value: {fileID: 8300000, guid: 7b2704e4e9acfca4981c219ad5ffb488, type: 3}
+      - Key: Paper
+        Value: {fileID: 8300000, guid: db029f4a00dcaec4dbe56e9c7481270c, type: 3}
     savedVolume: 0
     savedBgmVolume: 0
     savedSfxVolume: 0
@@ -264,6 +267,10 @@ MonoBehaviour:
     Panel: {fileID: 0}
     popupList:
       _serializedList: []
+  <admobInit>k__BackingField:
+    isAdActive: 1
+    testMode: 1
+    adsFrequency: 1
   gameState: 0
   isBgmOn: 1
   isSfxOn: 1

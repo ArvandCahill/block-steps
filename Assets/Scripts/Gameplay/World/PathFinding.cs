@@ -97,13 +97,6 @@ public class PathFinding : MonoBehaviour
 
         foreach (var dir in directions)
         {
-            Vector3Int sameLevel = position + dir;
-            if (IsPositionWalkable(sameLevel))
-            {
-                neighbors.Add(sameLevel);
-                continue;
-            }
-
             Vector3Int upStep = position + dir + Vector3Int.up;
             if (IsPositionWalkable(upStep))
             {
@@ -115,6 +108,13 @@ public class PathFinding : MonoBehaviour
             if (IsPositionWalkable(downStep))
             {
                 neighbors.Add(downStep);
+            }
+
+            Vector3Int sameLevel = position + dir;
+            if (IsPositionWalkable(sameLevel))
+            {
+                neighbors.Add(sameLevel);
+                continue;
             }
         }
 
@@ -239,8 +239,27 @@ public class PathFinding : MonoBehaviour
     {
         return new Vector3Int(
             Mathf.RoundToInt(pos.x),
-            Mathf.RoundToInt(0),
+            Mathf.RoundToInt(pos.y),
             Mathf.RoundToInt(pos.z)
         );
+    }
+
+    public void RegisterBlock(Block block)
+    {
+        Vector3Int pos = block.GetPosition();
+        if (!blocks.ContainsKey(pos))
+        {
+            blocks.Add(pos, block);
+            block.debugInfo = $"registered {block.name}";
+        }
+    }
+
+    public void UnregisterBlock(Block block)
+    {
+        Vector3Int pos = block.GetPosition();
+        if (blocks.ContainsKey(pos))
+        {
+            blocks.Remove(pos);
+        }
     }
 }

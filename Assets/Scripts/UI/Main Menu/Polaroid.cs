@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 
 public class Polaroid : MonoBehaviour
 {
@@ -64,6 +65,8 @@ public class Polaroid : MonoBehaviour
             onPolaroidClicked?.Invoke(this);
         });
 
+        InstantiateAppleImage(levelData);
+
         appleImageParent.gameObject.SetActive(true);
         Refresh(levelData);
     }
@@ -80,6 +83,24 @@ public class Polaroid : MonoBehaviour
 
         appleImageParent.gameObject.SetActive(false);
         Refresh(animalUnit);
+    }
+
+    private void InstantiateAppleImage(LevelData levelData)
+    {
+        for (int i = 0; i < levelData.maxCollectibles; i++)
+        {
+            Image img = Instantiate(appleImage, appleImageParent);
+            appleImages.Add(img);
+
+            if (i < levelData.collectiblesCollected)
+            {
+                appleImages[i].color = Color.white;
+            }
+            else
+            {
+                appleImages[i].color = Color.gray;
+            }
+        }
     }
 
     #endregion
@@ -121,6 +142,7 @@ public class Polaroid : MonoBehaviour
         State = PolaroidViewState.Animating;
 
         Sequence seq = DOTween.Sequence();
+        GameManager.instance.audioManager.PlaySFX("Paper");
 
         seq.Append(
             bg.DOAnchorPos(bgShownPos, pocketAnimDuration)

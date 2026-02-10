@@ -214,7 +214,7 @@ Rigidbody:
   m_GameObject: {fileID: 6588274714876077911}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 48.09
+  m_LinearDamping: 1
   m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

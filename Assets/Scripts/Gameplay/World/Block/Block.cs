@@ -21,6 +21,7 @@ public abstract class Block : Interactable
             case BlockType.Finish:
                 GameplayManager.instance.finishPoint = this;
                 gameObject.AddComponent<FinishBlock>();
+                isWalkable = true;
                 break;
             case BlockType.Decoration:
                 isWalkable = false;

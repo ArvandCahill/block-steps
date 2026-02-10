@@ -53,10 +53,8 @@ public class PlayerController : MonoBehaviour
         currentDraggable = null;
 
         startPos = inputManager.inputAction.Player.Drag.ReadValue<Vector2>();
+        if (currentDraggable != null) inputManager.cameraMap.Disable();
         StartRaycast(startPos);
-
-        if (currentDraggable != null) inputManager.inputAction.Camera.Disable();
-        else inputManager.inputAction.Camera.Enable();
 
         inputState = InputState.pressed;
     }
@@ -68,6 +66,7 @@ public class PlayerController : MonoBehaviour
         if (inputState == InputState.pressed && Vector2.Distance(currentPos, startPos) > dragThreshold)
         {
             inputState = InputState.dragging;
+            
         }
 
         if(inputState == InputState.dragging) Drag(currentPos);
@@ -79,8 +78,9 @@ public class PlayerController : MonoBehaviour
 
         if (inputState == InputState.dragging)
         {
+            currentDraggable?.OnDragEnd();
             inputState = InputState.idle;
-            inputManager.inputAction.Camera.Enable();
+            inputManager.cameraMap.Enable();
             return;
         }
 
@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
 
         hit.transform.TryGetComponent(out currentInteractable);
         hit.transform.TryGetComponent(out currentDraggable);
+        Debug.Log("Hit: " + hit.transform.name);
     }
 
     void Click(Vector2 screenPos)

@@ -99,11 +99,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9097478160056124491}
-  - component: {fileID: 8751313859340296424}
   - component: {fileID: 4129292690134152298}
   - component: {fileID: 7907877868515404545}
   - component: {fileID: 1350411672769717306}
   - component: {fileID: 159427484325185894}
+  - component: {fileID: 713346138893626252}
   m_Layer: 0
   m_Name: tree
   m_TagString: Untagged
@@ -127,23 +127,6 @@ Transform:
   - {fileID: 8516456553837507859}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8751313859340296424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8433954038029311729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
-  duration: 0.2
-  position: {x: 0, y: 1, z: -5}
-  type: 3
-  isWalkable: 1
-  debugInfo: 
 --- !u!65 &4129292690134152298
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -228,3 +211,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6979507, y: 1.3722427, z: 2.1826704}
   m_Center: {x: 0.41411704, y: 3.405998, z: 0.12737688}
+--- !u!114 &713346138893626252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433954038029311729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5928c1f7b0af804691ec5a8c4aba828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Gameplay::SolidBlock
+  duration: 0.2
+  position: {x: 0, y: 0, z: 0}
+  type: 3
+  isWalkable: 0
+  debugInfo: 

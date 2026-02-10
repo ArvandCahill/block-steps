@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public AudioManager audioManager { get; private set; }
     [field: SerializeField] public UIManager uiManager { get; private set; }
 
-    //[Header ("Ads")]
-    //[field: SerializeField] public AdmobInit admobInit { get; private set; }
+    [Header ("Ads")]
+    [field: SerializeField] public AdmobInit admobInit { get; private set; }
 
     public SaveManager saveManager { get; private set; }
     public SceneLoader SceneLoader { get; private set; }
@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
         SceneLoader = GetComponent<SceneLoader>();
         saveManager = GetComponent<SaveManager>();
         saveManager.LoadSaveData();
+        admobInit.Init();
     }
 
     #region Properties
@@ -136,6 +137,19 @@ public class GameManager : MonoBehaviour
         ApplyAudioSettings();
     }
 
+    private void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                audioManager.PlaySFX("Tap");
+            }
+        }
+    }
+
     public void ApplyAudioSettings()
     {
         audioManager?.SetBgmActive(IsBgmOn);
@@ -195,9 +209,9 @@ public class GameManager : MonoBehaviour
         sceneCount++;
 
         uiManager?.HideAllPopups();
-        //if (sceneName == "MainMenu" || sceneName == "ModeSelector") admobInit.DestroyBanner();
-        //else admobInit.RequestBanner();
-        //StartCoroutine(admobInit.ShowInterstitalWithDelay(sceneCount));
+
+        if (sceneName == "MainMenu" && sceneCount > 0)
+            admobInit.ShowInterstitial();
     }
 
     public void LoadingScreen(bool enable)

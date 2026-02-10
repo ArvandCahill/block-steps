@@ -18,6 +18,20 @@ public enum InputState
     dragging
 }
 
+public enum MoveState
+{
+    AtStart,
+    AtTarget
+}
+
+public enum MoveDirection
+{
+    Forward,
+    Backward,
+    Left,
+    Right
+}
+
 public enum BlockType
 {
     Start,

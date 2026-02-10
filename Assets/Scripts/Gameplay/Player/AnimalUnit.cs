@@ -21,8 +21,10 @@ public class AnimalUnit : MonoBehaviour
 
     [Header("Movement")]
     public bool stopMovement { get; set; } = false;
-
     public bool isMoving => moveRoutine != null;
+
+    [Header("Platform")]
+    private Vector3 externalDelta;
 
     private void Start()
     {
@@ -68,5 +70,19 @@ public class AnimalUnit : MonoBehaviour
     public void EnableAI(bool enabled)
     {
         behaviorGraphAgent.enabled = enabled;
+    }
+
+    public void AddExternalDelta(Vector3 delta)
+    {
+        externalDelta += delta; 
+    }
+
+    private void FixedUpdate()
+    {
+        if (externalDelta == Vector3.zero)
+            return;
+
+        rb.MovePosition(rb.position + externalDelta);
+        externalDelta = Vector3.zero;
     }
 }

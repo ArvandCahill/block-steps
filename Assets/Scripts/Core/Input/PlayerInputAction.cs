@@ -235,9 +235,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Press"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""95f9fa99-34de-4b24-80d0-5e9e598315c2"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true

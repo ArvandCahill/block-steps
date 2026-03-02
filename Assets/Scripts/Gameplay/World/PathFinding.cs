@@ -110,6 +110,8 @@ public class PathFinding : MonoBehaviour
                 neighbors.Add(downStep);
             }
 
+
+
             Vector3Int sameLevel = position + dir;
             if (IsPositionWalkable(sameLevel))
             {
@@ -239,7 +241,7 @@ public class PathFinding : MonoBehaviour
     {
         return new Vector3Int(
             Mathf.RoundToInt(pos.x),
-            Mathf.RoundToInt(pos.y),
+            Mathf.RoundToInt(pos.y - 1),
             Mathf.RoundToInt(pos.z)
         );
     }

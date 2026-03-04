@@ -1,9 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic;
-using AYellowpaper.SerializedCollections;
-using System.Linq;
-using UnityEngine.UI;
 using Unity.Behavior;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -13,7 +11,6 @@ public class GameplayManager : MonoBehaviour
     [Header("Core")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public AnimalUnit playerUnit;
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private AIController aiController;
     [SerializeField] private CameraManager cameraManager;   
     [SerializeField] public LevelData levelData;
@@ -22,6 +19,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Transform environmentParent;
     public Transform startPoint;
     public Block finishPoint;
+    [SerializeField] private Material daySkyMat;
+    [SerializeField] private Material nightSkyMat;
+
+    [Header("Lighting")]
+    [SerializeField] private Light directionalLight;
+    [SerializeField] Volume postProcessVolume;    
 
     [Header("Prefabs")]
     [SerializeField] private GameObject levelPrefab;
@@ -66,6 +69,9 @@ public class GameplayManager : MonoBehaviour
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         playerUnit.Init(gameManager.GetSelectedAnimal());
         Instantiate(flag, finishPoint.transform.position + Vector3.up, Quaternion.identity, finishPoint.transform);
+        ChangeSkybox();
+        SetLightIntensity();
+        SetExposure();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -78,6 +84,45 @@ public class GameplayManager : MonoBehaviour
         {
             finishPoint.gameObject.SetActive(true);
             Debug.Log("Finish Point Activated");
+        }
+    }
+
+    void ChangeSkybox()
+    {
+        if (!levelData.isNightMode)
+        {
+            RenderSettings.skybox = daySkyMat;
+        }
+        else
+        {
+            RenderSettings.skybox = nightSkyMat;
+        }
+    }
+
+    void SetLightIntensity()
+    {
+        if (!levelData.isNightMode)
+        {
+            directionalLight.intensity = 1f;
+        }
+        else
+        {
+            directionalLight.intensity = 0.2f;
+        }
+    }
+
+    void SetExposure()
+    {
+        if (postProcessVolume.profile.TryGet(out ColorAdjustments exposure))
+        {
+            float targetValue = levelData.isNightMode ? -2f : 0f;
+
+            exposure.postExposure.value = targetValue;
+            Debug.Log("Exposure set to " + exposure.postExposure.value);
+        }
+        else
+        {
+            Debug.LogWarning("ColorAdjustments not found in Volume!");
         }
     }
 

@@ -18,6 +18,7 @@ MonoBehaviour:
   levelName: Desert
   maxCollectibles: 3
   isUnlocked: 1
-  isNightMode: 1
-  collectiblesCollected: 0
+  collectiblesCollected: 2
   isLevelFinished: 0
+  isNightMode: 1
+  skyboxType: 1

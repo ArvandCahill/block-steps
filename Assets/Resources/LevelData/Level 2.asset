@@ -17,7 +17,8 @@ MonoBehaviour:
   levelNumber: 2
   levelName: CandyLand
   maxCollectibles: 5
-  isUnlocked: 0
-  isNightMode: 0
-  collectiblesCollected: 0
+  isUnlocked: 1
+  collectiblesCollected: 1
   isLevelFinished: 0
+  isNightMode: 0
+  skyboxType: 3

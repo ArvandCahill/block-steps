@@ -69,3 +69,12 @@ public enum PolaroidViewState
     Zoomed,     
     Animating   
 }
+
+public enum SkyboxType
+{
+    Day,
+    Night,
+    Tropical,
+    Pink,
+    Sunrise
+}

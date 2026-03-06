@@ -8,6 +8,8 @@ public class GameplayManager : MonoBehaviour
     #region Variables
     public static GameplayManager instance { get; private set; }
 
+    [SerializeField] private SceneEnvironment sceneEnvironment;
+
     [Header("Core")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] public AnimalUnit playerUnit;
@@ -18,13 +20,7 @@ public class GameplayManager : MonoBehaviour
     [Header("Environment")]
     [SerializeField] private Transform environmentParent;
     public Transform startPoint;
-    public Block finishPoint;
-    [SerializeField] private Material daySkyMat;
-    [SerializeField] private Material nightSkyMat;
-
-    [Header("Lighting")]
-    [SerializeField] private Light directionalLight;
-    [SerializeField] Volume postProcessVolume;    
+    public Block finishPoint; 
 
     [Header("Prefabs")]
     [SerializeField] private GameObject levelPrefab;
@@ -61,6 +57,7 @@ public class GameplayManager : MonoBehaviour
     {
         cameraManager.SetCameraTarget(playerUnit.transform);
         finishPoint.gameObject.SetActive(false);
+        sceneEnvironment.Init(levelData);
     }
 
     private void SpawnEnvironment()
@@ -69,9 +66,6 @@ public class GameplayManager : MonoBehaviour
         playerUnit = Instantiate(playerPrefab, startPoint.position + Vector3.up, startPoint.localRotation, environmentParent).GetComponent<AnimalUnit>();
         playerUnit.Init(gameManager.GetSelectedAnimal());
         Instantiate(flag, finishPoint.transform.position + Vector3.up, Quaternion.identity, finishPoint.transform);
-        ChangeSkybox();
-        SetLightIntensity();
-        SetExposure();
         Debug.Log("Player Spawned at " + playerUnit.transform.position);
     }
 
@@ -87,44 +81,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    void ChangeSkybox()
-    {
-        if (!levelData.isNightMode)
-        {
-            RenderSettings.skybox = daySkyMat;
-        }
-        else
-        {
-            RenderSettings.skybox = nightSkyMat;
-        }
-    }
-
-    void SetLightIntensity()
-    {
-        if (!levelData.isNightMode)
-        {
-            directionalLight.intensity = 1f;
-        }
-        else
-        {
-            directionalLight.intensity = 0.2f;
-        }
-    }
-
-    void SetExposure()
-    {
-        if (postProcessVolume.profile.TryGet(out ColorAdjustments exposure))
-        {
-            float targetValue = levelData.isNightMode ? -2f : 0f;
-
-            exposure.postExposure.value = targetValue;
-            Debug.Log("Exposure set to " + exposure.postExposure.value);
-        }
-        else
-        {
-            Debug.LogWarning("ColorAdjustments not found in Volume!");
-        }
-    }
+    
 
     public void NextLevel()
     {

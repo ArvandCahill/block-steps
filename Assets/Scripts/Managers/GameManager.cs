@@ -14,21 +14,10 @@ public class GameManager : MonoBehaviour
     [Header ("Ads")]
     [field: SerializeField] public AdmobInit admobInit { get; private set; }
 
-    public SaveManager saveManager { get; private set; }
     public SceneLoader SceneLoader { get; private set; }
 
     [Header("Game Enumerators")]
     [SerializeField] private GameState gameState;
-
-    [Header("Game Settings")]
-    [SerializeField] private bool isBgmOn = true;
-    [SerializeField] private bool isSfxOn = true;
-
-    [Header("Save Settings")]
-    [SerializeField] private int currency = 0;
-    [SerializeField] private List<int> unlockedUnit = new();
-    [SerializeField] private int unlockedStages = 1;
-    public bool isFirstTimePlaying;
 
     [Header("Resource")]
     [SerializeField] private AnimalData selectedAnimalData;
@@ -41,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool isAnimating;
     private int sceneCount = 0;
+
+    private SaveManager saveManager => SaveManager.instance;
 
     private void Awake()
     {
@@ -66,48 +57,10 @@ public class GameManager : MonoBehaviour
         }*/
 
         LoadResource();
-        SceneLoader = GetComponent<SceneLoader>();
-        saveManager = GetComponent<SaveManager>();
         saveManager.LoadSaveData();
+        SceneLoader = GetComponent<SceneLoader>();
         admobInit.Init();
     }
-
-    #region Properties
-    public int Currency
-    {
-        get { return currency; } 
-        set 
-        {
-            currency = value; 
-            GameEvents.TriggerCurrencyValueChanged(currency);
-        }
-    }
-
-    public bool IsBgmOn
-    {
-        get { return isBgmOn; }
-        set 
-        { 
-            if (value == isBgmOn) return;
-
-            isBgmOn = value; 
-            audioManager?.SetBgmActive(IsBgmOn);
-        }
-    }
-
-    public bool IsSfxOn
-    {
-        get { return isSfxOn; }
-        set 
-        { 
-            if (value == isSfxOn) return;
-
-            isSfxOn = value; 
-            audioManager?.SetSfxActive(IsSfxOn);
-        }
-    }
-
-    #endregion
 
    #region Getters and Setters
     public void SetSelectedAnimal(AnimalData animalData)
@@ -130,11 +83,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        audioManager?.Initialize(IsBgmOn, IsSfxOn);
+        audioManager?.Initialize(saveManager.IsBgmOn, saveManager. IsSfxOn);
 
         uiManager?.HideAllPopups();
-
-        ApplyAudioSettings();
     }
 
     private void Update()
@@ -148,12 +99,6 @@ public class GameManager : MonoBehaviour
                 audioManager.PlaySFX("Tap");
             }
         }
-    }
-
-    public void ApplyAudioSettings()
-    {
-        audioManager?.SetBgmActive(IsBgmOn);
-        audioManager?.SetSfxActive(IsSfxOn);
     }
 
     public void ResetSceneCount() => sceneCount = 0;
@@ -188,9 +133,9 @@ public class GameManager : MonoBehaviour
 
             SetSelectedLevel(nextLevel);
 
-            if (nextIndex + 1 > unlockedStages)
+            if (nextIndex + 1 > saveManager.UnlockedLevels)
             {
-                unlockedStages = nextIndex + 1;
+                saveManager.UnlockedLevels = nextIndex + 1;
             }
 
             SceneLoader.RestartScene();
@@ -201,7 +146,6 @@ public class GameManager : MonoBehaviour
             SceneLoader.LoadScene("MainMenu"); 
         }
     }
-
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

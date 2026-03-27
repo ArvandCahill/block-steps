@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Behavior;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using System.Collections.Generic;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private SceneEnvironment sceneEnvironment;
 
     [Header("Core")]
-    [SerializeField] private GameObject playerPrefab;
     [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private AIController aiController;
     [SerializeField] private CameraManager cameraManager;   
@@ -19,45 +17,55 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Environment")]
     [SerializeField] private Transform environmentParent;
+    public List<Collectible> appleCollectibles = new();
     public Transform startPoint;
     public Block finishPoint; 
 
     [Header("Prefabs")]
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject levelPrefab;
     [SerializeField] private GameObject flag;
 
-    private GameManager gameManager;
     public bool isPaused = false;
 
-    public int collectiblesCollected = 0;
+    private LevelProgress levelProgress;
+    private int collectiblesCollected = 0;
+    private int initialCollectiblesProgress;
+    private bool isLevelFinished = false;
     #endregion
+
+    private GameManager gameManager => GameManager.instance;
+    private SaveManager saveManager => SaveManager.instance;
 
     private void OnEnable()
     {
         GameEvents.OnCollectiblePicked += OnCollectiblesPicked;
+        GameEvents.OnLevelFinished += FinishLevel;
     }
 
     private void OnDisable()
     {
         GameEvents.OnCollectiblePicked -= OnCollectiblesPicked;
+        GameEvents.OnLevelFinished -= FinishLevel;
     }
 
     void Awake()
     {
         if (instance == null) instance = this;
 
-        gameManager = GameManager.instance;
         levelData = gameManager.GetSelectedLevel();
         levelPrefab = levelData?.levelPrefab;
-        levelData?.ResetLevel();
         SpawnEnvironment();
+        
     }
 
     void Start()
     {
-        cameraManager.SetCameraTarget(playerUnit.transform);
-        finishPoint.gameObject.SetActive(false);
         sceneEnvironment.Init(levelData);
+        levelProgress = saveManager.GetLevelProgress(levelData.levelNumber);
+        initialCollectiblesProgress = levelProgress.collectiblesCollected;
+        finishPoint.gameObject.SetActive(false);
+        cameraManager.SetCameraTarget(playerUnit.transform);
     }
 
     private void SpawnEnvironment()
@@ -71,28 +79,80 @@ public class GameplayManager : MonoBehaviour
 
     public void OnCollectiblesPicked()
     {
-        levelData.CollectiblesCollected();
         collectiblesCollected++;
 
-        if (levelData.IsFinish())
+        if (collectiblesCollected == levelData.maxCollectibles)
         {
             finishPoint.gameObject.SetActive(true);
             Debug.Log("Finish Point Activated");
         }
+
+        if (levelProgress.collectiblesCollected != levelData.maxCollectibles)
+        {
+            levelProgress.AddCollectiblesCollected(levelData);
+            return;
+        }
     }
 
-    
+    public void ResetCollectiblesCollected()
+    {
+        if (isLevelFinished) return;
+
+        levelProgress.collectiblesCollected = initialCollectiblesProgress;
+        saveManager.SaveGame();
+    }
+
+    private void FinishLevel(bool isWinning)
+    {
+        isLevelFinished = true;
+        Reward();
+
+        if (isWinning && saveManager.UnlockedLevels == levelData.levelNumber)
+        {
+            saveManager.UnlockedLevels += 2; 
+            levelProgress.MarkAsCompleted();
+        }
+    }
+
+    private void Reward()
+    {
+        int reward = collectiblesCollected - initialCollectiblesProgress;
+        Debug.Log("Reward: " + reward);
+        saveManager.AddCurrency(reward);
+    }
 
     public void NextLevel()
     {
         GameManager.instance.LoadNextLevel();
     }
 
+    [ContextMenu("Disable AI")]
     public void DisableAI()
     {
         foreach (BehaviorGraphAgent agent in aiController.agents)
         {
             agent.enabled = false;
+
+            if (agent.TryGetComponent<AnimalUnit>(out var unit)) 
+            { 
+                unit.stopMovement = true;
+            }
         }
+    }
+
+    [ContextMenu("Collect All Apples")]
+    public void CollectApples()
+    {
+        foreach (Collectible apple in appleCollectibles)
+        {
+            apple.OnCollected();
+            apple.gameObject.SetActive(false);
+        }
+    }
+
+    [ContextMenu("Teleport to Finish Point")]
+    public void TeleportToFinish()
+    {
+        playerUnit.transform.position = finishPoint.transform.position + Vector3.up;
     }
 }

@@ -12,8 +12,8 @@ public class SettingPanel : MonoBehaviour
 
     public void Start()
     {
-        bgmToggle.SetIsOnWithoutNotify(GameManager.instance.IsBgmOn);
-        sfxToggle.SetIsOnWithoutNotify(GameManager.instance.IsSfxOn);
+        bgmToggle.SetIsOnWithoutNotify(SaveManager.instance.IsBgmOn);
+        sfxToggle.SetIsOnWithoutNotify(SaveManager.instance.IsSfxOn);
 
         bgmText.text = bgmToggle.isOn ? "ON" : "OFF";
         sfxText.text = sfxToggle.isOn ? "ON" : "OFF";
@@ -25,14 +25,12 @@ public class SettingPanel : MonoBehaviour
     public void SetBGM(bool isOn)
     {
         bgmText.text = isOn ? "ON" : "OFF";
-        GameManager.instance.IsBgmOn = isOn;
-        GameManager.instance.saveManager.SaveSettings();
+        SaveManager.instance.IsBgmOn = isOn;
     }
 
     public void SetSFX(bool isOn)
     {
         sfxText.text = isOn ? "ON" : "OFF";
-        GameManager.instance.IsSfxOn = isOn;
-        GameManager.instance.saveManager.SaveSettings();
+        SaveManager.instance.IsSfxOn = isOn;
     }
 }

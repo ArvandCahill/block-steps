@@ -200,8 +200,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3700390754030458174}
   - component: {fileID: 6573215634301694122}
-  - component: {fileID: 7119242224315777431}
   - component: {fileID: 8641961889602242874}
+  - component: {fileID: 7119242224315777431}
   - component: {fileID: 6296053155693372439}
   - component: {fileID: 1891108589274427595}
   - component: {fileID: 8616484310266767770}
@@ -272,30 +272,12 @@ MonoBehaviour:
     testMode: 1
     adsFrequency: 1
   gameState: 0
-  isBgmOn: 1
-  isSfxOn: 1
-  currency: 0
-  unlockedUnit: 
-  unlockedStages: 1
-  isFirstTimePlaying: 0
   selectedAnimalData: {fileID: 0}
   selectedLevelData: {fileID: 11400000, guid: b59c6a084acc6994b82b15809507f00d, type: 2}
   allAnimalData: []
   allLevelData: []
   panel: {fileID: 5483269425888918826}
   isAnimating: 0
---- !u!114 &7119242224315777431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6066611954681488004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee260090e5cb374e8ac5f19723f4a0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Managers::SceneLoader
 --- !u!114 &8641961889602242874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +290,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200de3b8e2c13034ba762e368f5371b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Managers::SaveManager
+  <saveData>k__BackingField:
+    selectedAnimalId: 0
+    currency: 0
+    unlockedLevels: 0
+    levelProgress: []
+    unlockedAnimalIds: 
+    isBgmOn: 1
+    isSfxOn: 1
+    isFirstTimePlaying: 1
+--- !u!114 &7119242224315777431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6066611954681488004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee260090e5cb374e8ac5f19723f4a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Managers::SceneLoader
 --- !u!114 &6296053155693372439
 MonoBehaviour:
   m_ObjectHideFlags: 0

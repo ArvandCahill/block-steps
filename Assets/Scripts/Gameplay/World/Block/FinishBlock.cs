@@ -1,12 +1,13 @@
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
-public class FinishBlock : MonoBehaviour
+public class FinishBlock
 {
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.collider.CompareTag("Player")) return;
 
-        GameManager.instance.saveManager.UnlockNextStage();
-        StartCoroutine(GameEvents.TriggerPlayerFinished(true, GameplayManager.instance.collectiblesCollected));
+        SaveManager.instance.UnlockNextStage();
+        GameEvents.TriggerLevelFinished(true);
     }
 }

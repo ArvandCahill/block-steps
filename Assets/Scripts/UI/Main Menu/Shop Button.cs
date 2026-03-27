@@ -18,7 +18,7 @@ public class ShopButton : MonoBehaviour
     {
         button.onClick.RemoveAllListeners();
 
-        if (unit.animalData.CheckMilestone(gameManager.Currency))
+        if (unit.animalData.CheckMilestone(SaveManager.instance.Currency))
         {
             button.onClick.AddListener(() => SelectAnimal(unit));
 

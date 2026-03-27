@@ -8,7 +8,7 @@ public static class GameEvents
     public static event Action<Vector3> OnPlayerMoving;
     public static event Action<Vector3> OnPlayerStopped;
     public static event Action OnCollectiblePicked;
-    public static event Action<bool> OnPlayerFinished;
+    public static event Action<bool> OnLevelFinished;
     public static event Action<int> OnCurrencyValueChanged;
 
     public static void TriggerGamePaused()
@@ -31,14 +31,8 @@ public static class GameEvents
         OnCollectiblePicked?.Invoke();
     }
 
-    public static IEnumerator TriggerPlayerFinished(bool isWinning, int collectibles)
+    public static void TriggerLevelFinished(bool isWinning)
     {
-        yield return new WaitForSeconds(0.5f);
-        OnPlayerFinished?.Invoke(isWinning);
-    }
-
-    public static void TriggerCurrencyValueChanged(int currency)
-    {
-        OnCurrencyValueChanged?.Invoke(currency);
+        OnLevelFinished?.Invoke(isWinning);
     }
 }

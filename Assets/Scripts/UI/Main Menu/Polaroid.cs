@@ -39,6 +39,7 @@ public class Polaroid : MonoBehaviour
     private Vector3 bgOriginalScale;
 
     private Action<Polaroid> onPolaroidClicked;
+    private SaveManager saveManager => SaveManager.instance;
 
     private void Awake()
     {
@@ -52,10 +53,7 @@ public class Polaroid : MonoBehaviour
 
     #region Init
 
-    public void Init(
-        LevelData levelData,
-        Action<LevelData> startLevel,
-        Action<Polaroid> onClicked)
+    public void Init(LevelData levelData, Action<Polaroid> onClicked)
     {
         onPolaroidClicked = onClicked;
 
@@ -92,7 +90,7 @@ public class Polaroid : MonoBehaviour
             Image img = Instantiate(appleImage, appleImageParent);
             appleImages.Add(img);
 
-            if (i < levelData.collectiblesCollected)
+            if (i < saveManager.GetLevelProgress(levelData.levelNumber).collectiblesCollected)
             {
                 appleImages[i].color = Color.white;
             }
@@ -111,7 +109,7 @@ public class Polaroid : MonoBehaviour
     {
         image.sprite = levelData.levelImage;
 
-        bool locked = !levelData.isUnlocked;
+        bool locked = !saveManager.IsLevelUnlocked(levelData.levelNumber);
         lockImage.gameObject.SetActive(locked);
         levelButton.interactable = !locked;
 
@@ -126,7 +124,7 @@ public class Polaroid : MonoBehaviour
         image.sprite = data.animalImage;
         title.text = data.animalName;
 
-        bool unlocked = data.CheckMilestone(GameManager.instance.Currency);
+        bool unlocked = data.CheckMilestone(SaveManager.instance.Currency);
         lockImage.gameObject.SetActive(!unlocked);
     }
 

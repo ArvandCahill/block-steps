@@ -681,9 +681,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 559377348583625937}
-  - component: {fileID: 4828374355223580827}
+  - component: {fileID: 8227715889711040041}
+  - component: {fileID: 3759469686719519587}
   m_Layer: 0
-  m_Name: Flag 1
+  m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -706,7 +707,7 @@ Transform:
   - {fileID: 4520298695491393381}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4828374355223580827
+--- !u!114 &8227715889711040041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -715,11 +716,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 3464529973953161109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dadce9034a573e7448ad7d72f2308408, type: 3}
+  m_Script: {fileID: 11500000, guid: 283278f9393d30c45a08f92c40110e46, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay::Collectibles
+  m_EditorClassIdentifier: Game.Gameplay::FlagCollectible
   collectibleParticles: {fileID: 0}
-  mesh: {fileID: 0}
+--- !u!65 &3759469686719519587
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464529973953161109}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.9413372, z: 0.27047879}
+  m_Center: {x: 0, y: 0.42933136, z: 0.010959119}
 --- !u!1 &4717921078971103421
 GameObject:
   m_ObjectHideFlags: 0

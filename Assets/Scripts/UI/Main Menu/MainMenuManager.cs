@@ -34,16 +34,6 @@ public class MainMenuManager : MonoBehaviour
     private GameManager gameManager => GameManager.instance;
     private Polaroid focusedPolaroid;
 
-    private void OnEnable()
-    {
-        GameEvents.OnCurrencyValueChanged += OnCurrencyChanged;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.OnCurrencyValueChanged -= OnCurrencyChanged;
-    }
-
     private void Awake()
     {
         bookmarkHiddenPos = bookmarkIcon.anchoredPosition;
@@ -57,7 +47,7 @@ public class MainMenuManager : MonoBehaviour
 
         panelBackground.gameObject.SetActive(false);
 
-        OnCurrencyChanged(gameManager.Currency);
+        SetCurrencyText(SaveManager.instance.Currency);
     }
 
     private void InstantiateLevels()
@@ -65,7 +55,7 @@ public class MainMenuManager : MonoBehaviour
         foreach (LevelData levelData in gameManager.allLevelData)
         {
             Polaroid polaroid = Instantiate(polaroidPrefab, levelContainer);
-            polaroid.Init(levelData, StartLevel, OnPolaroidClicked);
+            polaroid.Init(levelData, OnPolaroidClicked);
             polaroids.Add(levelData, polaroid);
         }
     }
@@ -124,14 +114,9 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    private void OnCurrencyChanged(int currency)
+    private void SetCurrencyText(int currency)
     {
         currencyText.text = currency.ToString();
-
-        foreach (var pair in polaroids)
-        {
-            pair.Value.Refresh(pair.Key);
-        }
     }
 
     private void StartLevel(LevelData levelData)

@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 7476027685774720237, guid: f270f469c66d7d24a907696c0dc0ecc3, type: 3}
   levelImage: {fileID: 0}
-  levelNumber: 4
+  levelNumber: 3
   levelName: 
   maxCollectibles: 1
-  isUnlocked: 0
   isNightMode: 0
-  collectiblesCollected: 0
-  isLevelFinished: 0
+  skyboxType: 0

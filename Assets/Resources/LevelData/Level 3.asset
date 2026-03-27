@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 3460411290651650848, guid: 7c2a77ac459a26c4b97e21daeaa5e9ed, type: 3}
   levelImage: {fileID: 21300000, guid: 5cf9b18bc03284d4bbec720f77e646a7, type: 3}
-  levelNumber: 3
+  levelNumber: 2
   levelName: Desert
   maxCollectibles: 3
-  isUnlocked: 1
-  collectiblesCollected: 2
-  isLevelFinished: 0
   isNightMode: 1
   skyboxType: 1

@@ -35,13 +35,13 @@ public class GameplayUI : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnCollectiblePicked += UpdateCollectiblesUI;
-        GameEvents.OnPlayerFinished += OnPlayerFinished;
+        GameEvents.OnLevelFinished += OnPlayerFinished;
     }
 
     private void OnDisable()
     {
         GameEvents.OnCollectiblePicked -= UpdateCollectiblesUI;
-        GameEvents.OnPlayerFinished -= OnPlayerFinished;
+        GameEvents.OnLevelFinished -= OnPlayerFinished;
     }
 
     private void Start()

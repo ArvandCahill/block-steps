@@ -7,7 +7,9 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    public SaveData saveData { get; private set; }
+    public static SaveManager instance { get; private set; }
+
+    [field: SerializeField] public SaveData saveData { get; private set; }
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "saveData.sawit");
 
@@ -17,6 +19,70 @@ public class SaveManager : MonoBehaviour
 
     private List<LevelData> AllLevelData => GameManager.allLevelData;
 
+    #region Properties
+    public int Currency
+    {
+        get { return saveData.currency; }
+        set
+        {
+            saveData.currency = value;
+            SaveGame();
+        }
+    }
+
+    public int UnlockedLevels
+    {
+        get { return saveData.unlockedLevels; }
+        set
+        {
+            if (saveData.unlockedLevels >= value) return; 
+            saveData.unlockedLevels = value;
+            Debug.Log("Unlocked levels updated: " + saveData.unlockedLevels);
+            SaveGame();
+        }
+    }
+
+    public bool IsBgmOn
+    {
+        get { return saveData.isBgmOn; }
+        set
+        {
+            if (value == saveData.isBgmOn) return;
+
+            saveData.isBgmOn = value;
+            GameManager.audioManager?.SetBgmActive(IsBgmOn);
+            SaveGame();
+        }
+    }
+
+    public bool IsSfxOn
+    {
+        get { return saveData.isSfxOn; }
+        set
+        {
+            if (value == saveData.isSfxOn) return;
+
+            saveData.isSfxOn = value;
+            GameManager.audioManager?.SetSfxActive(IsSfxOn);
+            SaveGame();
+        }
+    }
+
+    #endregion
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     public void LoadSaveData()
     {
@@ -31,23 +97,21 @@ public class SaveManager : MonoBehaviour
         else
         {
             saveData = new SaveData();
+
+            foreach (var level in AllLevelData)
+            {
+                saveData.levelProgress.Add(new LevelProgress());
+            }
         }
 
-        GameManager.IsBgmOn = saveData.isBgmOn;
-        GameManager.IsSfxOn = saveData.isSfxOn;
-
-        GameManager.Currency = saveData.currency;
-        GameManager.isFirstTimePlaying = saveData.isFirstTimePlaying;
-
         LoadUnlockedAnimals();
-        LoadUnlockedStage();
     }
 
     void LoadUnlockedAnimals()
     {
         foreach (var animal in AllAnimalData)
         {
-            animal.CheckMilestone(GameManager.Currency);
+            animal.CheckMilestone(Currency);
 
             if (animal.animalID == saveData.selectedAnimalId)
             {
@@ -59,11 +123,11 @@ public class SaveManager : MonoBehaviour
     public void SetSelectedAnimalId(int animalID)
     {
         saveData.selectedAnimalId = animalID;
-        SaveGame(saveData);
+        SaveGame();
     }
 
     [ContextMenu("Save Game")]
-    public void SaveGame(SaveData saveData)
+    public void SaveGame()
     {
         using (FileStream stream = File.Open(SavePath, FileMode.Create))
         {
@@ -88,17 +152,11 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("cheat: Unlock All Animals")]
-    public void UnlockAllAnimals()
-    {
-
-    }
-
     [ContextMenu("cheat: Unlock All Level")]
     public void UnlockAllLevels()
     {
         saveData.unlockedLevels = AllLevelData.Count;
-        LoadUnlockedStage();
+        SaveGame();
     }
 
     [ContextMenu("cheat: Currency")]
@@ -113,7 +171,6 @@ public class SaveManager : MonoBehaviour
         if (saveData.unlockedLevels < AllLevelData.Count)
         {
             saveData.unlockedLevels++;
-            LoadUnlockedStage();
         }
         else
         {
@@ -121,27 +178,11 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    void LoadUnlockedStage()
-    {
-        for(int i = 0; i < saveData.unlockedLevels; i++)
-        {
-            AllLevelData[i].isUnlocked = true;
-        }
-    }
-
     public void AddCurrency(int amount)
     {
-        saveData.currency += amount;
-        SaveGame(saveData);
-    }
-
-    public void UnlockLevel(int stage)
-    {
-        if (stage > saveData.unlockedLevels)
-        {
-            saveData.unlockedLevels = stage;
-            SaveGame(saveData);
-        }
+        Debug.Log("Adding " + amount + " currency.");
+        Currency += amount;
+        SaveGame();
     }
 
     public bool IsAnimalUnlocked(int slimeID)
@@ -152,15 +193,16 @@ public class SaveManager : MonoBehaviour
     public void SetFirstTimePlaying(bool value)
     {
         saveData.isFirstTimePlaying = value;
-        GameManager.instance.isFirstTimePlaying = value;
-        SaveGame(saveData);
+        SaveGame();
     }
 
-    public void SaveSettings()
+    public bool IsLevelUnlocked(int levelNumber)
     {
-        saveData.isSfxOn = GameManager.instance.IsSfxOn;
-        Debug.Log(saveData.isSfxOn);
-        saveData.isBgmOn = GameManager.instance.IsBgmOn;
-        SaveGame(saveData);
+        return levelNumber <= saveData.unlockedLevels;
+    }
+
+    public LevelProgress GetLevelProgress(int levelNumber)
+    {
+        return saveData.levelProgress[levelNumber];
     }
 }

@@ -63,7 +63,7 @@ public class AnimalUnit : MonoBehaviour
         GameplayManager.instance.DisableAI();
         stopMovement = true;
         animator.SetTrigger("die");
-        StartCoroutine(GameEvents.TriggerPlayerFinished(false, GameplayManager.instance.collectiblesCollected));
+        GameEvents.TriggerLevelFinished(false);
         enabled = false;
     }
 

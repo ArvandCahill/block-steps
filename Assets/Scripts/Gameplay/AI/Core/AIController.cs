@@ -6,28 +6,26 @@ using System.Linq;
 
 public class AIController : MonoBehaviour
 {
-    public List<BehaviorGraphAgent> agents;
-    public List<Vector3Int> blocks = new();
+    public List<BehaviorGraphAgent> agents = new();
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.5f);
-        agents = new List<BehaviorGraphAgent>(FindObjectsByType<BehaviorGraphAgent>(FindObjectsSortMode.None));
+        agents = FindObjectsByType<BehaviorGraphAgent>(FindObjectsSortMode.None).ToList();
+
+        if (agents.Count == 0 ) yield break;
 
         foreach (BehaviorGraphAgent agent in agents)
         {
             AssignBBVariables(agent);
         }
 
-
-        blocks = PathFinding.instance.blocks.Where(pair => pair.Value.type == BlockType.Walkable)
-                                                                             .Select(pair => pair.Key).ToList();
         AssignSharedBBVariables();
     }
 
     void AssignSharedBBVariables()
     {
-        agents[0].SetVariableValue("patrolArea", blocks);
+        agents[0].SetVariableValue("patrolArea", GetPatrolableBlock());
     }
 
     void AssignBBVariables(BehaviorGraphAgent agent)
@@ -35,6 +33,13 @@ public class AIController : MonoBehaviour
         agent.SetVariableValue("agent", agent.gameObject.GetComponent<AnimalUnit>());
         agent.SetVariableValue("aiDetector", agent.gameObject.GetComponent<AIDetector>());
         agent.SetVariableValue("aiState", AIState.Idle);
+    }
+    
+    private List<Vector3Int> GetPatrolableBlock()
+    {
+        return PathFinding.instance.blocks.
+            Where(pair => pair.Value.type == BlockType.Walkable).
+            Select(pair => pair.Key).ToList();
     }
 
     public void DisableAI(AnimalUnit unit)

@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.EventSystems;
 
-public class AutoMoveBlock : MonoBehaviour
+[RequireComponent(typeof(BoxCollider))]
+public class AutoMoveBlock : Block
 {
     [Header("Movement")]
     [SerializeField] private MoveDirection moveDirection;
@@ -11,77 +11,122 @@ public class AutoMoveBlock : MonoBehaviour
 
     [Header("Behavior")]
     [SerializeField] private float toggleCooldown = 2f;
+    [SerializeField] private float enterDelay = 2f;
     [SerializeField] private bool lockYAxis = true;
-
-    private Rigidbody rb;
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private Vector3 currentTarget;
+    private Vector3 playerOffset;
 
     private AnimalUnit unitOnBlock;
     private MoveState state = MoveState.AtStart;
 
-    private bool isMoving;
-    private bool canToggle = true;
-
+    public bool isMoving;
+    public bool canToggle = true;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
-
         startPosition = transform.position;
         targetPosition = CalculateTargetPosition();
         currentTarget = startPosition;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!isMoving)
             return;
 
+        Vector3 newPos = Vector3.MoveTowards(
+            transform.position,
+            currentTarget,
+            moveSpeed * Time.deltaTime
+        );
 
-        Vector3 newPos = Vector3.MoveTowards(rb.position, currentTarget, moveSpeed * Time.deltaTime);
+        ApplyMovement(newPos);
 
-        rb.MovePosition(newPos);
-
-        if (Vector3.Distance(rb.position, currentTarget) < 0.01f)
+        if (Vector3.Distance(newPos, currentTarget) < 0.01f)
         {
+            Vector3 snapped = new Vector3(
+            Mathf.Round(transform.position.x),
+            transform.position.y,
+            Mathf.Round(transform.position.z)
+        );
+
             isMoving = false;
+
+            if (unitOnBlock != null)
+                unitOnBlock.stopMovement = false;
+
+            ApplyMovement(snapped);
+            PathFinding.instance?.RegisterBlock(this);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        if (!other.CompareTag("Player"))
+        if (!other.collider.CompareTag("Player"))
             return;
 
-        unitOnBlock = other.GetComponent<AnimalUnit>();
+        unitOnBlock = other.collider.GetComponent<AnimalUnit>();
+
+        if (unitOnBlock == null)
+        {
+            return;
+        }
+
+        playerOffset = other.transform.position - transform.position;
+
+        other.transform.SetParent(transform, true);
 
         if (!canToggle || isMoving)
             return;
 
-        AutoMove();
+        unitOnBlock.stopMovement = true;
+        PathFinding.instance.EnableMarker(unitOnBlock, Vector3.zero, false);
+
+        StartCoroutine(DelayedMove());
     }
 
-    private void OnTriggerExit(Collider other)
+    private IEnumerator DelayedMove()
     {
-        if (!other.CompareTag("Player"))
+        yield return new WaitForSeconds(enterDelay);
+        ToggleMove();
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (!other.collider.CompareTag("Player"))
             return;
 
         unitOnBlock = null;
+
+        other.transform.SetParent(null, true);
+
         StartCoroutine(ToggleCooldownRoutine());
     }
 
-    private void AutoMove()
+    private void ApplyMovement(Vector3 targetPos)
+    {
+        Vector3 delta = targetPos - transform.position;
+
+        transform.position = targetPos;
+
+        if (unitOnBlock != null)
+            unitOnBlock.transform.position += delta;
+    }
+
+    private void ToggleMove()
     {
         canToggle = false;
 
-        state = state == MoveState.AtStart ? MoveState.AtTarget : MoveState.AtStart;
+        state = state == MoveState.AtStart
+            ? MoveState.AtTarget
+            : MoveState.AtStart;
 
-        currentTarget = state == MoveState.AtTarget ? targetPosition : startPosition;
+        currentTarget = state == MoveState.AtTarget
+            ? targetPosition
+            : startPosition;
 
         isMoving = true;
     }
@@ -101,12 +146,15 @@ public class AutoMoveBlock : MonoBehaviour
             case MoveDirection.Forward:
                 offset = Vector3.forward;
                 break;
+
             case MoveDirection.Backward:
                 offset = Vector3.back;
                 break;
+
             case MoveDirection.Left:
                 offset = Vector3.left;
                 break;
+
             case MoveDirection.Right:
                 offset = Vector3.right;
                 break;
@@ -118,5 +166,10 @@ public class AutoMoveBlock : MonoBehaviour
             targetPos.y = startPosition.y;
 
         return targetPos;
+    }
+
+    public override void OnInteract(Vector3 position)
+    {
+        
     }
 }

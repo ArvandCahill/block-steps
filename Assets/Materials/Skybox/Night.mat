@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Night
   m_Shader: {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 2100000, guid: 48291896ac4bd6b4da74c6dfb1da2749, type: 2}
+  m_Parent: {fileID: 2100000, guid: 4a0b5662843e04a4ab4d90ecedd405bb, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []

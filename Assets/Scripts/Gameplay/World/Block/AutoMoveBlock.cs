@@ -44,6 +44,7 @@ public class AutoMoveBlock : Block
         );
 
         ApplyMovement(newPos);
+        Debug.Log("Player is Moving");
 
         if (Vector3.Distance(newPos, currentTarget) < 0.01f)
         {
@@ -69,6 +70,7 @@ public class AutoMoveBlock : Block
             return;
 
         unitOnBlock = other.collider.GetComponent<AnimalUnit>();
+        
 
         if (unitOnBlock == null)
         {
@@ -78,6 +80,7 @@ public class AutoMoveBlock : Block
         playerOffset = other.transform.position - transform.position;
 
         other.transform.SetParent(transform, true);
+        Debug.Log("Player inside autoMove parents");
 
         if (!canToggle || isMoving)
             return;
@@ -99,21 +102,29 @@ public class AutoMoveBlock : Block
         if (!other.collider.CompareTag("Player"))
             return;
 
+        if (isMoving)
+            return;
+
         unitOnBlock = null;
 
         other.transform.SetParent(null, true);
+        Debug.Log("Player exit AutoMove parent");
 
         StartCoroutine(ToggleCooldownRoutine());
     }
 
+    private void OnCollisionStay(Collision other)
+    {
+        if (!other.collider.CompareTag("Player"))
+            return;
+
+        if (other.transform.parent != transform)
+            other.transform.SetParent(transform, true);
+    }
+
     private void ApplyMovement(Vector3 targetPos)
     {
-        Vector3 delta = targetPos - transform.position;
-
         transform.position = targetPos;
-
-        if (unitOnBlock != null)
-            unitOnBlock.transform.position += delta;
     }
 
     private void ToggleMove()

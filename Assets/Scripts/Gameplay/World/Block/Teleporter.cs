@@ -6,13 +6,21 @@ using System.Collections.Generic;
 [RequireComponent(typeof(BoxCollider))]
 public class Teleporter : MonoBehaviour
 {
-    [Header("Teleport)")]
-    [SerializeField] private Transform targetPoint;
+    [Header("Teleporter")]
+    [SerializeField] private Teleporter targetPortal;
+
+    [Header("Exit Points)")]
+    [SerializeField] private Transform exitForward;
+    [SerializeField] private Transform exitBackward;
+    [SerializeField] private Transform exitLeft;
+    [SerializeField] private Transform exitRight;
+
+    [Header("Settings")]
     [SerializeField] private MoveDirection exitDirection;
     [SerializeField] private float teleportDelay = 1f;
     [SerializeField] private float cooldown = 1f;
 
-    private static HashSet<AnimalUnit> globalCooldown = new HashSet<AnimalUnit>();
+    private static HashSet<AnimalUnit> globalCooldown = new();
 
     private AnimalUnit player;
 
@@ -53,15 +61,16 @@ public class Teleporter : MonoBehaviour
 
         PathFinding.instance.EnableMarker(player, Vector3.zero, false);
 
-        Vector3 targetPos = targetPoint.position + GetOffset();
+        Transform exitPoint = targetPortal.GetExitPoint(exitDirection);
 
-        targetPos = new Vector3(
-            Mathf.Round(targetPos.x),
-            Mathf.Round(targetPos.y),
-            Mathf.Round(targetPos.z)
-        );
+        if (exitPoint == null)
+        {
+            Debug.LogError("Invalid exit direction for teleporter.");
+            yield break;
+        }
 
-        player.transform.position = targetPos;
+        player.transform.position = Snap(exitPoint.position);
+        player.visualRoot.rotation = exitPoint.rotation;
 
         yield return new WaitForSeconds(cooldown);
 
@@ -81,15 +90,24 @@ public class Teleporter : MonoBehaviour
         globalCooldown.Remove(player);
     }
 
-    private Vector3 GetOffset()
+    private Transform GetExitPoint(MoveDirection direction)
     {
-        return exitDirection switch
+        return direction switch
         {
-            MoveDirection.Forward => Vector3.forward * 2f,
-            MoveDirection.Backward => Vector3.back * 2f, 
-            MoveDirection.Left => Vector3.left * 2f,
-            MoveDirection.Right => Vector3.right * 2f,
-            _ => Vector3.zero
+            MoveDirection.Forward => exitForward,
+            MoveDirection.Backward => exitBackward,
+            MoveDirection.Left => exitLeft,
+            MoveDirection.Right => exitRight,
+            _ => null
         };
+    }
+
+    private Vector3 Snap(Vector3 pos)
+    {
+        return new Vector3(
+            Mathf.Round(pos.x),
+            Mathf.Round(pos.y),
+            Mathf.Round(pos.z)
+        );
     }
 }

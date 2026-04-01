@@ -1,12 +1,16 @@
 public class AppleCollectible : Collectible
 {
-    private void Start()
-    {
-        GameplayManager.instance.appleCollectibles.Add(this);
-    }
+    private bool collected;
 
     public override void OnCollected()
     {
+        if (collected)
+            return;
+
+        collected = true;
+
         GameEvents.TriggerCollectiblePicked();
+
+        gameObject.SetActive(false);
     }
 }

@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Behavior;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -66,6 +67,8 @@ public class GameplayManager : MonoBehaviour
         initialCollectiblesProgress = levelProgress.collectiblesCollected;
         finishPoint.gameObject.SetActive(false);
         cameraManager.SetCameraTarget(playerUnit.transform);
+
+        if (levelData.isNightMode) RandomizeCollectibles();
     }
 
     private void SpawnEnvironment()
@@ -92,14 +95,6 @@ public class GameplayManager : MonoBehaviour
             levelProgress.AddCollectiblesCollected(levelData);
             return;
         }
-    }
-
-    public void ResetCollectiblesCollected()
-    {
-        if (isLevelFinished) return;
-
-        levelProgress.collectiblesCollected = initialCollectiblesProgress;
-        saveManager.SaveGame();
     }
 
     private void FinishLevel(bool isWinning)
@@ -155,4 +150,75 @@ public class GameplayManager : MonoBehaviour
     {
         playerUnit.transform.position = finishPoint.transform.position + Vector3.up;
     }
+
+    #region Randomizer
+
+    private void RandomizeCollectibles()
+    {
+        List<Vector3Int> walkables = PathFinding.instance.GetAllWalkablePositions();
+        List<Vector3Int> chosenPositions = new();
+
+        walkables = walkables.OrderBy(x => Random.value).ToList();
+
+        int minGridDistance = 3;        
+        int minDistanceFromStart = 4;   
+        int minDistanceFromFinish = 4;  
+
+        Vector3Int startPos = PathFinding.instance.GetPlayerPosition(startPoint.position);
+        Vector3Int finishPos = finishPoint.GetPosition();
+
+        foreach (var pos in walkables)
+        {
+            int distToStart =
+                Mathf.Abs(pos.x - startPos.x) +
+                Mathf.Abs(pos.y - startPos.y) +
+                Mathf.Abs(pos.z - startPos.z);
+
+            if (distToStart < minDistanceFromStart)
+                continue;
+
+            int distToFinish =
+                Mathf.Abs(pos.x - finishPos.x) +
+                Mathf.Abs(pos.y - finishPos.y) +
+                Mathf.Abs(pos.z - finishPos.z);
+
+            if (distToFinish < minDistanceFromFinish)
+                continue;
+
+            bool tooClose = false;
+
+            foreach (var chosen in chosenPositions)
+            {
+                int dist =
+                    Mathf.Abs(pos.x - chosen.x) +
+                    Mathf.Abs(pos.y - chosen.y) +
+                    Mathf.Abs(pos.z - chosen.z);
+
+                if (dist < minGridDistance)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+
+            if (tooClose) continue;
+
+            chosenPositions.Add(pos);
+
+            if (chosenPositions.Count >= appleCollectibles.Count)
+                break;
+        }
+
+        for (int i = 0; i < appleCollectibles.Count; i++)
+        {
+            if (i >= chosenPositions.Count) break;
+
+            Vector3Int gridPos = chosenPositions[i];
+            Vector3 worldPos = new Vector3(gridPos.x, gridPos.y + 1, gridPos.z);
+
+            appleCollectibles[i].transform.position = worldPos;
+        }
+    }
+
+    #endregion
 }

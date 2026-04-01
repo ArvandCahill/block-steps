@@ -264,4 +264,19 @@ public class PathFinding : MonoBehaviour
             blocks.Remove(pos);
         }
     }
+
+    public List<Vector3Int> GetAllWalkablePositions()
+    {
+        List<Vector3Int> result = new();
+
+        foreach (var kvp in blocks)
+        {
+            if (kvp.Value.isWalkable)
+            {
+                result.Add(kvp.Key);
+            }
+        }
+
+        return result;
+    }
 }

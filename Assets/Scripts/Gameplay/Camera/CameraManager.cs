@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private CinemachineCamera _virtualCam;
     [SerializeField] private Transform _cameraRig;
-    private Interactable _currentInteractable;
+    private List<Interactable> _currentInteractables = new List<Interactable>();
 
     [Header("Rotation")]
     [SerializeField] private float _rotationSpeed = 120f;
@@ -64,28 +65,37 @@ public class CameraManager : MonoBehaviour
     }
 
 
+
     private void StartRaycast()
     {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+        RaycastHit[] hits = Physics.RaycastAll(ray, 2f);
+
+        List<Interactable> newHits = new List<Interactable>();
+
+        foreach (var hit in hits)
         {
             if (hit.collider.TryGetComponent(out Interactable interactable))
             {
-                if (_currentInteractable != interactable)
+                newHits.Add(interactable);
+
+                if (!_currentInteractables.Contains(interactable))
                 {
-                    _currentInteractable = interactable;
-                    _currentInteractable.FadeOut();
+                    interactable.FadeOut();
                 }
-                return;
             }
         }
 
-        if (_currentInteractable != null)
+        foreach (var old in _currentInteractables)
         {
-            _currentInteractable.FadeIn();
-            _currentInteractable = null;
+            if (!newHits.Contains(old))
+            {
+                old.FadeIn();
+            }
         }
+
+        _currentInteractables = newHits;
     }
 
     private void OnZoom(InputAction.CallbackContext context)

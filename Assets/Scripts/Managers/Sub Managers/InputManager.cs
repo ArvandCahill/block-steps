@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     public InputActionMap playerMap;
     public InputActionMap cameraMap;
 
-    private void OnEnable()
+    private void Awake()
     {
         inputAction = new PlayerInputAction();
 
@@ -37,7 +37,8 @@ public class InputManager : MonoBehaviour
 
     public void DisableAllMap()
     {
-        playerMap.Disable();
-        cameraMap.Disable();
+        inputAction.Player.Disable();
+        inputAction.Camera.Disable();
+        Debug.Log("All input maps disabled");
     }
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d766e7fa4807e41a1b42e9d164446d, type: 3}
   m_Name: Level 4
   m_EditorClassIdentifier: Game.Core::LevelData
-  levelPrefab: {fileID: 6141578547361753787, guid: 79cb60bb02d199a4185c7e34b267b4b7, type: 3}
-  levelImage: {fileID: 21300000, guid: d3b265fc299ff1c459ee328dd3550383, type: 3}
-  levelNumber: 7
-  levelName: Eternal Frost
+  levelPrefab: {fileID: 1261415366275919296, guid: f7bf38d76e4dd0d4691a2f56c7d95936, type: 3}
+  levelImage: {fileID: 21300000, guid: 3b988f0420dd92f4a9187a8aa86ab009, type: 3}
+  levelNumber: 6
+  levelName: Candy Land
   maxCollectibles: 5
   isNightMode: 1
   skyboxType: 3

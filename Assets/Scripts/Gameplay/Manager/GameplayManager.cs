@@ -68,6 +68,7 @@ public class GameplayManager : MonoBehaviour
         finishPoint.gameObject.SetActive(false);
         cameraManager.SetCameraTarget(playerUnit.transform);
 
+        Debug.Log("Night Mode: " + levelData.isNightMode);
         if (levelData.isNightMode) RandomizeCollectibles();
     }
 
@@ -99,9 +100,12 @@ public class GameplayManager : MonoBehaviour
 
     private void FinishLevel(bool isWinning)
     {
+        InputManager.instance.DisableAllMap();
         isLevelFinished = true;
+
         Reward();
 
+        if (levelData.isNightMode) return;
         if (isWinning && saveManager.UnlockedLevels == levelData.levelNumber)
         {
             saveManager.UnlockedLevels += 2; 
@@ -155,17 +159,28 @@ public class GameplayManager : MonoBehaviour
 
     private void RandomizeCollectibles()
     {
+        Debug.Log("=== RANDOMIZE START ===");
+
         List<Vector3Int> walkables = PathFinding.instance.GetAllWalkablePositions();
+        Debug.Log("Total Walkables: " + walkables.Count);
+
         List<Vector3Int> chosenPositions = new();
 
         walkables = walkables.OrderBy(x => Random.value).ToList();
 
-        int minGridDistance = 3;        
-        int minDistanceFromStart = 4;   
-        int minDistanceFromFinish = 4;  
+        int minGridDistance = 3;
+        int minDistanceFromStart = 4;
+        int minDistanceFromFinish = 4;
 
         Vector3Int startPos = PathFinding.instance.GetPlayerPosition(startPoint.position);
         Vector3Int finishPos = finishPoint.GetPosition();
+
+        Debug.Log("Start Pos: " + startPos);
+        Debug.Log("Finish Pos: " + finishPos);
+
+        int skippedStart = 0;
+        int skippedFinish = 0;
+        int skippedTooClose = 0;
 
         foreach (var pos in walkables)
         {
@@ -175,7 +190,10 @@ public class GameplayManager : MonoBehaviour
                 Mathf.Abs(pos.z - startPos.z);
 
             if (distToStart < minDistanceFromStart)
+            {
+                skippedStart++;
                 continue;
+            }
 
             int distToFinish =
                 Mathf.Abs(pos.x - finishPos.x) +
@@ -183,7 +201,10 @@ public class GameplayManager : MonoBehaviour
                 Mathf.Abs(pos.z - finishPos.z);
 
             if (distToFinish < minDistanceFromFinish)
+            {
+                skippedFinish++;
                 continue;
+            }
 
             bool tooClose = false;
 
@@ -197,6 +218,7 @@ public class GameplayManager : MonoBehaviour
                 if (dist < minGridDistance)
                 {
                     tooClose = true;
+                    skippedTooClose++;
                     break;
                 }
             }
@@ -204,20 +226,35 @@ public class GameplayManager : MonoBehaviour
             if (tooClose) continue;
 
             chosenPositions.Add(pos);
+            Debug.Log("Chosen Pos: " + pos);
 
             if (chosenPositions.Count >= appleCollectibles.Count)
                 break;
         }
 
+        Debug.Log("Skipped (Start): " + skippedStart);
+        Debug.Log("Skipped (Finish): " + skippedFinish);
+        Debug.Log("Skipped (Too Close): " + skippedTooClose);
+        Debug.Log("Final Chosen Count: " + chosenPositions.Count);
+        Debug.Log("Apple Count Needed: " + appleCollectibles.Count);
+
         for (int i = 0; i < appleCollectibles.Count; i++)
         {
-            if (i >= chosenPositions.Count) break;
+            if (i >= chosenPositions.Count)
+            {
+                Debug.LogWarning("Not enough valid positions for all apples!");
+                break;
+            }
 
             Vector3Int gridPos = chosenPositions[i];
             Vector3 worldPos = new Vector3(gridPos.x, gridPos.y + 1, gridPos.z);
 
-            appleCollectibles[i].transform.position = worldPos;
+            appleCollectibles[i].transform.parent.position = worldPos;
+
+            Debug.Log($"Apple {i} placed at {worldPos}");
         }
+
+        Debug.Log("=== RANDOMIZE END ===");
     }
 
     #endregion

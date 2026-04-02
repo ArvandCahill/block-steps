@@ -33,7 +33,7 @@ public class AdmobInit
 
     private void RequestInterstitial()
     {
-        string adUnitId = testMode ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-9002983919929663/6840936034";
+        string adUnitId = testMode ? "ca-app-pub-3940256099942544/1033173712" : "ca-app-pub-1026938913756689~1550362378";
 
         var adRequest = new AdRequest();
         InterstitialAd.Load(adUnitId, adRequest, (ad, error) =>

@@ -8,6 +8,8 @@ public class AIController : MonoBehaviour
 {
     public List<BehaviorGraphAgent> agents = new();
 
+    private float detectionTime => GameplayManager.instance.levelData.isNightMode ? 0f : 1f;
+
     IEnumerator Start()
     {
         yield return new WaitForSeconds(0.5f);
@@ -26,6 +28,7 @@ public class AIController : MonoBehaviour
     void AssignSharedBBVariables()
     {
         agents[0].SetVariableValue("patrolArea", GetPatrolableBlock());
+        agents[0].SetVariableValue("detectionTime", detectionTime);
     }
 
     void AssignBBVariables(BehaviorGraphAgent agent)

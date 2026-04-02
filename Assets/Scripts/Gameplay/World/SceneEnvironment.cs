@@ -39,7 +39,7 @@ public class SceneEnvironment
     {
         if (!levelData.isNightMode)
         {
-            directionalLight.intensity = 1f;
+            directionalLight.intensity = 0.8f;
         }
         else
         {
@@ -51,7 +51,7 @@ public class SceneEnvironment
     {
         if (postProcessVolume.profile.TryGet(out ColorAdjustments exposure))
         {
-            float targetValue = levelData.isNightMode ? -0.5f : 0f;
+            float targetValue = levelData.isNightMode ? -1f : -0.5f;
 
             exposure.postExposure.value = targetValue;
             Debug.Log("Exposure set to " + exposure.postExposure.value);

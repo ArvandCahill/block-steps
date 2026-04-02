@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
         inputManager.inputAction.Player.Press.started += OnPressStarted;
         inputManager.inputAction.Player.Drag.performed += OnDrag;
         inputManager.inputAction.Player.Press.canceled += OnPressReleased;
+
+        GameEvents.OnLevelFinished += disable;
     }
 
     private void OnDisable()
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
         inputManager.inputAction.Player.Press.canceled -= OnPressReleased;
 
         inputManager.inputAction.Player.Disable();
+        inputManager.inputAction.Camera.Disable();
     }
 
     void Start()
@@ -66,7 +69,6 @@ public class PlayerController : MonoBehaviour
         if (inputState == InputState.pressed && Vector2.Distance(currentPos, startPos) > dragThreshold)
         {
             inputState = InputState.dragging;
-            
         }
 
         if(inputState == InputState.dragging) Drag(currentPos);
@@ -114,5 +116,10 @@ public class PlayerController : MonoBehaviour
     void Drag(Vector2 screenPos)
     {
         currentDraggable?.OnDrag(screenPos);
+    }
+
+    void disable(bool isWinning)
+    {
+        /*enabled = false;*/
     }
 }

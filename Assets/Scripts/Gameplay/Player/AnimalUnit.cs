@@ -18,6 +18,7 @@ public class AnimalUnit : MonoBehaviour
 
     [Header("AI")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
+    public GameObject alertIcon;
 
     [Header("Movement")]
     public bool stopMovement { get; set; } = false;
@@ -59,12 +60,16 @@ public class AnimalUnit : MonoBehaviour
 
     public void Die()
     {
+        GetComponentInChildren<Collider>().enabled = false;
+        StopAllCoroutines();
         InputManager.instance.DisableAllMap();
         GameplayManager.instance.DisableAI();
         stopMovement = true;
         animator.SetTrigger("die");
         GameEvents.TriggerLevelFinished(false);
         enabled = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void EnableAI(bool enabled)

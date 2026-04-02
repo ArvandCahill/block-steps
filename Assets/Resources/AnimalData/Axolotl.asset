@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4331b9e7a87e6b040b2af0f88471f3fe, type: 3}
   m_Name: Axolotl
   m_EditorClassIdentifier: Game.Core::AnimalData
-  animalID: 0
+  animalID: 2
   animalName: Axolotl
   animalImage: {fileID: 21300000, guid: 282e524013c1a0a4d9433b67285850f1, type: 3}
   animalMesh: {fileID: -2432090755550338912, guid: fec2eb8c1a2a8d547b16823abe1b04b1, type: 3}
   health: 3
   movementSpeed: 1
-  price: 0
+  price: 6
   isUnlockedAtStart: 0

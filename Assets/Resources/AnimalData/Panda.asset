@@ -18,5 +18,5 @@ MonoBehaviour:
   animalMesh: {fileID: -2432090755550338912, guid: 8bb1e0aac63822648b34816cdccfebef, type: 3}
   health: 3
   movementSpeed: 1
-  price: 4
+  price: 20
   isUnlockedAtStart: 0

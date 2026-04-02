@@ -323,6 +323,9 @@ MonoBehaviour:
   exitDirection: 0
   teleportDelay: 1
   cooldown: 1
+  shrinkDuration: 0.5
+  growDuration: 0.5
+  minScale: 0.1
 --- !u!1 &4885470578212735757
 GameObject:
   m_ObjectHideFlags: 0

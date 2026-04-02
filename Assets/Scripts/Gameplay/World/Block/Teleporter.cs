@@ -1,7 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Teleporter : MonoBehaviour
@@ -19,6 +20,11 @@ public class Teleporter : MonoBehaviour
     [SerializeField] private MoveDirection exitDirection;
     [SerializeField] private float teleportDelay = 1f;
     [SerializeField] private float cooldown = 1f;
+
+    [Header("Scale Effect")]
+    [SerializeField] private float shrinkDuration = 0.5f;
+    [SerializeField] private float growDuration = 0.5f;
+    [SerializeField] private float minScale = 0.1f;
 
     private static HashSet<AnimalUnit> globalCooldown = new();
 
@@ -51,6 +57,14 @@ public class Teleporter : MonoBehaviour
     {
         globalCooldown.Add(player);
 
+        Transform playerTransform = player.transform;
+
+        Tween shrinkTween = playerTransform
+            .DOScale(minScale, shrinkDuration)
+            .SetEase(Ease.InBack);
+
+        yield return shrinkTween.WaitForCompletion();
+
         yield return new WaitForSeconds(teleportDelay);
 
         if (player.moveRoutine != null)
@@ -69,8 +83,16 @@ public class Teleporter : MonoBehaviour
             yield break;
         }
 
-        player.transform.position = Snap(exitPoint.position);
+        playerTransform.position = Snap(exitPoint.position);
         player.visualRoot.rotation = exitPoint.rotation;
+
+        playerTransform.localScale = Vector3.one * minScale;
+
+        Tween growTween = playerTransform
+            .DOScale(Vector3.one, growDuration)
+            .SetEase(Ease.OutBack);
+
+        yield return growTween.WaitForCompletion();
 
         yield return new WaitForSeconds(cooldown);
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 5
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 9197766607519735077, guid: 9817638f082f9774f80f64cf0673ac39, type: 3}
-  levelImage: {fileID: 21300000, guid: 0f50806bba9d08443be38afd2aa0cc35, type: 3}
+  levelImage: {fileID: 21300000, guid: 49a6817b502946844a4a54e6023604b1, type: 3}
   levelNumber: 4
   levelName: Dark Batbloom
   maxCollectibles: 1

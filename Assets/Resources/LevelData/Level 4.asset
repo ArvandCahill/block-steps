@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 4
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 6141578547361753787, guid: 79cb60bb02d199a4185c7e34b267b4b7, type: 3}
-  levelImage: {fileID: 21300000, guid: 9d0466f312f0d3e45aef7e0c9937bdb4, type: 3}
+  levelImage: {fileID: 21300000, guid: d3b265fc299ff1c459ee328dd3550383, type: 3}
   levelNumber: 7
   levelName: Eternal Frost
   maxCollectibles: 5

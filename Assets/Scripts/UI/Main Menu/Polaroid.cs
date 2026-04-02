@@ -113,7 +113,7 @@ public class Polaroid : MonoBehaviour
         lockImage.gameObject.SetActive(locked);
         levelButton.interactable = !locked;
 
-        title.text = $"Level - {levelData.levelNumber}";
+        title.text = $"Level - {levelData.levelNumber + 1}";
         levelNameText.text = levelData.levelName;
     }
 

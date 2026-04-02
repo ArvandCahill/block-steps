@@ -18,7 +18,9 @@ public class AudioManager
     public AudioSource bgmSource;
     public List<AudioClip> bgmList;
     public int currentBgmIndex;
+    public float fadeDuration = 1f;
     public string bgmMixerParam = "BGM_VOLUME";
+    private Coroutine bgmFadeRoutine;
 
     [Header("SFX Settings")]
     public AudioSource sfxSource;
@@ -64,6 +66,8 @@ public class AudioManager
 
     private void InitializePool()
     {
+        if (sfx3DPrefab == null) return;
+
         for (int i = 0; i < poolSize; i++)
         {
             GameObject obj = GameObject.Instantiate(sfx3DPrefab);
@@ -82,13 +86,46 @@ public class AudioManager
 
     public void PlayBGM(int index)
     {
-        if (bgmSource.isPlaying && currentBgmIndex == index && bgmSource.clip == bgmList[index])
+        if (bgmSource.clip == bgmList[index] && bgmSource.isPlaying)
             return;
 
-        currentBgmIndex = index;
-        bgmSource.clip = bgmList[index];
+        if (bgmFadeRoutine != null)
+            GameManager.instance.StopCoroutine(bgmFadeRoutine);
+
+        bgmFadeRoutine = GameManager.instance.StartCoroutine(FadeBGM(index));
+
+        Debug.Log($"Playing BGM: {bgmSource.clip.name}");
+    }
+
+    private IEnumerator FadeBGM(int newIndex)
+    {
+        float startVolume = bgmSource.volume;
+
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            bgmSource.volume = Mathf.Lerp(startVolume, 0f, t / fadeDuration);
+            yield return null;
+        }
+
+        bgmSource.volume = 0f;
+        bgmSource.Stop();
+
+        currentBgmIndex = newIndex;
+        bgmSource.clip = bgmList[newIndex];
         bgmSource.loop = true;
         bgmSource.Play();
+
+        t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            bgmSource.volume = Mathf.Lerp(0f, 1f, t / fadeDuration);
+            yield return null;
+        }
+
+        bgmSource.volume = 1f;
     }
 
     public void StopBGM()

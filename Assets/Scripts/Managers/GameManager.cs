@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup panel;
 
     [HideInInspector] public bool isAnimating;
-    private int sceneCount = 0;
+    private int sceneCount = -1;
 
     private SaveManager saveManager => SaveManager.instance;
 
@@ -158,6 +158,17 @@ public class GameManager : MonoBehaviour
 
         if (sceneName == "MainMenu" && sceneCount > 0)
             admobInit.ShowInterstitial();
+
+        switch (scene.name)
+        {
+            case "MainMenu":
+                audioManager.PlayBGM(0);
+                break;
+
+            case "Gameplay":
+                audioManager.PlayBGM(1);
+                break;
+        }
     }
 
     public void LoadingScreen(bool enable)

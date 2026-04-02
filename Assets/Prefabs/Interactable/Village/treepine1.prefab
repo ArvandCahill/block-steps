@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4247435140315363953}
   - component: {fileID: 8848785492800204531}
   - component: {fileID: 4144620798979831437}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: treepine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.75, y: 1.5, z: 0.75}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3869588555850608522}
   m_Father: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   duration: 0.2
   position: {x: 0, y: 0, z: 0}
   type: 3
-  isWalkable: 1
+  isWalkable: 0
   debugInfo: 
 --- !u!65 &8848785492800204531
 BoxCollider:
@@ -92,7 +92,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.0818307, y: 3.1094673, z: 3.210792}
+  m_Size: {x: 3.0818307, y: 2.65, z: 3.210792}
   m_Center: {x: 0.01842324, y: 2.261456, z: -0.0460585}
 --- !u!1 &5405908571688434865
 GameObject:
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 3869588555850608522}
   - component: {fileID: 2117999240713492160}
   - component: {fileID: 3188864334115992148}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4450610281875857106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

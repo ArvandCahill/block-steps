@@ -77,7 +77,7 @@ public class AnimalUnit : MonoBehaviour
         behaviorGraphAgent.enabled = enabled;
     }
 
-    public void AddExternalDelta(Vector3 delta)
+    /*public void AddExternalDelta(Vector3 delta)
     {
         externalDelta += delta; 
     }
@@ -89,5 +89,5 @@ public class AnimalUnit : MonoBehaviour
 
         rb.MovePosition(rb.position + externalDelta);
         externalDelta = Vector3.zero;
-    }
+    }*/
 }

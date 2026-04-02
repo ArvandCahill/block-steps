@@ -76,7 +76,7 @@ MonoBehaviour:
   moveSpeed: 4
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1 &9124043636290998588
 GameObject:
   m_ObjectHideFlags: 0

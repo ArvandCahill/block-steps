@@ -49,6 +49,7 @@ public class PathFinding : MonoBehaviour
         return blocks;
     }
 
+    #region Pathfinding Core Logic
     public List<Vector3Int> FindPath(Vector3Int start, Vector3Int target)
     {
         Queue<Vector3Int> queue = new Queue<Vector3Int>();
@@ -110,8 +111,6 @@ public class PathFinding : MonoBehaviour
                 neighbors.Add(downStep);
             }
 
-
-
             Vector3Int sameLevel = position + dir;
             if (IsPositionWalkable(sameLevel))
             {
@@ -132,6 +131,7 @@ public class PathFinding : MonoBehaviour
         }
         return false;
     }
+    #endregion
 
     IEnumerator MoveToPoint(AnimalUnit unit, List<Vector3Int> path)
     {
@@ -139,6 +139,8 @@ public class PathFinding : MonoBehaviour
 
         for (int i = 1; i < path.Count; i++)
         {
+            if (!IsPositionWalkable(path[i]) && !unit.isShopAi) break;
+
             if (!unit.isPlayer)
             {
                 blocks[Vector3Int.RoundToInt(unit.transform.position) + Vector3Int.down].isWalkable = true;
@@ -179,62 +181,74 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-        EnableMarker(unit, Vector3.zero, false);
+        EnableMarker(unit, Vector3.zero, false, false);
         unit.moveRoutine = null;
     }
 
-    public Coroutine StartMoveRoutine(AnimalUnit unit, List<Vector3Int> path)
+    Coroutine StartMoveRoutine(AnimalUnit unit, List<Vector3Int> path)
     {
         return StartCoroutine(MoveToPoint(unit, path));
     }
 
     public void Move(AnimalUnit unit, Vector3Int targetPos)
     {
-        if (unit.gameObject.transform.position == new Vector3(targetPos.x, targetPos.y + 1, targetPos.z)) return;
+        if (unit.transform.position == new Vector3(targetPos.x, targetPos.y + 1, targetPos.z)) return;
 
         if (unit.isMoving)
         {
             unit.stopMovement = true;
-            EnableMarker(unit, targetPos, true);
+
+            if (!TryGetPath(unit, targetPos, out _)) return;
+
+            EnableMarker(unit, targetPos, true, true);
             StartCoroutine(QueueMove(unit, targetPos));
             return;
         }
 
-        List<Vector3Int> path = FindPath(GetPlayerPosition(unit.transform.position), targetPos);
+        if (!TryGetPath(unit, targetPos, out List<Vector3Int> path)) return;
 
-        if (path == null || path.Count == 0)
-        {
-            Debug.Log($"Path not found {targetPos}");
-            return;
-        }
-
+        EnableMarker(unit, targetPos, true, true);
         unit.stopMovement = false;
-        EnableMarker(unit, targetPos, true);
         unit.moveRoutine = StartMoveRoutine(unit, path);
+
+        return;
     }
 
     private IEnumerator QueueMove(AnimalUnit unit, Vector3Int targetPos)
     {
         yield return new WaitUntil(() => !unit.isMoving);
 
-        List<Vector3Int> path = FindPath(GetPlayerPosition(unit.transform.position), targetPos);
-
-        if (path == null || path.Count == 0)
-        {
-            Debug.Log($"Path not found {targetPos}");
-            yield break;
-        }
+        if (!TryGetPath(unit, targetPos, out List<Vector3Int> path)) yield break;
 
         unit.stopMovement = false;
         unit.moveRoutine = StartMoveRoutine(unit, path);
     }
 
-    public void EnableMarker(AnimalUnit unit, Vector3 position, bool enable)
+    public void EnableMarker(AnimalUnit unit, Vector3 position, bool enable, bool useEvent)
     {
         if (!unit.isPlayer) return;
         if (marker == null) return;
+        if (useEvent) GameEvents.TriggerPathValidated(position, enable);
+
         marker.gameObject.SetActive(enable);
         marker.position = position + Vector3.up;
+
+        Debug.Log($"Marker {(enable ? "enabled" : "disabled")} at {position}");
+    }
+
+    #region Helpers
+    private bool TryGetPath(AnimalUnit unit, Vector3Int targetPos, out List<Vector3Int> path)
+    {
+        path = FindPath(GetPlayerPosition(unit.transform.position), targetPos);
+
+        if (path == null || path.Count == 0)
+        {
+            EnableMarker(unit, targetPos, false, true);
+            Debug.Log($"Path not found {targetPos}");
+            return false;
+        }
+
+        return true;
     }
 
     public Vector3Int GetPlayerPosition(Vector3 pos)
@@ -279,4 +293,5 @@ public class PathFinding : MonoBehaviour
 
         return result;
     }
+    #endregion
 }

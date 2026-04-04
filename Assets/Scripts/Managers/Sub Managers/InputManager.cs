@@ -35,6 +35,18 @@ public class InputManager : MonoBehaviour
         cameraMap.Enable();
     }
 
+    public void DisablePlayerMap()
+    {
+        playerMap.Disable();
+        Debug.Log("Player input map disabled");
+    }
+
+    public void DisableCameraMap()
+    {
+        cameraMap.Disable();
+        Debug.Log("Camera input map disabled");
+    }
+
     public void DisableAllMap()
     {
         inputAction.Player.Disable();

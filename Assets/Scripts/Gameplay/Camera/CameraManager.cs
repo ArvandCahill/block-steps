@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _zoomSpeedMobile = 0.01f;
 
     private float _minZoom = 30f;
-    private float _maxZoom = 75f;
+    private float _maxZoom = 70f;
 
     private PlayerInputAction inputAction;
 
@@ -41,11 +41,12 @@ public class CameraManager : MonoBehaviour
         _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, _minZoom, _maxZoom);
 
         inputAction = InputManager.instance.inputAction;
+        inputAction.Camera.Enable();
     }
 
     private void OnEnable()
     {
-        inputAction.Camera.Enable();
+
 
         inputAction.Camera.Zoom.performed += OnZoom;
     }
@@ -64,13 +65,11 @@ public class CameraManager : MonoBehaviour
         HandlePinchZoom();
     }
 
-
-
     private void StartRaycast()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
+        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        RaycastHit[] hits = Physics.RaycastAll(ray, 2f);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 5f);
 
         List<Interactable> newHits = new List<Interactable>();
 

@@ -73,7 +73,7 @@ public class Teleporter : MonoBehaviour
             player.moveRoutine = null;
         }
 
-        PathFinding.instance.EnableMarker(player, Vector3.zero, false);
+        PathFinding.instance.EnableMarker(player, Vector3.zero, false, false);
 
         Transform exitPoint = targetPortal.GetExitPoint(exitDirection);
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 4 - Night Mode
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 1261415366275919296, guid: f7bf38d76e4dd0d4691a2f56c7d95936, type: 3}
-  levelImage: {fileID: 21300000, guid: ed6f34f7e8945a646a8c31564fc320fe, type: 3}
+  levelImage: {fileID: 21300000, guid: def70b088127a5f4fb4a94f368302cd9, type: 3}
   levelNumber: 7
   levelName: Candy Land - Night
   maxCollectibles: 5

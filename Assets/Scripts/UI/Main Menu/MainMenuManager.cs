@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,9 +41,11 @@ public class MainMenuManager : MonoBehaviour
         bookmarkShownPos = bookmarkHiddenPos + Vector2.up * bookmarkPullOffset;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         InstantiateLevels();
+
+        yield return new WaitUntil(() => SaveManager.instance.saveData.levelProgress.Count > 0);
         shop.InstantiatePolaroids();
 
         panelBackground.gameObject.SetActive(false);

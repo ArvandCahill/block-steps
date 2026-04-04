@@ -9,7 +9,7 @@ public static class GameEvents
     public static event Action<Vector3> OnPlayerStopped;
     public static event Action OnCollectiblePicked;
     public static event Action<bool> OnLevelFinished;
-    public static event Action<int> OnCurrencyValueChanged;
+    public static event Action<Vector3, bool> OnPathValidated;
 
     public static void TriggerGamePaused()
     {
@@ -34,5 +34,10 @@ public static class GameEvents
     public static void TriggerLevelFinished(bool isWinning)
     {
         OnLevelFinished?.Invoke(isWinning);
+    }
+
+    public static void TriggerPathValidated(Vector3 targetPos, bool isValid)
+    {
+        OnPathValidated?.Invoke(targetPos, isValid);
     }
 }

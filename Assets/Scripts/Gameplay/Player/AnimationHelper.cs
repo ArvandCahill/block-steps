@@ -11,8 +11,8 @@ public class AnimationHelper : MonoBehaviour
 
     public void PlayFootstep()
     {
-        if (unit.isPlayer)
-            GameManager.instance.audioManager.PlayRandomSFX("Footstep1", "Footstep2", "Footstep3");
+        if (unit.isPlayer && !unit.isShopAi)
+            GameManager.instance.audioManager.PlayRandomSFX("Footstep1", "Footstep2");
             
     }
 }

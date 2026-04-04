@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 3 - Night
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 6141578547361753787, guid: 79cb60bb02d199a4185c7e34b267b4b7, type: 3}
-  levelImage: {fileID: 21300000, guid: 9a3df83aed7c7774ba3963587b1714a6, type: 3}
+  levelImage: {fileID: 21300000, guid: cf23841c5e9f8a04380a3edba6b0f898, type: 3}
   levelNumber: 5
   levelName: Eternal Frost - Night
   maxCollectibles: 3

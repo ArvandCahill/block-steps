@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 623315712031945903, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1248924828418249697, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
       propertyPath: m_Graph
       value: 
@@ -16,9 +20,13 @@ PrefabInstance:
       propertyPath: isPlayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2281844378087477893, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
+      propertyPath: isShopAi
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4694252595903224369, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
       propertyPath: m_Name
-      value: Shop
+      value: Shop AI
       objectReference: {fileID: 0}
     - target: {fileID: 5363370930824544395, guid: 5e62022b23ce5004f8c2e06d255f8c0f, type: 3}
       propertyPath: m_LocalPosition.x

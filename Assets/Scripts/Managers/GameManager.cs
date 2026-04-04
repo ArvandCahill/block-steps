@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = 60;
 
-  
         if (instance == null)
         {
             instance = this;
@@ -58,8 +57,6 @@ public class GameManager : MonoBehaviour
             admobInit.Init();
             admobInit.RequestBanner();
         }*/
-
-        SceneLoader = GetComponent<SceneLoader>();
         admobInit.Init();
     }
 
@@ -84,9 +81,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        saveManager.LoadSaveData();
+        SceneLoader = GetComponent<SceneLoader>();
         audioManager?.Initialize(saveManager.IsBgmOn, saveManager. IsSfxOn);
-
         uiManager?.HideAllPopups();
     }
 

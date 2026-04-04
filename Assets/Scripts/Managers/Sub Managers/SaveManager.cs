@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,6 +83,8 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        LoadSaveData();
     }
 
     public void LoadSaveData()
@@ -92,6 +95,30 @@ public class SaveManager : MonoBehaviour
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 saveData = formatter.Deserialize(stream) as SaveData;
+            }
+
+            if (saveData.levelProgress == null)
+            {
+                saveData.levelProgress = new List<LevelProgress>();
+            }
+
+            int totalLevels = AllLevelData.Count;
+
+            if (saveData.levelProgress.Count < totalLevels)
+            {
+                for (int i = saveData.levelProgress.Count; i < totalLevels; i++)
+                {
+                    saveData.levelProgress.Add(new LevelProgress());
+                }
+
+                Debug.Log("LevelProgress synchronized with new levels.");
+                SaveGame(); 
+            }
+
+            if (saveData.levelProgress.Count > totalLevels)
+            {
+                saveData.levelProgress = saveData.levelProgress.Take(totalLevels).ToList();
+                SaveGame();
             }
         }
         else

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +9,9 @@ public class GameplayUI : MonoBehaviour
     private GameplayManager GameplayManager => GameplayManager.instance;
     private InputManager InputManager => InputManager.instance;
     private GameState currentState;
+
+    [SerializeField] private Image marker;
+    private RectTransform markerRect;
 
     [Header("Collectibles")]
     [SerializeField] private Transform appleImageParent;
@@ -34,12 +37,14 @@ public class GameplayUI : MonoBehaviour
 
     private void OnEnable()
     {
+        GameEvents.OnPathValidated += ShowMarker;
         GameEvents.OnCollectiblePicked += UpdateCollectiblesUI;
         GameEvents.OnLevelFinished += OnPlayerFinished;
     }
 
     private void OnDisable()
     {
+        GameEvents.OnPathValidated -= ShowMarker;
         GameEvents.OnCollectiblePicked -= UpdateCollectiblesUI;
         GameEvents.OnLevelFinished -= OnPlayerFinished;
     }
@@ -49,6 +54,8 @@ public class GameplayUI : MonoBehaviour
         currentState = GameManager.instance.GetGameState();
         InstantiateAppleImages();
         HideResultUI();
+
+        markerRect = marker.GetComponent<RectTransform>();
     }
 
     #region Collectibles
@@ -218,5 +225,24 @@ public class GameplayUI : MonoBehaviour
     {
         if (isWin) ShowWin();
         else ShowLose();
+    }
+
+    void ShowMarker(Vector3 worldPos, bool isValid)
+    {
+        marker.color = isValid ? Color.white : Color.red;
+
+        GameManager.instance.audioManager.PlaySFX(isValid ? "Valid" : "Invalid");
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos + Vector3.up);
+        markerRect.position = screenPos;
+
+        markerRect.DOKill();
+
+        markerRect.localScale = Vector3.zero;
+        /*marker.gameObject.SetActive(true);*/
+
+        markerRect.DOScale(2f, 0.1f)
+        .SetEase(Ease.OutBack)
+        .OnComplete (() => marker.gameObject.SetActive(false));
     }
 }

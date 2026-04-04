@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         hit.transform.TryGetComponent(out currentInteractable);
         hit.transform.TryGetComponent(out currentDraggable);
-        Debug.Log("Hit: " + hit.transform.name);
+        /*Debug.Log("Hit: " + hit.transform.name);*/
     }
 
     void Click(Vector2 screenPos)

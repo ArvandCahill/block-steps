@@ -71,6 +71,7 @@ public partial class AiDetectionAction : Action
     {
         if (alertIcon == null || hasPlayedTween) return;
 
+        GameManager.instance.audioManager.PlayRandomSFX("Bear");
         scaleTween?.Kill();
 
         alertIcon.transform.localScale = Vector3.zero;

@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
 using AYellowpaper.SerializedCollections;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Shop : MonoBehaviour
     [Header("References")]
     [SerializeField] private Block blockTarget;
     [SerializeField] private Block blockDefault;
-    [SerializeField] private Transform polaroidContainer;
+    [SerializeField] private RectTransform polaroidContainer;
     [SerializeField] private Transform animalContainer;
     [SerializeField] private ShopButton shopButton;
 
@@ -30,29 +31,22 @@ public class Shop : MonoBehaviour
     [SerializeField] private float scrollAnimDuration = 0.4f;
     [SerializeField] private float scrollOffset = -600f;
     private Vector2 scrollOriginalPos;
+    private ScrollRect scrollRect;
 
 
     private GameManager gameManager => GameManager.instance;
 
     private void OnEnable()
     {
-        GameEvents.OnCurrencyValueChanged += UpdateMilestones;
         AnimateScrollViewIn();
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.OnCurrencyValueChanged -= UpdateMilestones;
+        DisplayEquippedAnimal();
     }
 
     private void Awake()
     {
-        scrollOriginalPos = scrollView.anchoredPosition;
-    }
+        scrollRect = scrollView.GetComponent<ScrollRect>();
 
-    private void Start()
-    {
-        DisplayFirstAnimal();
+        scrollOriginalPos = scrollView.anchoredPosition;
     }
 
     public void InstantiatePolaroids()
@@ -77,10 +71,18 @@ public class Shop : MonoBehaviour
         }
     }
 
-    private void DisplayFirstAnimal()
+    private void DisplayEquippedAnimal()
     {
-        if (animals.Count == 0) return;
-        StartCoroutine(DisplayAnimal(animals.Keys.First()));
+        var selectedData = gameManager.GetSelectedAnimal();
+
+        foreach (var pair in animals)
+        {
+            if (pair.Key.animalData.animalID == selectedData.animalID)
+            {
+                StartCoroutine(DisplayAnimal(pair.Key));
+                return;
+            }
+        }
     }
 
     private void OnPolaroidSelected(AnimalUnit animal)
@@ -90,6 +92,8 @@ public class Shop : MonoBehaviour
 
     private IEnumerator DisplayAnimal(AnimalUnit animal)
     {
+        StartCoroutine(tes(animals[animal]));
+/*        FocusToPolaroid(animals[animal]);*/
         if (displayedPolaroid == animals[animal]) yield break;
 
         ResetPreviousSelection();
@@ -104,7 +108,6 @@ public class Shop : MonoBehaviour
         if (displayedAnimal != null)
         {
             PathFinding.instance.Move(displayedAnimal, blockDefault.GetPosition());
-            Debug.Log("move previous animal");
         }
         displayedAnimal?.EnableAI(true);
         displayedPolaroid?.transform
@@ -128,7 +131,6 @@ public class Shop : MonoBehaviour
         blockTarget.isWalkable = true;
         animal.stopMovement = true;
         PathFinding.instance.Move(animal, blockTarget.GetPosition());
-        Debug.Log($"Moving {animal.name} to {blockTarget.GetPosition()}");
 
         yield return new WaitForSeconds(0.5f);
 
@@ -165,6 +167,47 @@ public class Shop : MonoBehaviour
         scrollView
             .DOAnchorPos(scrollOriginalPos, scrollAnimDuration)
             .SetEase(Ease.OutBack);
+    }
+
+    private IEnumerator FocusDelayed(Polaroid target)
+    {
+        yield return null; 
+        yield return null; 
+
+        FocusToPolaroid(target);
+    }
+
+    private IEnumerator tes(Polaroid polaroid)
+    {
+        yield return new WaitUntil(() => polaroidContainer.rect.width > 100);
+        FocusToPolaroid(polaroid);
+    }
+
+    private void FocusToPolaroid(Polaroid target)
+    {
+        polaroidContainer.DOKill();
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform targetRect = target.GetComponent<RectTransform>();
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            polaroidContainer,
+            RectTransformUtility.WorldToScreenPoint(null, targetRect.position),
+            null,
+            out localPoint
+        );
+
+        float viewportCenterX = scrollRect.viewport.rect.width / 2f;
+
+        float targetX = -localPoint.x + viewportCenterX;
+
+        float minX = -(polaroidContainer.rect.width - scrollRect.viewport.rect.width);
+        float maxX = 0f;
+
+        targetX = Mathf.Clamp(targetX, minX, maxX);
+
+        polaroidContainer.DOAnchorPosX(targetX, 0.3f).SetEase(Ease.OutCubic);
     }
 
     public void CloseShop()

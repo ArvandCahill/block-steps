@@ -246,7 +246,9 @@ MonoBehaviour:
     bgmSource: {fileID: 1891108589274427595}
     bgmList:
     - {fileID: 8300000, guid: e9794e80c36409e46b6490f1e0883be5, type: 3}
+    - {fileID: 8300000, guid: d1a9d00c6b6dba24c9a72d179208f555, type: 3}
     currentBgmIndex: 0
+    fadeDuration: 1
     bgmMixerParam: BGM_VOLUME
     sfxSource: {fileID: 8616484310266767770}
     sfxMixerParam: SFX_VOLUME
@@ -260,7 +262,29 @@ MonoBehaviour:
         Value: {fileID: 8300000, guid: 7b2704e4e9acfca4981c219ad5ffb488, type: 3}
       - Key: Paper
         Value: {fileID: 8300000, guid: db029f4a00dcaec4dbe56e9c7481270c, type: 3}
-    savedVolume: 0
+      - Key: Footstep1
+        Value: {fileID: 8300000, guid: 66b96bc6c03b025439681ff032d10e9d, type: 3}
+      - Key: Footstep2
+        Value: {fileID: 8300000, guid: 6b20521b756c62f44acc6d9f05dbfbe2, type: 3}
+      - Key: Bear
+        Value: {fileID: 8300000, guid: ab25bd797b95fe045902891ae2fa778a, type: 3}
+      - Key: Collectibles1
+        Value: {fileID: 8300000, guid: 644760a7f02b9944383efc19ae4aeef4, type: 3}
+      - Key: Collectibles2
+        Value: {fileID: 8300000, guid: adfdf1dbff982e24092432910f6ef320, type: 3}
+      - Key: Win
+        Value: {fileID: 8300000, guid: da0b83e73c0a78243b31f19c9bb31639, type: 3}
+      - Key: Lose
+        Value: {fileID: 8300000, guid: ff65d07543915ab458fc2f3ba4c9772c, type: 3}
+      - Key: Valid
+        Value: {fileID: 8300000, guid: 88974a34b29ba6e4ab19b17d5f437fb1, type: 3}
+      - Key: Invalid
+        Value: {fileID: 8300000, guid: f5cd384fe9f769443ba450442fd6765f, type: 3}
+    sfx3DPrefab: {fileID: 0}
+    spatialBlend: 1
+    minDistance: 1
+    maxDistance: 15
+    poolSize: 15
     savedBgmVolume: 0
     savedSfxVolume: 0
   <uiManager>k__BackingField:

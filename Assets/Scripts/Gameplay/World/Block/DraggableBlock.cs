@@ -150,10 +150,12 @@ public class DraggableBlock : Block, IDraggable
 
     private void OnCollisionExit(Collision other)
     {
-        if (!other.collider.CompareTag("Player"))
+        if (other.collider.CompareTag("Player"))
+        {
+            passenger = null;
+            other.transform.SetParent(null);
+        }
 
-        passenger = null;
-        other.transform.SetParent(null, true);
     }
 
     public override void OnInteract(Vector3 position) { }

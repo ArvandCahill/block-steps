@@ -14,6 +14,7 @@ public class AppleCollectible : Collectible
 
         collected = true;
 
+        GameManager.instance.audioManager.PlayRandomSFX("Collectibles1", "Collectibles2");
         GameEvents.TriggerCollectiblePicked();
 
         gameObject.SetActive(false);

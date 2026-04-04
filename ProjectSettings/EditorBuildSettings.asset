@@ -7,10 +7,13 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 08c0122f7939c7b42b269620efe29e9a
+    guid: 47c606dbe484bb9459dde55de640a954
   - enabled: 1
     path: Assets/Scenes/Gameplay.unity
     guid: 5cfd9cc58ac46824f9d26b1cbd14813c
+  - enabled: 0
+    path: Assets/Scenes/MainMenu1.unity
+    guid: 08c0122f7939c7b42b269620efe29e9a
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
@@ -26,4 +29,5 @@ EditorBuildSettings:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7c287c1a89e30ae4db4d12762b1c9d06, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: d0b9643f05ebbbc45ba89a30b1ff301c, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 609397bd6832839499ad9c29c3fd9ce9, type: 3}
   m_UseUCBPForAssetBundles: 0

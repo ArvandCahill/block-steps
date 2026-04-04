@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 4
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 1261415366275919296, guid: f7bf38d76e4dd0d4691a2f56c7d95936, type: 3}
-  levelImage: {fileID: 21300000, guid: 3b988f0420dd92f4a9187a8aa86ab009, type: 3}
+  levelImage: {fileID: 21300000, guid: e3edfb75ae4c5f94dab02e33d2f99eb6, type: 3}
   levelNumber: 6
   levelName: Candy Land
   maxCollectibles: 5

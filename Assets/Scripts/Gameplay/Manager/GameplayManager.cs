@@ -100,7 +100,10 @@ public class GameplayManager : MonoBehaviour
 
     private void FinishLevel(bool isWinning)
     {
-        InputManager.instance.DisableAllMap();
+        string sfxName = isWinning ? "Win" : "Lose";
+
+        InputManager.instance.DisableCameraMap();
+        gameManager.audioManager.PlaySFX(sfxName);
         isLevelFinished = true;
 
         Reward();

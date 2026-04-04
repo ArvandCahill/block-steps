@@ -86,7 +86,7 @@ public class AutoMoveBlock : Block
             return;
 
         unitOnBlock.stopMovement = true;
-        PathFinding.instance.EnableMarker(unitOnBlock, Vector3.zero, false);
+        PathFinding.instance.EnableMarker(unitOnBlock, Vector3.zero, false, false);
 
         StartCoroutine(DelayedMove());
     }

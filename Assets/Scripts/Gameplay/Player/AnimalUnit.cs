@@ -19,6 +19,7 @@ public class AnimalUnit : MonoBehaviour
     [Header("AI")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     public GameObject alertIcon;
+    public bool isShopAi = false;
 
     [Header("Movement")]
     public bool stopMovement { get; set; } = false;

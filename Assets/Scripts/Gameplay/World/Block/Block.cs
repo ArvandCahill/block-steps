@@ -68,4 +68,9 @@ public abstract class Block : Interactable
         return isBlocked;
     }
 
+    public void UpdateWalkability(bool isWalkable = true)
+    {
+        Debug.Log($"Updating walkability of {name} to {isWalkable}");
+        this.isWalkable = isWalkable;
+    }
 }

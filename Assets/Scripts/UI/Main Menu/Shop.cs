@@ -51,7 +51,9 @@ public class Shop : MonoBehaviour
 
     public void InstantiatePolaroids()
     {
-        foreach (AnimalData animalData in GameManager.instance.allAnimalData)
+        var sortedAnimalData = GameManager.instance.allAnimalData.OrderBy(data => data.price).ToList();
+
+        foreach (AnimalData animalData in sortedAnimalData)
         {
             Polaroid polaroid = Instantiate(polaroidPrefab, polaroidContainer);
             AnimalUnit animalUnit = Instantiate(

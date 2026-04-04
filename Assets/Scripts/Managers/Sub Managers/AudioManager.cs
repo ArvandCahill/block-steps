@@ -56,8 +56,6 @@ public class AudioManager
         SetBgmActive(bgmOn);
         SetSfxActive(sfxOn);
 
-        SetAudioMixerValue();
-
         InitializePool();
 
         if (bgmOn && bgmList.Count > 0)
@@ -257,8 +255,8 @@ public class AudioManager
 
     private void SetAudioMixerValue()
     {
-        audioMixer?.SetFloat(bgmMixerParam, Mathf.Log10(Mathf.Clamp(savedBgmVolume, 0.0001f, 1f)) * 20f);
-        audioMixer?.SetFloat(sfxMixerParam, Mathf.Log10(Mathf.Clamp(savedSfxVolume, 0.0001f, 1f)) * 20f);
+        audioMixer?.SetFloat(bgmMixerParam, Mathf.Log10(Mathf.Clamp(savedBgmVolume, 0.0001f, 1.2f)) * 20f);
+        audioMixer?.SetFloat(sfxMixerParam, Mathf.Log10(Mathf.Clamp(savedSfxVolume, 0.0001f, 1.2f)) * 20f);
     }
 
     public void SetBgmVolume(float volume)

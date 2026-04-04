@@ -46,8 +46,6 @@ public class CameraManager : MonoBehaviour
 
     private void OnEnable()
     {
-
-
         inputAction.Camera.Zoom.performed += OnZoom;
     }
 
@@ -67,15 +65,15 @@ public class CameraManager : MonoBehaviour
 
     private void StartRaycast()
     {
-        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Vector3 center = _cam.transform.position;
 
-        RaycastHit[] hits = Physics.RaycastAll(ray, 5f);
+        Collider[] hits = Physics.OverlapSphere(center, 1f);
 
         List<Interactable> newHits = new List<Interactable>();
 
         foreach (var hit in hits)
         {
-            if (hit.collider.TryGetComponent(out Interactable interactable))
+            if (hit.TryGetComponent(out Interactable interactable))
             {
                 newHits.Add(interactable);
 

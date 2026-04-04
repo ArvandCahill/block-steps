@@ -105,11 +105,11 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a5e55a68707ba26449aa591b182555c1, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -160,7 +160,6 @@ GameObject:
   - component: {fileID: 423805040189534179}
   - component: {fileID: 6869573666408017978}
   - component: {fileID: 1363855635127552457}
-  - component: {fileID: 6608962187254604810}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -206,6 +205,7 @@ MonoBehaviour:
   movementSpeed: 0
   behaviorGraphAgent: {fileID: 0}
   alertIcon: {fileID: 0}
+  isShopAi: 0
 --- !u!114 &6869573666408017978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,27 +247,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &6608962187254604810
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6588274714876077911}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.52242804, y: 0.6510606, z: 0.53758633}
-  m_Center: {x: 0.0020532608, y: 0.29000443, z: -0.01985073}
 --- !u!1 &6710887288051385066
 GameObject:
   m_ObjectHideFlags: 0

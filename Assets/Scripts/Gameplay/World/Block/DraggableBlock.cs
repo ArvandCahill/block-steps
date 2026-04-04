@@ -15,9 +15,12 @@ public class DraggableBlock : Block, IDraggable
     private Vector3 dragStartBlockPos;
     private Vector3 initialBlockPos;
     private Vector3 dragAxis;
+    private Vector3 velocity;
 
+    private Block blockBelow;
     private Transform passenger;
     private Vector3 lastPosition;
+    
 
     protected void Awake()
     {
@@ -45,6 +48,16 @@ public class DraggableBlock : Block, IDraggable
         dragStartWorld = ScreenToWorldOnPlane(screenPos, dragStartBlockPos.y);
 
         dragAxis = Vector3.zero;
+
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 3f))
+        {
+            if (hit.collider.gameObject != gameObject)
+            {
+                blockBelow = hit.collider.GetComponent<Block>();
+            }
+        }
     }
 
     private void UpdateDrag(Vector3 screenPos)
@@ -65,10 +78,11 @@ public class DraggableBlock : Block, IDraggable
 
         rawTarget = ClampToInitial(rawTarget);
 
-        Vector3 nextPos = Vector3.MoveTowards(
+        Vector3 nextPos = Vector3.SmoothDamp(
             transform.position,
             rawTarget,
-            moveSpeed * Time.deltaTime
+            ref velocity,
+            0.5f
         );
 
         Vector3 move = nextPos - transform.position;
@@ -88,9 +102,6 @@ public class DraggableBlock : Block, IDraggable
 
         transform.position = targetPos;
 
-        if (passenger != null)
-            passenger.position += delta;
-
         lastPosition = transform.position;
     }
 
@@ -108,6 +119,7 @@ public class DraggableBlock : Block, IDraggable
         ApplyMovement(snapped);
 
         PathFinding.instance?.RegisterBlock(this);
+        blockBelow?.UpdateWalkability();
     }
 
     private bool IsBlocked(Vector3 move)
@@ -143,9 +155,18 @@ public class DraggableBlock : Block, IDraggable
     {
         if (!other.collider.CompareTag("Player"))
             return;
-
-        passenger = other.transform;
-        other.transform.SetParent(transform, true);
+        Debug.Log("Collision detected");
+        foreach (ContactPoint contact in other.contacts)
+        {
+            if (Vector3.Dot(contact.normal, Vector3.down) > 0.1f)
+            {
+                Debug.DrawRay(contact.point, contact.normal * 200f, Color.green, 2f);
+                Debug.Log("Passenger detected");
+                passenger = other.transform;
+                other.transform.SetParent(transform, true);
+                return;
+            }
+        }
     }
 
     private void OnCollisionExit(Collision other)

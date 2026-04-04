@@ -73,7 +73,7 @@ MonoBehaviour:
   isWalkable: 1
   debugInfo: 
   maxDistance: 3
-  moveSpeed: 4
+  moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1

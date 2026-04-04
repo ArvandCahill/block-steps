@@ -9,7 +9,7 @@ MonoImporter:
   - playerController: {instanceID: 0}
   - environmentParent: {instanceID: 0}
   - levelPrefab: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: 350
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

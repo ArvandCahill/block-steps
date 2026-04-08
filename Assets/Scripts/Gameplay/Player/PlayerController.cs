@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
         inputManager = InputManager.instance;
 
         inputManager.inputAction.Player.Enable();
+        inputManager.inputAction.Camera.Enable();
         inputManager.inputAction.Player.Press.started += OnPressStarted;
         inputManager.inputAction.Player.Drag.performed += OnDrag;
         inputManager.inputAction.Player.Press.canceled += OnPressReleased;
@@ -56,8 +57,8 @@ public class PlayerController : MonoBehaviour
         currentDraggable = null;
 
         startPos = inputManager.inputAction.Player.Drag.ReadValue<Vector2>();
-        if (currentDraggable != null) inputManager.cameraMap.Disable();
         StartRaycast(startPos);
+        if (currentDraggable != null) inputManager.EnableCameraMap(false);  
 
         inputState = InputState.pressed;
     }
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
         {
             currentDraggable?.OnDragEnd();
             inputState = InputState.idle;
-            inputManager.cameraMap.Enable();
+            inputManager.EnableCameraMap();
             return;
         }
 

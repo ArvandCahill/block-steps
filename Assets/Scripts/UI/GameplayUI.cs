@@ -112,7 +112,7 @@ public class GameplayUI : MonoBehaviour
         currentState = GameState.Win;
         InputManager.DisableAllMap();
 
-        SetResultText("YOU WIN!");
+        SetResultText("Well Done");
 
         ShowResultUI(
             pause: false,
@@ -128,7 +128,7 @@ public class GameplayUI : MonoBehaviour
         currentState = GameState.Lose;
         InputManager.DisableAllMap();
 
-        SetResultText("YOU'RE CAPTURED");
+        SetResultText("You're Captured!");
 
         ShowResultUI(
             pause: false,

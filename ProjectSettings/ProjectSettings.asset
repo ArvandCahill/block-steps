@@ -40,7 +40,7 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 21300000, guid: 7d4209551836ff7449983b0a43cf296d, type: 3}
+  - logo: {fileID: 21300000, guid: f4bc68bcfb147f54682b7fee3c48f6e5, type: 3}
     duration: 2
   m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 1732a99fbe6493e42bd89bb1b27bdb70, type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
@@ -149,7 +149,6 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 11400000, guid: d0b9643f05ebbbc45ba89a30b1ff301c, type: 2}
   - {fileID: -944628639613478452, guid: 609397bd6832839499ad9c29c3fd9ce9, type: 3}
-  - {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -180,7 +179,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 1
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 25
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

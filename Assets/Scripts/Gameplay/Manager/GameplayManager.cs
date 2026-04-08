@@ -102,7 +102,7 @@ public class GameplayManager : MonoBehaviour
     {
         string sfxName = isWinning ? "Win" : "Lose";
 
-        InputManager.instance.DisableCameraMap();
+       
         gameManager.audioManager.PlaySFX(sfxName);
         isLevelFinished = true;
 
@@ -171,7 +171,7 @@ public class GameplayManager : MonoBehaviour
 
         walkables = walkables.OrderBy(x => Random.value).ToList();
 
-        int minGridDistance = 3;
+        int minGridDistance = 8;
         int minDistanceFromStart = 4;
         int minDistanceFromFinish = 4;
 

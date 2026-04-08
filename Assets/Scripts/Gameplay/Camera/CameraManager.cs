@@ -39,21 +39,17 @@ public class CameraManager : MonoBehaviour
     {
         _lockedXrotation = transform.rotation.eulerAngles.x;
         _cam.fieldOfView = Mathf.Clamp(_cam.fieldOfView, _minZoom, _maxZoom);
-
-        inputAction = InputManager.instance.inputAction;
-        inputAction.Camera.Enable();
     }
 
     private void OnEnable()
     {
+        inputAction = InputManager.instance.inputAction;
         inputAction.Camera.Zoom.performed += OnZoom;
     }
 
     private void OnDisable()
     {
         inputAction.Camera.Zoom.performed -= OnZoom;
-
-        inputAction.Camera.Disable();
     }
 
     private void LateUpdate()
@@ -67,7 +63,7 @@ public class CameraManager : MonoBehaviour
     {
         Vector3 center = _cam.transform.position;
 
-        Collider[] hits = Physics.OverlapSphere(center, 1f);
+        Collider[] hits = Physics.OverlapSphere(center, 0.5f);
 
         List<Interactable> newHits = new List<Interactable>();
 

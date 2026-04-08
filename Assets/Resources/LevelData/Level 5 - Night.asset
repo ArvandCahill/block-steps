@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 9197766607519735077, guid: 9817638f082f9774f80f64cf0673ac39, type: 3}
   levelImage: {fileID: 21300000, guid: 36e7e538b35ec674ba10325a784a4a47, type: 3}
-  levelNumber: 8
+  levelNumber: 9
   levelName: Dark Batbloom - Night
   maxCollectibles: 4
   isNightMode: 1
-  skyboxType: 0
+  skyboxType: 1

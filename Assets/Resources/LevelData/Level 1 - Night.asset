@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 1 - Night
   m_EditorClassIdentifier: Game.Core::LevelData
   levelPrefab: {fileID: 7476027685774720237, guid: f270f469c66d7d24a907696c0dc0ecc3, type: 3}
-  levelImage: {fileID: 21300000, guid: a1a0cbffafbc6074ca50579cf2df8ef9, type: 3}
+  levelImage: {fileID: 21300000, guid: 70267c244fe4519429f3f35a46f7c264, type: 3}
   levelNumber: 1
   levelName: Skyland - Night
   maxCollectibles: 3

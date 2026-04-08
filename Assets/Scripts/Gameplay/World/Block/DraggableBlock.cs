@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using static UnityEngine.UI.Image;
 
 [RequireComponent(typeof(BoxCollider))]
 public class DraggableBlock : Block, IDraggable
@@ -17,9 +19,10 @@ public class DraggableBlock : Block, IDraggable
     private Vector3 dragAxis;
     private Vector3 velocity;
 
-    private Block blockBelow;
     private Transform passenger;
     private Vector3 lastPosition;
+
+    private Coroutine snapRoutine;
     
 
     protected void Awake()
@@ -39,6 +42,11 @@ public class DraggableBlock : Block, IDraggable
 
     private void BeginDrag(Vector3 screenPos)
     {
+        if (snapRoutine != null)
+        {
+            StopCoroutine(snapRoutine);
+            snapRoutine = null;
+        }
         PathFinding.instance?.UnregisterBlock(this);
 
         dragging = true;
@@ -46,18 +54,9 @@ public class DraggableBlock : Block, IDraggable
 
         dragStartBlockPos = transform.position;
         dragStartWorld = ScreenToWorldOnPlane(screenPos, dragStartBlockPos.y);
+        SetBlockBelowWalkability(true);
 
         dragAxis = Vector3.zero;
-
-        Vector3 origin = transform.position + Vector3.up * 0.2f;
-
-        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 3f))
-        {
-            if (hit.collider.gameObject != gameObject)
-            {
-                blockBelow = hit.collider.GetComponent<Block>();
-            }
-        }
     }
 
     private void UpdateDrag(Vector3 screenPos)
@@ -116,10 +115,29 @@ public class DraggableBlock : Block, IDraggable
             Mathf.Round(transform.position.z)
         );
 
-        ApplyMovement(snapped);
+        snapRoutine = StartCoroutine(Snap(snapped));
+    }
+
+    private IEnumerator Snap(Vector3 target)
+    {
+        Vector3 velocity = Vector3.zero;
+
+        while (Vector3.Distance(transform.position, target) > 0.01f)
+        {
+            transform.position = Vector3.SmoothDamp(
+                transform.position,
+                target,
+                ref velocity,
+                0.3f 
+            );
+
+            yield return null;
+        }
+
+        transform.position = target;
 
         PathFinding.instance?.RegisterBlock(this);
-        blockBelow?.UpdateWalkability();
+        SetBlockBelowWalkability(false);
     }
 
     private bool IsBlocked(Vector3 move)
@@ -177,6 +195,20 @@ public class DraggableBlock : Block, IDraggable
             other.transform.SetParent(null);
         }
 
+    }
+
+    private void SetBlockBelowWalkability(bool walkable)
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 3f))
+        {
+            if (hit.collider.gameObject != gameObject)
+            {
+                Block blockBelow = hit.collider.GetComponent<Block>();
+                blockBelow.isWalkable = walkable;
+            }
+        }
     }
 
     public override void OnInteract(Vector3 position) { }

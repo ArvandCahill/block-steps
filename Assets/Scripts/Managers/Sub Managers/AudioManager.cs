@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 using System;
 using AYellowpaper.SerializedCollections;
@@ -43,6 +43,7 @@ public class AudioManager
     public int poolSize = 15;
 
     private Queue<AudioSource> sfxPool = new Queue<AudioSource>();
+    private AudioClip currentLoopClip;
 
     [HideInInspector] public float savedBgmVolume = 1f;
     [HideInInspector] public float savedSfxVolume = 1f;
@@ -91,8 +92,6 @@ public class AudioManager
             GameManager.instance.StopCoroutine(bgmFadeRoutine);
 
         bgmFadeRoutine = GameManager.instance.StartCoroutine(FadeBGM(index));
-
-        Debug.Log($"Playing BGM: {bgmSource.clip.name}");
     }
 
     private IEnumerator FadeBGM(int newIndex)
@@ -247,6 +246,38 @@ public class AudioManager
         source.Play();
 
         GameManager.instance.StartCoroutine(ReturnAfterPlay(source, clip.length));
+    }
+
+    public void PlayLoopingSFX(string sfxName)
+    {
+        if (!sfxList.TryGetValue(sfxName, out AudioClip clip))
+        {
+            Debug.LogWarning($"SFX '{sfxName}' tidak ditemukan!");
+            return;
+        }
+
+        if (sfxSource.isPlaying && currentLoopClip == clip)
+            return;
+
+        sfxSource.Stop();
+
+        sfxSource.clip = clip;
+        sfxSource.loop = true;
+        sfxSource.Play();
+
+        currentLoopClip = clip;
+    }
+
+    public void StopLoopingSFX()
+    {
+        if (!sfxSource.isPlaying)
+            return;
+
+        sfxSource.Stop();
+        sfxSource.loop = false;
+        sfxSource.clip = null;
+
+        currentLoopClip = null;
     }
 
     #endregion

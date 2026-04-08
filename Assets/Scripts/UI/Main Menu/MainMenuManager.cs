@@ -39,9 +39,17 @@ public class MainMenuManager : MonoBehaviour
     {
         bookmarkHiddenPos = bookmarkIcon.anchoredPosition;
         bookmarkShownPos = bookmarkHiddenPos + Vector2.up * bookmarkPullOffset;
+
+        InstantiateLevels();
+
+        shop.InstantiatePolaroids();
+
+        panelBackground.gameObject.SetActive(false);
+
+        SetCurrencyText(SaveManager.instance.Currency);
     }
 
-    private IEnumerator Start()
+    /*private IEnumerator Start()
     {
         InstantiateLevels();
 
@@ -51,7 +59,7 @@ public class MainMenuManager : MonoBehaviour
         panelBackground.gameObject.SetActive(false);
 
         SetCurrencyText(SaveManager.instance.Currency);
-    }
+    }*/
 
     private void InstantiateLevels()
     {

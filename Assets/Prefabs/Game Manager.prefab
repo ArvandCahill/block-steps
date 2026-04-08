@@ -245,8 +245,8 @@ MonoBehaviour:
     audioMixerGroup: {fileID: 0}
     bgmSource: {fileID: 1891108589274427595}
     bgmList:
-    - {fileID: 8300000, guid: e9794e80c36409e46b6490f1e0883be5, type: 3}
-    - {fileID: 8300000, guid: d1a9d00c6b6dba24c9a72d179208f555, type: 3}
+    - {fileID: 8300000, guid: 53c84493eba805844909066a65f21179, type: 3}
+    - {fileID: 8300000, guid: 77752557809f7f74eacd0d0d70479208, type: 3}
     currentBgmIndex: 0
     fadeDuration: 1
     bgmMixerParam: BGM_VOLUME
@@ -280,6 +280,8 @@ MonoBehaviour:
         Value: {fileID: 8300000, guid: 88974a34b29ba6e4ab19b17d5f437fb1, type: 3}
       - Key: Invalid
         Value: {fileID: 8300000, guid: f5cd384fe9f769443ba450442fd6765f, type: 3}
+      - Key: Box
+        Value: {fileID: 8300000, guid: 16736f261face724a81add35b8226e00, type: 3}
     sfx3DPrefab: {fileID: 0}
     spatialBlend: 1
     minDistance: 1
@@ -293,7 +295,7 @@ MonoBehaviour:
       _serializedList: []
   <admobInit>k__BackingField:
     isAdActive: 1
-    testMode: 1
+    testMode: 0
     adsFrequency: 1
   gameState: 0
   selectedAnimalData: {fileID: 0}
@@ -347,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da44f6dc7969fc5408386d0dab1a9a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Managers::InputManager
+  InputActionReference: {fileID: 8531282206186878947, guid: 609397bd6832839499ad9c29c3fd9ce9, type: 3}
   playerMap:
     m_Name: Player Map
     m_Id: 5d964fa6-a028-4e18-a103-ae2725c37d25

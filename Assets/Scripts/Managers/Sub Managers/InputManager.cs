@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     public static InputManager instance { get; private set; }
 
     public PlayerInputAction inputAction;
+    public InputActionReference InputActionReference;
     public InputActionMap playerMap;
     public InputActionMap cameraMap;
 
@@ -38,19 +39,17 @@ public class InputManager : MonoBehaviour
     public void DisablePlayerMap()
     {
         playerMap.Disable();
-        Debug.Log("Player input map disabled");
     }
 
-    public void DisableCameraMap()
+    public void EnableCameraMap(bool enable = true)
     {
-        cameraMap.Disable();
-        Debug.Log("Camera input map disabled");
+        if(enable) InputActionReference.action.actionMap.Enable();
+        else InputActionReference.action.actionMap.Disable();
     }
 
     public void DisableAllMap()
     {
         inputAction.Player.Disable();
-        inputAction.Camera.Disable();
-        Debug.Log("All input maps disabled");
+        InputActionReference.action.actionMap.Disable();
     }
 }

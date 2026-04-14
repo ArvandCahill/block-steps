@@ -2,6 +2,7 @@
 using Unity.Behavior;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -13,14 +14,14 @@ public class GameplayManager : MonoBehaviour
     [Header("Core")]
     [SerializeField] public AnimalUnit playerUnit;
     [SerializeField] private AIController aiController;
-    [SerializeField] private CameraManager cameraManager;   
+    [SerializeField] private CameraManager cameraManager;
     [SerializeField] public LevelData levelData;
 
     [Header("Environment")]
     [SerializeField] private Transform environmentParent;
     public List<Collectible> appleCollectibles = new();
     public Transform startPoint;
-    public Block finishPoint; 
+    public Block finishPoint;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject playerPrefab;
@@ -57,7 +58,6 @@ public class GameplayManager : MonoBehaviour
         levelData = gameManager.GetSelectedLevel();
         levelPrefab = levelData?.levelPrefab;
         SpawnEnvironment();
-        
     }
 
     void Start()
@@ -70,6 +70,7 @@ public class GameplayManager : MonoBehaviour
 
         Debug.Log("Night Mode: " + levelData.isNightMode);
         if (levelData.isNightMode) RandomizeCollectibles();
+        StartCoroutine(CheckTutorialRoutine());
     }
 
     private void SpawnEnvironment()
@@ -100,9 +101,11 @@ public class GameplayManager : MonoBehaviour
 
     private void FinishLevel(bool isWinning)
     {
+        PathFinding.instance.EnableMarker(playerUnit, Vector3.zero, false, false);
+
         string sfxName = isWinning ? "Win" : "Lose";
 
-       
+
         gameManager.audioManager.PlaySFX(sfxName);
         isLevelFinished = true;
 
@@ -111,7 +114,7 @@ public class GameplayManager : MonoBehaviour
         if (levelData.isNightMode) return;
         if (isWinning && saveManager.UnlockedLevels == levelData.levelNumber)
         {
-            saveManager.UnlockedLevels += 2; 
+            saveManager.UnlockedLevels += 2;
             levelProgress.MarkAsCompleted();
         }
     }
@@ -135,8 +138,8 @@ public class GameplayManager : MonoBehaviour
         {
             agent.enabled = false;
 
-            if (agent.TryGetComponent<AnimalUnit>(out var unit)) 
-            { 
+            if (agent.TryGetComponent<AnimalUnit>(out var unit))
+            {
                 unit.stopMovement = true;
             }
         }
@@ -261,4 +264,22 @@ public class GameplayManager : MonoBehaviour
     }
 
     #endregion
+
+    private IEnumerator CheckTutorialRoutine()
+    {
+        yield return new WaitUntil (() => gameManager.panel.gameObject.activeSelf == false);
+
+        if (saveManager.isFirstTimePlaying)
+        {
+            GameEvents.TriggerTutorial();
+            saveManager.isFirstTimePlaying = false;
+            yield break;
+        }
+
+        if (saveManager.isfirstTimeNightMode && levelData.isNightMode)
+        {
+            GameEvents.TriggerNightTutorial();
+            saveManager.isfirstTimeNightMode = false;
+        }
+    }
 }

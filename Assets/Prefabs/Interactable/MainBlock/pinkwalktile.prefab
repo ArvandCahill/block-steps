@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1034972290019176737}
   - component: {fileID: 679656968744097154}
   - component: {fileID: 5283417448364769536}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pinkwalktile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 444943642905935993}
   - component: {fileID: 3385562047383615795}
   - component: {fileID: 2296365904197000615}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

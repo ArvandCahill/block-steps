@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3304179234406445280}
   - component: {fileID: 3091888514383467587}
   - component: {fileID: 7697848567189307585}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pinkgrass3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 2714256274040127928}
   - component: {fileID: 972169416712894706}
   - component: {fileID: 4348345072749157478}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

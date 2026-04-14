@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4602619752968717160}
   - component: {fileID: 4102110751526676427}
   - component: {fileID: 8705818422378804041}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: darkbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 2
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &8705818422378804041
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 4012705572102648368}
   - component: {fileID: 2267792388523723642}
   - component: {fileID: 3340944182442831854}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

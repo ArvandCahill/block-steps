@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5096437226945130486}
   - component: {fileID: 7957018297386800828}
   - component: {fileID: 6865944179749761576}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5677379508893195950}
   - component: {fileID: 5330097210988329485}
   - component: {fileID: 703853915006578319}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: darkwalktile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

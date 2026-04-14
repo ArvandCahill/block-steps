@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections.Generic;
+using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
+using static UnityEngine.UI.Image;
 
 public class CameraManager : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private CinemachineCamera _virtualCam;
     [SerializeField] private Transform _cameraRig;
+    [SerializeField] private Transform player;
+
+    private RaycastHit[] _hits = new RaycastHit[10];
     private List<Interactable> _currentInteractables = new List<Interactable>();
 
     [Header("Rotation")]
@@ -59,17 +64,32 @@ public class CameraManager : MonoBehaviour
         HandlePinchZoom();
     }
 
+    private void Start()
+    {
+        player = GameplayManager.instance.playerUnit.transform;
+    }
+
     private void StartRaycast()
     {
-        Vector3 center = _cam.transform.position;
+        Vector3 origin = _cam.transform.position;
+        Vector3 direction = (player.position - origin).normalized;
+        float distance = Vector3.Distance(origin, player.position) - 5f;
 
-        Collider[] hits = Physics.OverlapSphere(center, 0.5f);
+        int hitCount = Physics.SphereCastNonAlloc(
+            origin,
+            0.3f, 
+            direction,
+            _hits,
+            distance
+            );
 
         List<Interactable> newHits = new List<Interactable>();
 
-        foreach (var hit in hits)
+        for (int i = 0; i < hitCount; i++)
         {
-            if (hit.TryGetComponent(out Interactable interactable))
+            var hit = _hits[i];
+
+            if (hit.collider.TryGetComponent(out Interactable interactable))
             {
                 newHits.Add(interactable);
 

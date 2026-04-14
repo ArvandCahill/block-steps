@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 519758367115675231}
   - component: {fileID: 1364228264747772}
   - component: {fileID: 4627449194458822270}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pinkbox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 2
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &4627449194458822270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 1100770884781258503}
   - component: {fileID: 2851225059351629389}
   - component: {fileID: 1635981170048740057}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

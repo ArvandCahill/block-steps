@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7394737811993094317}
   - component: {fileID: 5640843746269286887}
   - component: {fileID: 9182267486802703731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7993703447506606581}
   - component: {fileID: 7628257019549007190}
   - component: {fileID: 3017934102640159188}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: neograss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,6 +140,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 2
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &3017934102640159188
 BoxCollider:
   m_ObjectHideFlags: 0

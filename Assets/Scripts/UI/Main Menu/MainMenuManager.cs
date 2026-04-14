@@ -42,24 +42,15 @@ public class MainMenuManager : MonoBehaviour
 
         InstantiateLevels();
 
-        shop.InstantiatePolaroids();
-
         panelBackground.gameObject.SetActive(false);
 
         SetCurrencyText(SaveManager.instance.Currency);
     }
 
-    /*private IEnumerator Start()
+    private void Start()
     {
-        InstantiateLevels();
-
-        yield return new WaitUntil(() => SaveManager.instance.saveData.levelProgress.Count > 0);
         shop.InstantiatePolaroids();
-
-        panelBackground.gameObject.SetActive(false);
-
-        SetCurrencyText(SaveManager.instance.Currency);
-    }*/
+    }
 
     private void InstantiateLevels()
     {

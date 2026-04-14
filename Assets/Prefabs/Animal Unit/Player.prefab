@@ -218,6 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b5fb6fbc6625c44975273aef38b80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay::PlayerController
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   inputState: 0
   dragThreshold: 10
 --- !u!54 &1363855635127552457

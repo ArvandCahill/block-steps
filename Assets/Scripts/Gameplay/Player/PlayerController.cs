@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 startPos;
     private Vector2 currentPos;
 
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private InputState inputState = InputState.idle;
     [SerializeField] private float dragThreshold = 10f;
 
@@ -100,11 +101,10 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 1f);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer)) return;
 
         hit.transform.TryGetComponent(out currentInteractable);
         hit.transform.TryGetComponent(out currentDraggable);
-        /*Debug.Log("Hit: " + hit.transform.name);*/
     }
 
     void Click(Vector2 screenPos)

@@ -42,7 +42,6 @@ public class PathFinding : MonoBehaviour
             if (!blocks.ContainsKey(pos))
             {
                 blocks.Add(pos, block);
-                block.debugInfo = $"registered {block.name}";
             }
         }
 
@@ -232,8 +231,6 @@ public class PathFinding : MonoBehaviour
 
         marker.gameObject.SetActive(enable);
         marker.position = position + Vector3.up;
-
-        Debug.Log($"Marker {(enable ? "enabled" : "disabled")} at {position}");
     }
 
     #region Helpers

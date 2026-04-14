@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public List<LevelData> allLevelData;
 
     [Header("UI")]
-    [SerializeField] private CanvasGroup panel;
+    public CanvasGroup panel;
 
     [HideInInspector] public bool isAnimating;
     private int sceneCount = -1;

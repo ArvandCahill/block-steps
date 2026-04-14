@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1915740631439152909}
   - component: {fileID: 2135909421004223406}
   - component: {fileID: 6744314203640932140}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: darkgrassmushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 1361819672914929237}
   - component: {fileID: 4193142188380102431}
   - component: {fileID: 798459553161853835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

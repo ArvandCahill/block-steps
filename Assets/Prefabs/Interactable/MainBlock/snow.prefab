@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 593470819678827536}
   - component: {fileID: 1084869611321512115}
   - component: {fileID: 5706873738017965105}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 21491751554975048}
   - component: {fileID: 2926062116725799938}
   - component: {fileID: 1855148653552343190}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

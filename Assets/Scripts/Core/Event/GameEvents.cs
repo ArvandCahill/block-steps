@@ -11,6 +11,9 @@ public static class GameEvents
     public static event Action<bool> OnLevelFinished;
     public static event Action<Vector3, bool> OnPathValidated;
 
+    public static event Action OnTutorial;
+    public static event Action OnNightTutorial;
+
     public static void TriggerGamePaused()
     {
         OnGamePaused?.Invoke();
@@ -39,5 +42,15 @@ public static class GameEvents
     public static void TriggerPathValidated(Vector3 targetPos, bool isValid)
     {
         OnPathValidated?.Invoke(targetPos, isValid);
+    }
+
+    public static void TriggerTutorial()
+    {
+        OnTutorial?.Invoke();
+    }
+
+    public static void TriggerNightTutorial()
+    {
+        OnNightTutorial?.Invoke();
     }
 }

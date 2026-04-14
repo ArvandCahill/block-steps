@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2067185736651690699}
   - component: {fileID: 1982230076418930280}
   - component: {fileID: 6610883501912089322}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: darkgrass2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 1495241578626540435}
   - component: {fileID: 4329935164966689497}
   - component: {fileID: 951032711704542797}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

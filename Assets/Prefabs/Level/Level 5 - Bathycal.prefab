@@ -19817,7 +19817,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1001 &3592700539753718830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27945,7 +27945,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!4 &5443070573939551481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 132402935996177896, guid: f29b2833a94d9054c8239eb2dd85585c, type: 3}
@@ -30375,7 +30375,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1001 &5887246441351868866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31396,7 +31396,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1001 &6199946153094279999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39860,7 +39860,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!4 &7837899547923163955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 132402935996177896, guid: f29b2833a94d9054c8239eb2dd85585c, type: 3}
@@ -41672,7 +41672,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1001 &8216621523651236390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44718,7 +44718,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!4 &8899790325881136095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 132402935996177896, guid: f29b2833a94d9054c8239eb2dd85585c, type: 3}

@@ -36,7 +36,7 @@ public class Shop : MonoBehaviour
 
     private GameManager gameManager => GameManager.instance;
 
-    private void OnEnable()
+    public void OnEnable()
     {
         AnimateScrollViewIn();
         DisplayEquippedAnimal();
@@ -45,8 +45,6 @@ public class Shop : MonoBehaviour
     private void Awake()
     {
         scrollRect = scrollView.GetComponent<ScrollRect>();
-
-        scrollOriginalPos = scrollView.anchoredPosition;
     }
 
     public void InstantiatePolaroids()
@@ -71,6 +69,8 @@ public class Shop : MonoBehaviour
 
             if (animalData.animalID == gameManager.GetSelectedAnimal().animalID) SetSelectedAnimal(animalUnit);
         }
+
+        scrollOriginalPos = scrollView.anchoredPosition;
     }
 
     private void DisplayEquippedAnimal()
@@ -158,8 +158,6 @@ public class Shop : MonoBehaviour
 
     private void AnimateScrollViewIn()
     {
-        if (scrollView == null) return;
-
         shopButton.transform.parent.gameObject.SetActive(true);
 
         scrollView.DOKill();

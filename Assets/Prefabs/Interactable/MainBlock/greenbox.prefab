@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9174809974291600027}
   - component: {fileID: 6306260296675535825}
   - component: {fileID: 7395452041698316101}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8584790239117157315}
   - component: {fileID: 8075262562271938400}
   - component: {fileID: 3471642819758953442}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: greenbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,6 +140,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 2
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &3471642819758953442
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3112343102663732488}
   - component: {fileID: 3171402987281303979}
   - component: {fileID: 7800180071309614377}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: bluebox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   type: 2
   isWalkable: 1
+  debugInfo: 
 --- !u!65 &7800180071309614377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 2540443320256404560}
   - component: {fileID: 834952505133081882}
   - component: {fileID: 4229973789936746894}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

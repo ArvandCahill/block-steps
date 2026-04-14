@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6029831334631129316}
   - component: {fileID: 8897262362513865134}
   - component: {fileID: 5358393895060528442}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 6619859981744763324}
   - component: {fileID: 6695764324798108959}
   - component: {fileID: 2076434757929746845}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: walktile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

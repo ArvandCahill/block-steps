@@ -18,4 +18,5 @@ public class SaveData
     public bool isSfxOn = true;
 
     public bool isFirstTimePlaying = true;
+    public bool isFirstTimeNightMode = true;
 }

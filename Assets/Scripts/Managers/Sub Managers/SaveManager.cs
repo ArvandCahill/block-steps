@@ -10,7 +10,7 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance { get; private set; }
 
-    [field: SerializeField] public SaveData saveData { get; private set; }
+    [field: SerializeField] private SaveData saveData;
 
     private static string SavePath => Path.Combine(Application.persistentDataPath, "saveData.sawit");
 
@@ -65,6 +65,26 @@ public class SaveManager : MonoBehaviour
 
             saveData.isSfxOn = value;
             GameManager.audioManager?.SetSfxActive(IsSfxOn);
+            SaveGame();
+        }
+    }
+
+    public bool isFirstTimePlaying
+    {
+        get { return saveData.isFirstTimePlaying; }
+        set
+        {
+            saveData.isFirstTimePlaying = value;
+            SaveGame();
+        }
+    }
+
+    public bool isfirstTimeNightMode
+    {
+        get { return saveData.isFirstTimeNightMode; }
+        set
+        {
+            saveData.isFirstTimeNightMode = value;
             SaveGame();
         }
     }

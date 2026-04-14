@@ -37,10 +37,11 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (!other.CompareTag("Player"))
             return;
 
-        player = other.GetComponent<AnimalUnit>();
+        player = other.GetComponentInParent<AnimalUnit>();
 
         if(player == null)
             return;
@@ -101,6 +102,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+
         if (!other.CompareTag("Player"))
             return;
 

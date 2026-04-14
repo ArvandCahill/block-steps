@@ -10,12 +10,12 @@ public class AIController : MonoBehaviour
 
     private float detectionTime => GameplayManager.instance.levelData.isNightMode ? 0f : 1f;
 
-    IEnumerator Start()
+
+    private void Start()
     {
-        yield return new WaitForSeconds(0.5f);
         agents = FindObjectsByType<BehaviorGraphAgent>(FindObjectsSortMode.None).ToList();
 
-        if (agents.Count == 0 ) yield break;
+        if (agents.Count == 0 ) return;
 
         foreach (BehaviorGraphAgent agent in agents)
         {
@@ -36,6 +36,15 @@ public class AIController : MonoBehaviour
         agent.SetVariableValue("agent", agent.gameObject.GetComponent<AnimalUnit>());
         agent.SetVariableValue("aiDetector", agent.gameObject.GetComponent<AIDetector>());
         agent.SetVariableValue("aiState", AIState.Idle);
+
+        if (GameplayManager.instance != null && GameplayManager.instance.levelData.isNightMode)
+        {
+            foreach(AnimalUnit unit in agent.gameObject.GetComponents<AnimalUnit>())
+            {
+                unit.movementSpeed = 1f;
+                unit.animator.SetFloat("speed", 1f);
+            }
+        }
     }
     
     private List<Vector3Int> GetPatrolableBlock()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 601518709325624159}
   - component: {fileID: 5717192084814807934}
   - component: {fileID: 2339910061494927799}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: box2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ MonoBehaviour:
   moveSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
 --- !u!1 &9124043636290998588
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 11595616955646471}
   - component: {fileID: 2953830818356001613}
   - component: {fileID: 1863266883220201433}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

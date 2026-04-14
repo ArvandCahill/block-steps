@@ -32,6 +32,10 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private Button replayButton;
     [SerializeField] private Button nextLevelButton;
 
+    [Header("Tutorials")]
+    public Tutorial mainTutorial;
+    public Tutorial nightTutorial;
+
     [Header("Animations")]
     [SerializeField] private float panelAnimDuration = 0.3f;
 
@@ -40,6 +44,8 @@ public class GameplayUI : MonoBehaviour
         GameEvents.OnPathValidated += ShowMarker;
         GameEvents.OnCollectiblePicked += UpdateCollectiblesUI;
         GameEvents.OnLevelFinished += OnPlayerFinished;
+        GameEvents.OnTutorial += SpawnMainTutotial;
+        GameEvents.OnNightTutorial += SpawnNightTutorial;
     }
 
     private void OnDisable()
@@ -47,6 +53,8 @@ public class GameplayUI : MonoBehaviour
         GameEvents.OnPathValidated -= ShowMarker;
         GameEvents.OnCollectiblePicked -= UpdateCollectiblesUI;
         GameEvents.OnLevelFinished -= OnPlayerFinished;
+        GameEvents.OnTutorial -= SpawnMainTutotial;
+        GameEvents.OnNightTutorial -= SpawnNightTutorial;
     }
 
     private void Start()
@@ -112,7 +120,7 @@ public class GameplayUI : MonoBehaviour
         currentState = GameState.Win;
         InputManager.DisableAllMap();
 
-        SetResultText("Well Done");
+        SetResultText("Well Done!");
 
         ShowResultUI(
             pause: false,
@@ -244,5 +252,15 @@ public class GameplayUI : MonoBehaviour
         markerRect.DOScale(2f, 0.1f)
         .SetEase(Ease.OutBack)
         .OnComplete (() => marker.gameObject.SetActive(false));
+    }
+
+    void SpawnMainTutotial()
+    {
+        Instantiate(mainTutorial, transform);
+    }
+
+    void SpawnNightTutorial()
+    {
+        Instantiate(nightTutorial, transform);
     }
 }
